@@ -12,6 +12,7 @@ pre: " <b> 1.1. </b> "
 * Đọc và nắm rõ các nội quy, quy định của đơn vị thực tập.
 * Tìm hiểu tổng quan về Cloud Computing và các nhóm dịch vụ cốt lõi của AWS (Compute, Storage, Networking, Database).
 * Hướng dẫn tạo và bảo mật tài khoản AWS Free Tier, cài đặt AWS CLI và tìm hiểu các thành phần cơ bản của Amazon EC2.
+* Tìm nhóm để làm project liên quan tới AWS.
 
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
@@ -52,3 +53,5 @@ pre: " <b> 1.1. </b> "
 * Thực hành thành công việc tạo mới, gắn (attach) và kiểm tra EBS Volume trên EC2 instance.
 
 * Nắm được vai trò cơ bản của các thành phần AMI, Security Group, Key Pair và Elastic IP trong quản lý tài nguyên EC2.
+
+* Tìm được nhóm gồm 4 thành viên và chuẩn bị sẳn sàng để làm project.

@@ -12,6 +12,7 @@ pre: " <b> 1.1. </b> "
 * Read and understand the rules and regulations of the internship unit.
 * Gain an overview of Cloud Computing and core AWS service categories (Compute, Storage, Networking, and Database).
 * Learn how to set up and secure an AWS Free Tier account, install AWS CLI, and understand fundamental Amazon EC2 components.
+* Find team to build project using AWS.
 
 ### Tasks to be carried out this week:
 | Day | Task | Start Date | Completion Date | Reference Material |
@@ -52,3 +53,5 @@ pre: " <b> 1.1. </b> "
 * Successfully created, attached, and verified an Amazon EBS volume on the EC2 instance.
 
 * Gained a basic understanding of the fundamental roles of AMI, Security Group, Key Pair, and Elastic IP in EC2 instance management.
+
+* Found a team with 4 participants and ready to build project using AWS.
