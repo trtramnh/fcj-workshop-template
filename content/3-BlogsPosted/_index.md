@@ -8,11 +8,14 @@ pre: " <b> 3. </b> "
 
 This section will list and introduce the blogs you have posted to [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj). For example:
 
-###  [Blog 1 - SESSION POLICIES IN AMAZON EKS POD IDENTITY](3.1-Blog1/)
-This blog introduces the newly added session policies feature in Amazon EKS Pod Identity, which allows you to narrow IAM permissions flexibly and precisely for each pod without needing to create multiple separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+### [Blog 1 - SCALABLE E-COMMERCE WEBSITE ARCHITECTURE ON AWS](3.1-Blog1/)
 
-###  [Blog 2 - ...](3.2-Blog2/)
-This blog introduces the newly added session policies feature in Amazon EKS Pod Identity, which allows you to narrow IAM permissions flexibly and precisely for each pod without needing to create multiple separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+This blog introduces a scalable e-commerce website architecture on AWS using Route 53, CloudFront, AWS WAF, Application Load Balancer, ECS Fargate, ElastiCache, and Aurora Serverless v2. The architecture improves performance, security, scalability, and system monitoring during periods of high traffic.
 
-###  [Blog 3 - ...](3.3-Blog3/)
-This blog introduces the newly added session policies feature in Amazon EKS Pod Identity, which allows you to narrow IAM permissions flexibly and precisely for each pod without needing to create multiple separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+### [Blog 2 - AWS Toolkit & Cloud-Native Mindset from Real-world Internship](3.2-Blog2/)
+
+This blog shares foundational knowledge and a Cloud-Native mindset gained from hands-on internship experience with Amazon S3, including Decoupling architecture, AWSSDK.S3 mastery, AWS IAM access management, Secret Key & Environment Variable security, safe data sharing with Pre-signed URLs, and CORS error handling.
+
+### [Blog 3 - How Did AWS Upgrade Amazon Cognito Without Users Noticing?](3.3-Blog3/)
+
+This blog analyzes how AWS upgraded Amazon Cognito to a next-generation infrastructure with a near-zero downtime objective, unlocking high-throughput performance, customer-managed keys (CMK), and multi-Region replication using shadow mode validation, dual-write architecture, anti-entropy validation, and incremental rollout.

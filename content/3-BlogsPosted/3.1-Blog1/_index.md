@@ -1,27 +1,81 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-07-27
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-# SESSION POLICIES IN AMAZON EKS POD IDENTITY
 
-Amazon EKS Pod Identity has recently added the session policies feature, allowing you to narrow IAM permissions flexibly and precisely for each pod without needing to create many separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+# SCALABLE E-COMMERCE WEBSITE ARCHITECTURE ON AWS
 
-Key points to know:
+Hello everyone,
 
-* A session policy is an inline IAM policy specified when creating or updating a Pod Identity association.
-* Effective permissions = intersection between the IAM role permissions and the session policy → the session policy can only narrow permissions, not expand them.
-* Helps avoid over-permissioning when reusing a single IAM role for multiple workloads with different needs.
-* Supports both same-account and cross-account (via IAM role chaining).
-* Significantly reduces the number of IAM roles that need to be managed, helping avoid hitting IAM quota limits in large clusters.
-* Easily configured through the AWS Management Console, AWS CLI, or AWS SDK when creating an association between a Kubernetes ServiceAccount and an IAM role.
+E-commerce websites often experience huge fluctuations in traffic, especially during promotional events or peak shopping seasons. If all requests are handled by a single server and query the database directly, the system can easily become slow, overloaded, or interrupted.
 
-This feature is especially useful when you have many applications running on the same IAM role but need different permission restrictions (for example: one pod only reads a specific S3 bucket, another pod only calls certain APIs).
+## General Architecture Flow
 
-...Image...
+```text
+User → Route 53 → CloudFront → AWS WAF → Application Load Balancer → ECS Fargate → ElastiCache/Aurora
+```
 
-...Link...
+![Scalable E-commerce Web Application Architecture on AWS](images/blog1.jpg)
 
-...Guide...
+## How the System Works
+
+1. **Amazon Route 53**
+
+   Routes user requests to the system.
+
+2. **Amazon CloudFront**
+
+   Delivers content from edge locations close to users, reducing latency and offloading the backend infrastructure.
+
+3. **AWS WAF**
+
+   Inspects and blocks anomalous requests before they reach the application.
+
+4. **Application Load Balancer**
+
+   Distributes valid requests to Backend containers running on Amazon ECS.
+
+5. **Amazon ECS with AWS Fargate**
+
+   Runs Backend containers without directly managing servers. The system can scale the number of containers up or down based on demand.
+
+6. **Amazon Cognito**
+
+   Supports user registration, sign-in, and authentication. Cognito is an authentication service and does not reside directly on the public request processing path.
+
+7. **Amazon ElastiCache**
+
+   Caches frequently accessed data to speed up response times and reduce direct queries to the database.
+
+8. **Amazon Aurora Serverless v2**
+
+   Stores core website data such as user profiles, products, inventory, and orders. Aurora Serverless v2 can automatically adjust resources according to workload demand.
+
+## System Monitoring and Alerting
+
+Amazon CloudWatch monitors the activity of ECS and Aurora. When high CPU utilization, frequent application errors, or abnormal database resource usage are detected, CloudWatch Alarms trigger Amazon SNS to send notifications via email or SMS.
+
+```text
+CloudWatch → CloudWatch Alarm → Amazon SNS → Email/SMS
+```
+
+## Architectural Benefits
+
+By combining these services, the website can:
+
+* Increase access speed for users.
+* Enhance security.
+* Reduce database load.
+* Scale flexibly when traffic spikes.
+* Automatically monitor and detect issues early.
+* Minimize the risk of downtime during promotions or peak shopping seasons.
+
+## Reference Material
+
+* [Guidance for Web Store on AWS](https://docs.aws.amazon.com/solutions/web-store-on-aws/)
+* [Guidance for Building a Containerized and Scalable Web Application on AWS](https://docs.aws.amazon.com/solutions/building-a-containerized-and-scalable-web-application-on-aws/)
+
+#AWS #AWSArchitecture #CloudComputing #Ecommerce #ECS #Fargate #CloudFront #Aurora #CloudWatch
