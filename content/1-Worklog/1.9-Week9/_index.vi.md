@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 9"
-date: 2026-07-13
+date: 2026-07-06
 weight: 9
 chapter: false
 pre: " <b> 1.9. </b> "
@@ -8,27 +8,31 @@ pre: " <b> 1.9. </b> "
 
 ### Mục tiêu tuần 9
 
-* Phân tích chi tiết yêu cầu bài toán thực tế dự án nhóm "IoT Weather Platform for Lab Research" dành cho phòng nghiên cứu ITea Lab.
-* Xác định mục tiêu và phạm vi hệ thống (Thu nhập dữ liệu từ 5 trạm thời tiết Raspberry Pi + ESP32, khả năng mở rộng 15 trạm, truyền gói tin MQTT).
-* Lựa chọn và thiết kế hệ thống dịch vụ AWS Serverless hợp nhất: AWS IoT Core, AWS Lambda, Amazon S3 Data Lake, AWS Glue Crawlers/ETL, API Gateway, AWS Amplify và Amazon Cognito.
-* Vẽ sơ đồ kiến trúc chi tiết cho 2 thành phần chính: Edge Architecture (Thiết bị biên) và Platform Architecture (Nền tảng Đám mây).
-* Tính toán chi tiết ngân sách vận hành bằng công cụ AWS Pricing Calculator và lập ma trận đánh giá rủi ro cho dự án Proposal.
+* Xây dựng trang Phân tích & Báo cáo chi tiêu (Spending Analysis & Reports UI) với các biểu đồ trực quan trong Angular.
+* Tích hợp các loại biểu đồ chi tiêu với thư viện **Ngx-charts / Chart.js**: Pie Chart (tỷ lệ danh mục), Bar Chart (so sánh thu chi), Line Chart (xu hướng chi tiêu).
+* Thiết kế bộ lọc thời gian linh hoạt (ngày, tuần, tháng, quý, năm, khoảng tùy chỉnh) và hiển thị chỉ số tăng/giảm.
+* Xây dựng giao diện trang Trợ lý AI Insight & Chatbot tài chính (AI Assistant Chat UI).
+* Thiết kế giao diện trò chuyện chat hiện đại (Sidebar lịch sử hội thoại, khung chat chính, ô nhập câu hỏi).
+* Thiết kế các khung tin nhắn (Message bubbles), hiệu ứng AI đang phản hồi (Typing indicator animation) và câu hỏi gợi ý mẫu.
+* Xử lý các trạng thái rỗng (Empty State), lỗi kết nối (Error State) và kiểm tra responsive trên mobile.
 
 ### Các công việc thực hiện trong tuần
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| Thứ 2 | - Họp nhóm thống nhất nội dung Bản đề xuất (Proposal) dự án "IoT Weather Platform for Lab Research".<br>- Phân tích thực trạng: các trạm thời tiết cũ thu thập thủ công, thiếu hệ thống lưu trữ tập trung và phân tích thời gian thực.<br>- Xác định người dùng mục tiêu (5 nghiên cứu viên ITea Lab) và bài toán cần giải quyết. | 13/07/2026 | 13/07/2026 | [Proposal Document](2-Proposal/)<br>[AWS IoT Core Overview](https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html) |
-| Thứ 3 | - Nghiên cứu thiết kế luồng dữ liệu tiếp nhận (Ingestion) và xử lý (ETL).<br>- Lựa chọn AWS IoT Core làm cổng nhận tin nhắn MQTT từ thiết bị biên Raspberry Pi.<br>- Phân tích mô hình S3 Data Lake: Bucket 1 chứa dữ liệu thô (Raw Data Lake), Bucket 2 chứa dữ liệu đã làm sạch và chuyển đổi (Analytical Data). | 14/07/2026 | 14/07/2026 | [AWS IoT Rules](https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html)<br>[Building Data Lakes on AWS](https://aws.amazon.com/solutions/implementations/data-lake-solution/) |
-| Thứ 4 | - Tìm hiểu giải pháp phân tích dữ liệu tự động bằng AWS Glue (Crawlers lập chỉ mục dữ liệu S3 & ETL Jobs chuyển đổi định dạng).<br>- Phân tích vai trò của AWS Amplify lưu trữ ứng dụng fullstack Next.js và Amazon Cognito quản lý xác thực người dùng an toàn.<br>- Lựa chọn công cụ AWS CDK/SDK để lập trình hạ tầng theo dạng mã nguồn. | 15/07/2026 | 15/07/2026 | [AWS Glue Developer Guide](https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html)<br>[Amazon Cognito User Pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html) |
-| Thứ 5 | - **Thực hành thiết kế sơ đồ kiến trúc:**<br>- Vẽ sơ đồ Edge Architecture mô tả luồng cảm biến ESP32 -> Raspberry Pi (Docker) -> MQTT qua Wi-Fi.<br>- Vẽ sơ đồ Platform Architecture thể hiện kết nối giữa IoT Core -> S3 -> Glue -> Lambda -> API Gateway -> Amplify Next.js.<br>- Hoàn thiện ma trận đánh giá rủi ro (mất mạng, hỏng cảm biến, vượt ngân sách) và phương án dự phòng. | 16/07/2026 | 16/07/2026 | [AWS Architecture Icons](https://aws.amazon.com/architecture/icons/)<br>[Proposal Section 3](2-Proposal/#3-kiến-trúc-giải-pháp) |
-| Thứ 6 | - **Tính toán ngân sách & Hoàn thiện Proposal:**<br>- Sử dụng AWS Pricing Calculator tính toán chi tiết từng dịch vụ (Lambda $0, S3 $0.15, Amplify $0.35, Glue $0.09, IoT Core $0.08).<br>- Xác nhận tổng chi phí hạ tầng cloud tối ưu: **0.70 USD/tháng** (~8.40 USD/năm).<br>- Đưa toàn bộ nội dung Proposal lên thư mục `content/2-Proposal/` của báo cáo Hugo và kiểm tra hiển thị. | 17/07/2026 | 17/07/2026 | [AWS Pricing Calculator](https://calculator.aws/)<br>[Proposal Budget Section](2-Proposal/#6-ước-tính-ngân-sách) |
+| 2 | - Thiết kế bố cục trang Phân tích & Báo cáo chi tiêu (Analysis Page).<br>- Tích hợp thư viện biểu đồ **Ngx-charts / Chart.js** vào Angular module xây dựng Pie Chart phân bổ tỷ lệ chi tiêu theo danh mục và Bar Chart so sánh tổng thu nhập vs tổng chi tiêu hàng tháng.<br>- Định cấu hình màu sắc tương phản cao và tooltip hiển thị số tiền khi hover. | 06/07/2026 | 06/07/2026 | [Ngx-charts Guide](https://swimlane.github.io/ngx-charts/)<br>[Data Visualization UX](https://uxdesign.cc/) |
+| 3 | - Xây dựng Line Chart theo dõi biến động chi tiêu theo chuỗi thời gian.<br>- Phát triển Thanh công cụ bộ lọc thời gian (Time Filter Bar): chọn xem theo Tuần, Tháng, Quý, Năm hoặc chọn khoảng ngày tùy chỉnh.<br>- Thiết kế các Card hiển thị chỉ số xu hướng chi tiêu (% tăng/giảm so với kỳ trước kèm mũi tên chỉ hướng sinh động). | 07/07/2026 | 07/07/2026 | [Financial Chart Patterns](https://dribbble.com/) |
+| 4 | - Thiết kế cấu trúc giao diện trang Trò chuyện với AI (AI Assistant Chat Component).<br>- Xây dựng Sidebar danh sách các cuộc hội thoại cũ với các chức năng: Tạo cuộc trò chuyện mới, Đổi tên, Xóa lịch sử chat.<br>- Thiết kế Khung nhắn tin chính ở trung tâm với ô nhập liệu câu hỏi tích hợp nút Gửi. | 08/07/2026 | 08/07/2026 | [Chat Interface UI Patterns](https://uicoach.io/) |
+| 5 | - Thiết kế các khung tin nhắn (Message Bubbles) phân biệt rõ ràng giữa Người dùng (User align right) và Trợ lý AI (AI align left kèm avatar AI).<br>- Xây dựng hiệu ứng visual AI đang suy nghĩ / trả lời (Typing Indicator Animation với ba chấm nhấp nháy).<br>- Thiết kế danh sách các Prompt gợi ý mẫu (Prompt Chips: "Phân tích chi tiêu tháng này", "Lập kế hoạch tiết kiệm") trên màn hình bắt đầu. | 09/07/2026 | 09/07/2026 | [AI Chatbot UX Best Practices](https://uxplanet.org/) |
+| 6 | - Thiết kế các trường hợp thông báo lỗi khi mất kết nối AI API hoặc hết hạn sử dụng dịch vụ.<br>- Kiểm tra khả năng hiển thị responsive của các biểu đồ báo cáo và giao diện Chat AI trên thiết bị di động.<br>- Tối ưu hóa hiệu năng render biểu đồ; Rà soát tổng thể tuần 9. | 10/07/2026 | 10/07/2026 | [Ngx-charts Responsive](https://swimlane.github.io/ngx-charts/) |
 
 ### Kết quả đạt được tuần 9
 
-* Thống nhất thành công đề xuất dự án "IoT Weather Platform for Lab Research", giải quyết triệt để bài toán thu thập và phân tích dữ liệu thời tiết thủ công.
-* Thiết kế thành công kiến trúc Đám mây Serverless hoàn chỉnh kết hợp giữa AWS IoT Core, S3 Data Lake, AWS Glue, Lambda, API Gateway, Amplify và Cognito.
-* Hoàn thành bộ sơ đồ kiến trúc đạt chuẩn bao gồm Edge Architecture (máy biên Raspberry Pi/ESP32) và Platform Architecture (nền tảng Serverless AWS).
-* Lập ma trận đánh giá rủi ro bài bản (mất kết nối mạng, hỏng phần cứng) và đề xuất giải pháp lưu trữ đệm (buffering) bằng Docker trên thiết bị biên.
-* Ước tính ngân sách chính xác thông qua AWS Pricing Calculator với chi phí cực kỳ tối ưu (0.70 USD/tháng), giúp dự án đạt hiệu quả kinh tế (ROI) cao.
-* Cập nhật đầy đủ bản Proposal Tiếng Việt và Tiếng Anh lên cấu trúc Hugo (`content/2-Proposal/_index.vi.md` và `_index.md`), sẵn sàng chuyển sang giai đoạn triển khai.
+* Hoàn thành trang Phân tích chi tiêu với hệ thống biểu đồ Ngx-charts Pie Chart, Bar Chart và Line Chart vô cùng sống động.
+* Phát triển bộ lọc thời gian báo cáo đa dạng đáp ứng nhu cầu xem dữ liệu chi tiết của người dùng.
+* Hiển thị trực quan chỉ số so sánh xu hướng chi tiêu tăng/giảm theo từng chu kỳ tài chính.
+* Hoàn thành thiết kế giao diện trang Trò chuyện với AI trong Angular theo chuẩn ứng dụng chat hiện đại.
+* Tích hợp bộ danh sách Prompt Chips gợi ý câu hỏi giúp người dùng dễ dàng bắt đầu hội thoại với AI.
+* Xây dựng hiệu ứng Typing animation phản hồi chân thực mang lại cảm giác tương tác tự nhiên.
+* Xử lý chu đáo các màn hình trạng thái rỗng và thông báo lỗi kết nối AI.
+* Đảm bảo các biểu đồ tài chính và giao diện chat AI tương thích chuẩn 100% trên màn hình điện thoại di động.

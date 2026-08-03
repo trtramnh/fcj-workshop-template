@@ -5,107 +5,145 @@ weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
 
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+# SNAPTICS – AI-Powered Personal Expense Management and Receipt Scanning Platform
+## Cloud-Native AWS Expense Management & AI Receipt Scanning Platform
+
+---
 
 ### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
 
-### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
+**Snaptics** is a personal and family financial management platform designed to help users record, track, and analyze expenses visually. Instead of manually inputting every single transaction, users can simply snap a photo or upload an image of a receipt. The system leverages Optical Character Recognition (OCR) and Artificial Intelligence (AI) to recognize key receipt information, including merchant name, transaction date, total amount, category, and individual line items.
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+Once processed, Snaptics automatically stores transactions, categorizes expenses, and updates the user's financial dashboard. The system provides interactive charts, reports, budget tracking, shared wallets, and AI-driven financial recommendations based on spending habits.
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+Snaptics is built as a SaaS web application deployed on AWS Cloud-Native infrastructure. The system architecture utilizes services such as **AWS Amplify**, **Amazon CloudFront**, **Amazon ECS Fargate**, **Application Load Balancer**, **Amazon SQS**, **Amazon S3**, **Amazon ECR**, **Amazon CloudWatch**, and **SQL Server** in a Primary/Standby configuration. AI capabilities are integrated with **Azure Document Intelligence**, **Gemini API**, and **OpenAI API**.
 
-### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
+The platform serves two main user roles:
+* **User**: Manages transactions, receipts, personal and family budgets, shared wallets, views analytics reports, and receives AI advice.
+* **Admin**: Manages users, notifications, support tickets, system configuration, background tasks, and overall platform monitoring.
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+---
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+### 2. Project Goals
 
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
+#### 2.1. General Objective
+Build a smart expense management platform that reduces manual entry time, empowers users to control budgets, and provides actionable financial insights using data analytics and artificial intelligence.
 
-### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+#### 2.2. Specific Objectives
+* **Automation**: Automatically extract receipt data via OCR; auto-create and categorize transactions based on receipt content.
+* **Flexible Management**: Support manual transaction entry; manage multiple personal and family wallets/budgets; enable multi-member collaboration on shared budgets.
+* **Analytics & Reporting**: Display spending reports by day, week, month, and category; analyze spending habits with AI recommendations; provide an interactive AI chat interface with message history.
+* **Alerts & Notifications**: Send proactive alerts when budget limits are approached or exceeded; build a centralized notification center.
+* **System Administration**: Provide an Admin Panel to monitor users, support tickets, notifications, and background processing workers.
+* **Cloud Operation & Deployment**: Deploy on AWS with scalability, security, and centralized monitoring; implement CI/CD automation for testing and deployment.
 
-### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
+---
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+### 3. Problem Statement
 
-### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
+* **Manual Expense Entry**: Most users record expenses via notebooks, Excel, or manual app entry, which is time-consuming, error-prone, and frequently abandoned. Snaptics solves this by enabling image uploads and automated data extraction.
+* **Fragmented Financial Data**: Expense information is scattered across paper receipts, banking apps, and e-wallets. Snaptics consolidates all transactions into a single unified platform.
+* **Budget Control Challenges**: Users often realize they overspent only after budgets are breached. Snaptics tracks budget utilization in real-time and triggers proactive alerts.
+* **Lack of Behavior Insights**: Raw transactions provide little value without synthesis. Snaptics applies AI to analyze historical data, detect spending trends, and offer tailored financial advice.
+* **Family Expense Collaboration**: Shared household budgets lack visibility when member spending is uncoordinated. Snaptics offers family wallets and shared budget pools.
+* **AI Service Scalability**: Synchronous OCR and AI processing can cause API timeouts under load. Snaptics uses Amazon SQS for asynchronous AI processing to keep Backend APIs fast and responsive.
+
+---
+
+### 4. Solution Architecture
+
+Snaptics utilizes an AWS Cloud-Native architecture combining web applications, containerized microservices, asynchronous queues, high-availability databases, and external AI services.
+
+![Snaptics AWS Cloud Architecture](/images/2-Proposal/snaptics_architecture.jpg)
+
+#### 4.1. Key Components
+
+* **Frontend**: Single Page Application (SPA) hosted on **AWS Amplify**. Connected directly to GitHub Repository for automated builds/deploys, integrated with **Amazon Route 53** for DNS management and **Amazon CloudFront** (CDN) for fast, secure HTTPS delivery.
+* **Backend API**: Packaged as Docker Images stored on **Amazon ECR**, deployed via **AWS Fargate (Amazon ECS Cluster)** behind an **Application Load Balancer (ALB)** with **Auto Scaling** capabilities.
+* **Database**: **SQL Server** deployed in a Primary/Standby model across Private Subnets in two Availability Zones (Multi-AZ), managing user accounts, transactions, receipts, wallets, budgets, notifications, AI chat history, tickets, and audit logs.
+* **Media Storage**: **Amazon S3** stores raw receipt images, transaction attachments, and processed images, decoupling binary assets from database storage.
+* **OCR & AI Pipeline**:
+  - Backend uploads images to S3 and enqueues messages to **Amazon SQS** (`snaptics-ai-queue`).
+  - **AI Worker** on ECS Fargate dequeues messages, invokes **Azure Document Intelligence** for OCR extraction, then sends structured data to **Gemini API** / **OpenAI API** for classification & insights.
+  - Failed messages are redirected to a **Dead Letter Queue (DLQ)** for debugging and fault handling.
+* **Notification System**: Managed centrally in DB combined with **Amazon SNS** for pushing alerts (budget warnings, OCR status, AI tips, system updates).
+* **Security**: Secrets stored in **AWS Systems Manager Parameter Store**, Private Subnets for Backend/DB, mandatory HTTPS, Access Token authentication, Admin/User RBAC, encrypted storage, and Audit Logging.
+* **CI/CD Pipeline**: Automated via **GitHub Actions** (Docker build, ECR push, ECS service update) and **AWS Amplify** (automatic web frontend builds).
+* **Monitoring & Cost Control**: **Amazon CloudWatch** (logs, container metrics, SQS depth) and **AWS Budgets** (cost alerts at 50%, 80%, 100% thresholds).
+
+#### 4.2. Receipt Processing Flow
+1. User uploads a receipt image via the Frontend.
+2. Frontend sends image to Backend API -> Backend saves image to **Amazon S3**.
+3. Backend pushes a processing message to **Amazon SQS**.
+4. **AI Worker** retrieves message from SQS, calls **Azure Document Intelligence** for text/table extraction.
+5. AI Worker sends extracted data to **Gemini API / OpenAI API** for category normalization and transaction parsing.
+6. AI Worker saves transaction records into **SQL Server** and generates user notifications.
+7. Frontend Dashboard and Financial Reports automatically update.
+
+---
+
+### 5. Project Timeline (12 Weeks)
+
+| Phase | Duration | Core Tasks | Expected Outcomes |
+| :--- | :--- | :--- | :--- |
+| **Phase 1** | Weeks 1–2 | Requirement analysis, Use Case/User Flow definition, DB Schema & AWS Architecture design | Requirements spec, DB Schema, System Architecture Diagram |
+| **Phase 2** | Weeks 3–5 | Auth/Author implementation, Transaction Management, Categories, Personal/Family Wallets, Budgets & Dashboard | Working core backend & frontend for transaction management |
+| **Phase 3** | Weeks 6–8 | Azure Document Intelligence OCR integration, S3 image upload, SQS/DLQ pipeline, Gemini/OpenAI API & AI Insights | Automated receipt OCR & AI spending recommendation pipeline |
+| **Phase 4** | Weeks 9–10 | Admin panel (Users, Tickets, Notifications, System Settings), Responsive Mobile UI optimization | Feature-complete Admin Portal & responsive UI |
+| **Phase 5** | Week 11 | AWS Infrastructure deployment (VPC, Multi-AZ SQL Server, S3, SQS, ECS Fargate, ALB, Amplify, Route 53) & CI/CD | Full cloud-native platform live on AWS |
+| **Phase 6** | Week 12 | End-to-end testing, OCR/AI evaluation, Security audit, SQS/DLQ resilience check, CloudWatch monitoring & docs | Demo-ready production release |
+
+---
 
 ### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
+#### 6.1. Development & Demo Environment
 
-Total: $0.7/month, $8.40/12 months
+| Service Component | Estimated Monthly Cost |
+| :--- | :--- |
+| AWS Amplify, CloudFront & Route 53 | $5 – $15 USD |
+| Amazon S3 | $1 – $5 USD |
+| ECS Fargate (Backend & AI Worker) | $20 – $50 USD |
+| Application Load Balancer (ALB) | $18 – $25 USD |
+| SQL Server (Dev Environment) | $30 – $80 USD |
+| Amazon SQS, SNS & ECR | $2 – $10 USD |
+| CloudWatch & AWS Budgets | $2 – $10 USD |
+| AI Services (Azure Document Intelligence, Gemini, OpenAI) | Usage-based pay-as-you-go |
+| **Total Estimated Cost** | **$80 – $200 USD / month** |
 
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+#### 6.2. Production Multi-AZ Environment
 
-### 7. Risk Assessment
-#### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
+| Service Component | Estimated Monthly Cost |
+| :--- | :--- |
+| ECS Fargate & Application Load Balancer | $60 – $150 USD |
+| SQL Server Primary/Standby (Multi-AZ) | $150 – $300 USD |
+| Dual NAT Gateways & Data Transfer | $70 – $120 USD |
+| S3, CloudFront, SQS, SNS, ECR & CloudWatch | $20 – $60 USD |
+| External AI APIs | Usage-based on receipt volume |
+| **Total Estimated Cost** | **$300 – $600 USD / month** *(excl. AI APIs)* |
 
-#### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
+> **Cost Optimization Strategy:** During development, single-AZ configs and limited container execution are used. Production environment seamlessly scales to Multi-AZ and Auto Scaling for High Availability.
 
-#### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+---
+
+### 7. Risk Assessment & Mitigation
+
+| # | Risk Description | Severity | Mitigation & Contingency Strategy |
+| :---: | :--- | :---: | :--- |
+| **1** | OCR Extraction Errors (blurry, wrinkled, skewed receipts) | **High** | Allow user review & edit prior to saving; show side-by-side original image; highlight low-confidence fields. |
+| **2** | External AI Service Dependency | **High** | Asynchronous SQS queueing; Exponential Backoff Retries; DLQ routing; decoupled AI Service layer for vendor switching; manual entry fallback. |
+| **3** | Financial Data Leakage | **Critical** | Mandatory HTTPS encryption; Secrets stored in SSM Parameter Store; granular Admin/User RBAC; backend ownership checks; Audit Logging. |
+| **4** | Unexpected AWS & AI Cost Overruns | **Med - High** | Configure AWS Budgets at 50%, 80%, 100% thresholds; compress images pre-upload; S3 Lifecycle Policies; AI request rate-limiting. |
+| **5** | High Concurrency Receipt Scanning | **Medium** | Amazon SQS buffering; AI Worker Auto Scaling driven by SQS Queue Depth; strict decoupling of API Backend and AI Workers. |
+| **6** | Deployment Regression Errors | **Medium** | Automated CI/CD pipelines; isolated dev/prod environments; ECS Rolling Updates; Automated Health Checks; ECR image rollback capability. |
+| **7** | Inaccurate AI Financial Advice | **Medium** | Only evaluate user-confirmed transaction data; present AI Insights as advisory suggestions; gather user feedback to optimize prompts. |
+
+---
 
 ### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
-#### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+
+* **Complete SaaS Platform**: End-to-end operation from receipt capture, data extraction, secure storage, to analytics and financial alerting.
+* **Superior User Experience**: Dramatically reduced manual entry overhead through smart OCR and interactive verification workflows.
+* **Validated Cloud-Native AWS Architecture**: Demonstrated reliability of asynchronous queue processing (SQS), database redundancy (Multi-AZ DB), centralized monitoring (CloudWatch), and automated CI/CD.
+* **Extensible Foundation**: Strong foundation for user feedback collection, continuous AI accuracy improvements, and future feature expansion.

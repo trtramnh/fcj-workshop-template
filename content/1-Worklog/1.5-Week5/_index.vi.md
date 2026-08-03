@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 5"
-date: 2026-06-15
+date: 2026-06-08
 weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
@@ -8,28 +8,30 @@ pre: " <b> 1.5. </b> "
 
 ### Mục tiêu tuần 5
 
-* Hiểu giải pháp giám sát và ghi log tập trung trên AWS thông qua dịch vụ Amazon CloudWatch (Metrics, Logs, Alarms, Dashboards).
-* Cấu hình CloudWatch Alarms và kết hợp với Amazon Simple Notification Service (SNS) để gửi cảnh báo tự động khi tài nguyên quá tải.
-* Tìm hiểu dịch vụ AWS CloudTrail phục vụ kiểm toán hệ thống, theo dõi lịch sử gọi API và quản trị an ninh thông tin.
-* Làm chủ các công cụ quản lý chi phí AWS Cost Management: AWS Cost Explorer, AWS Budgets và quy trình thiết lập cảnh báo vượt ngân sách.
-* Thực hành cài đặt CloudWatch Agent trên máy chủ EC2, đẩy Application Log lên CloudWatch Logs và thiết kế Dashboard giám sát hạ tầng.
+* Khởi tạo source code dự án Frontend Single Page Application (SPA) bằng **Angular CLI** với cấu trúc dự án chuẩn mực.
+* Cấu hình hệ thống **Angular Router Module** phân luồng điều hướng cho các khu vực Public, User và Admin.
+* Xây dựng bộ khung Layout chính: Main Layout (Sidebar thu gọn, Top Header với User Menu, Main Content Area).
+* Xây dựng hệ thống Design System trong CSS: định nghĩa bộ CSS Variables (Tokens) cho màu sắc, font chữ, khoảng cách và hiệu ứng.
+* Thiết kế các Angular UI Components cơ bản dùng chung có khả năng tái sử dụng cao (Button, Input, Select, Card, Modal, Loader).
+* Thiết kế giao diện Đăng nhập (Login), Đăng ký (Register) và Quên mật khẩu (Forgot Password).
+* Cài đặt cơ chế bảo mật điều hướng Client (**Angular CanActivate Guards**: AuthGuard / AdminGuard) và kiểm tra responsive cơ bản.
 
 ### Các công việc thực hiện trong tuần
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| Thứ 2 | - Tìm hiểu tổng quan về Amazon CloudWatch: Metrics, Log Groups, Log Streams, Alarms và Dashboards.<br>- Phân biệt Basic Monitoring (5 phút) và Detailed Monitoring (1 phút) trên EC2.<br>- Phân tích các chỉ số tài nguyên quan trọng: CPUUtilization, StatusCheckFailed, NetworkIn/NetworkOut. | 15/06/2026 | 15/06/2026 | [Amazon CloudWatch User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html)<br>[CloudWatch Concepts](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html) |
-| Thứ 3 | - Tìm hiểu dịch vụ Amazon SNS (Simple Notification Service) và mô hình Pub/Sub.<br>- Tạo SNS Topic `CloudWatch-Alerts-Topic` và đăng ký Subscription nhận thông báo qua Email.<br>- Thực hành tạo CloudWatch Alarm phát hiện khi CPU EC2 vượt quá 80% trong 5 phút và kích hoạt SNS gửi Email cảnh báo. | 16/06/2026 | 16/06/2026 | [Amazon SNS User Guide](https://docs.aws.amazon.com/sns/latest/dg/welcome.html)<br>[CloudWatch Alarms](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) |
-| Thứ 4 | - Nghiên cứu dịch vụ AWS CloudTrail phục vụ ghi nhận nhật ký hoạt động (Audit Logs).<br>- Phân tích cấu trúc của một CloudTrail Event (User Identity, Event Time, Event Source, Source IP, Request Parameters).<br>- Tạo một CloudTrail Trail mới đẩy toàn bộ lịch sử thao tác API vào Amazon S3 Bucket để lưu trữ an toàn. | 17/06/2026 | 17/06/2026 | [AWS CloudTrail User Guide](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html)<br>[CloudTrail Events](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events.html) |
-| Thứ 5 | - Nghiên cứu nhóm công cụ quản lý chi phí AWS Cost Management.<br>- Sử dụng AWS Cost Explorer để phân tích chi phí tiêu thụ theo từng dịch vụ AWS và từng Region.<br>- Cấu hình AWS Budgets để thiết lập ngưỡng ngân sách hàng tháng (Monthly Budget Limit) và cài đặt cảnh báo khi chi phí vượt 80% dự kiến. | 18/06/2026 | 18/06/2026 | [AWS Cost Explorer](https://docs.aws.amazon.com/cost-management/latest/userguide/ce-whatis.html)<br>[AWS Budgets Guide](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html) |
-| Thứ 6 | - **Thực hành & Giám sát hệ thống:**<br>- Thực hành cài đặt CloudWatch Unified Agent trên máy chủ EC2 Linux.<br>- Cấu hình Agent đẩy các chỉ số RAM/Disk utilization và System Logs (`/var/log/syslog`) lên CloudWatch Logs.<br>- Thiết kế CloudWatch Dashboard tập trung hiển thị biểu đồ CPU, RAM, Disk và RDS Connections.<br>- Lưu trữ tài liệu minh chứng quá trình cấu hình. | 19/06/2026 | 19/06/2026 | [CloudWatch Agent Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Install-CloudWatch-Agent.html)<br>[CloudWatch Dashboards](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Dashboards.html) |
+| 2 | - Khởi tạo source code dự án Frontend SPA bằng Angular CLI (`ng new snaptics-frontend`) kết hợp TypeScript và SCSS/CSS Utilities.<br>- Tổ chức cấu trúc cây thư mục chuẩn: `app/core`, `app/shared`, `app/features`, `app/layouts`, `assets`, `styles`.<br>- Cài đặt các thư viện hỗ trợ giao diện: Angular Material, Lucide Angular Icons, RxJS. | 08/06/2026 | 08/06/2026 | [Angular CLI Guide](https://angular.io/cli)<br>[Angular Architecture](https://angular.io/guide/architecture) |
+| 3 | - Xây dựng file CSS Design System Tokens (`styles.css` / `variables.css`).<br>- Khai báo bộ biến CSS Variables: Primary Dark Slate (`#0f172a`), Emerald Accent (`#10b981`), Neutral Colors, Spacing scale, Card Shadows, Border Radius.<br>- Xây dựng các Angular UI shared components cơ bản: `Button`, `Input`, `Select`, `Badge`. | 09/06/2026 | 09/06/2026 | [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) |
+| 4 | - Thiết kế giao diện trang Đăng nhập (Login) với form nhập email, mật khẩu, tùy chọn Remember Me và liên kết Quên mật khẩu.<br>- Thiết kế giao diện trang Đăng ký (Register) với các trường thông tin cá nhân và xác nhận mật khẩu.<br>- Thiết kế trang Quên mật khẩu (Forgot Password) gửi email khôi phục.<br>- Sử dụng Angular Reactive Forms để quản lý state form phía Client và validate sơ bộ. | 10/06/2026 | 10/06/2026 | [Angular Reactive Forms](https://angular.io/guide/reactive-forms) |
+| 5 | - Xây dựng bộ khung Main Layout: thiết kế Sidebar thanh điều hướng thu gọn linh hoạt với logo Snaptics và danh sách menu.<br>- Thiết kế Top Header chứa thông tin tài khoản, nút thông báo và ô tìm kiếm nhanh.<br>- Cấu hình Angular Router định tuyến trang web và cài đặt cơ chế CanActivate Guards (AuthGuard & AdminGuard) ở phía Client. | 11/06/2026 | 11/06/2026 | [Angular Route Guards](https://angular.io/guide/router-tutorial-with-guards) |
+| 6 | - Kiểm tra hiển thị giao diện Auth và khung Layout trên màn hình Desktop và Mobile.<br>- Tinh chỉnh các hiệu ứng chuyển đổi mượt mà (transitions, hover states).<br>- Rà soát tính khớp nối giữa thiết kế Design System và các component Angular đã dựng; Tổng kết tuần 5. | 12/06/2026 | 12/06/2026 | [Responsive Web Design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design) |
 
 ### Kết quả đạt được tuần 5
 
-* Nắm vững cấu trúc và nguyên lý hoạt động của hệ thống giám sát tập trung Amazon CloudWatch.
-* Tạo thành công Amazon SNS Topic và cấu hình Email Subscription để tiếp nhận cảnh báo hệ thống tức thời.
-* Cấu hình hoàn chỉnh CloudWatch Alarm theo dõi CPU Utilization và kích hoạt thông báo tự động qua Email khi tài nguyên chạm ngưỡng quá tải.
-* Hiểu vai trò của AWS CloudTrail trong việc tuân thủ bảo mật, kiểm toán hành vi người dùng và lưu trữ audit log an toàn trên S3.
-* Làm chủ giao diện AWS Cost Explorer, nắm rõ phân bổ chi phí hạ tầng và thiết lập thành công AWS Budget Alert ngăn chặn rủi ro vượt ngân sách.
-* Cài đặt thành công CloudWatch Agent trên EC2, thu thập thêm các chỉ số nâng cao (Memory & Disk usage) và đẩy log hệ thống về CloudWatch Logs.
-* Xây dựng giao diện CloudWatch Dashboard trực quan, giúp theo dõi toàn diện sức khỏe hệ thống (EC2, RDS, Network) trên một màn hình duy nhất.
+* Khởi tạo thành công cấu trúc dự án Frontend Angular SPA sạch sẽ, mô-đun hóa cao với Feature Modules/Standalone Components.
+* Định nghĩa bộ CSS Design System Tokens đồng nhất áp dụng cho toàn bộ giao diện Snaptics.
+* Xây dựng bộ Angular UI Shared Components (Button, Form Input, Select Dropdown, Badge, Card Container).
+* Hoàn thành thiết kế giao diện Login, Register, Forgot Password với thẩm mỹ hiện đại và Angular Reactive Forms validation.
+* Xây dựng thành công bộ khung Main Layout bao gồm Sidebar thu gọn và Top Header tiện lợi.
+* Định cấu hình Angular Router Module và thiết lập cơ chế CanActivate Guards (AuthGuard & AdminGuard) ở Client.
+* Đảm bảo các giao diện khởi tạo hiển thị responsive mượt mà trên cả máy tính và thiết bị di động.

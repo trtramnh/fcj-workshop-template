@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 12"
-date: 2026-08-03
+date: 2026-07-27
 weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
@@ -8,27 +8,31 @@ pre: " <b> 1.12. </b> "
 
 ### Mục tiêu tuần 12
 
-* Kiểm tra toàn bộ mã nguồn Hugo của báo cáo thực tập FCJ Workforce, đảm bảo chuẩn xác về mốc thời gian, front matter và định dạng bảng Markdown.
-* Chuẩn bị môi trường demo, kiểm thử lại toàn bộ các endpoint của dự án IoT Weather Platform và các VPC Endpoints trong bài thực hành Workshop.
-* Hoàn thiện phần Tự đánh giá bản thân (`content/6-Self-evaluation/`) và tổng hợp Ý kiến phản hồi của Mentor (`content/7-Feedback/`).
-* Thực thi lệnh biên dịch tĩnh Hugo (`hugo`), kiểm tra và khắc phục tất cả các cảnh báo hoặc lỗi liên kết còn tồn tại.
-* Đóng gói báo cáo thực tập, thuyết trình kết quả rèn luyện trước Mentor và các thành viên FCAJ, hoàn tất chương trình thực tập 12 tuần.
+* Đọc tài liệu Swagger API và trao đổi trực tiếp với thành viên Backend để xác định danh sách Endpoints, Request Body và Response Format.
+* Xây dựng và cập nhật lớp Frontend API Service bằng **Angular HttpClient** và **Angular HttpInterceptor** để tự động đính kèm Bearer Access Token (JWT) và xử lý tập trung lỗi token hết hạn.
+* Bỏ hoàn toàn dữ liệu giả lập (Mock Data Service) và thay thế bằng dữ liệu thật từ Backend API.
+* Tích hợp thành công các API: Đăng nhập/Đăng ký, Giao dịch, Ví, Ngân sách, Quét hóa đơn, Thông báo, AI Insight, Support Ticket và Admin APIs.
+* Xử lý mượt mà các trạng thái giao diện: Skeleton Loading Component, thông báo Toast báo lỗi/thành công, lỗi kết nối mạng (Network Error) và dữ liệu rỗng (Empty State).
+* Tinh chỉnh Angular Reactive Form Validation và khắc phục lỗi cuộn trang bị nảy/lệch thanh Navigation bar trên thiết bị di động.
+* Sửa lỗi responsive trên trang Settings và sửa lỗi menu tài khoản dropdown bị che mờ hoặc đơ đứng.
 
 ### Các công việc thực hiện trong tuần
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| Thứ 2 | - Tiến hành rà soát toàn bộ cấu trúc thư mục `content/` của báo cáo thực tập Hugo.<br>- Kiểm tra tính nhất quán về ngày tháng, weight, pre-string trong front matter từ Tuần 1 đến Tuần 12.<br>- Đảm bảo tất cả các bảng công việc Markdown đều hiển thị chuẩn xác và đồng nhất giữa 2 phiên bản Tiếng Việt và Tiếng Anh. | 03/08/2026 | 03/08/2026 | [Hugo Structure Guide](https://gohugo.io/content-management/organization/)<br>[Hugo Front Matter](https://gohugo.io/content-management/front-matter/) |
-| Thứ 3 | - Chuẩn bị kịch bản và môi trường demo sản phẩm phục vụ buổi báo cáo cuối kỳ.<br>- Kiểm thử hoạt động của các dịch vụ AWS trong dự án: IoT Core, Lambda, S3 Data Lake, API Gateway và Web Amplify Next.js.<br>- Re-test kết nối riêng tư S3 qua Gateway VPC Endpoint và Interface VPC Endpoint theo báo cáo Workshop 5. | 04/08/2026 | 04/08/2026 | [Proposal Document](2-Proposal/)<br>[Workshop Document](5-Workshop/) |
-| Thứ 4 | - Hoàn thiện nội dung phần Báo cáo Tự đánh giá bản thân tại thư mục `content/6-Self-evaluation/`.<br>- Tổng hợp các đánh giá chuyên môn, góp ý và điểm số từ phía Mentor cùng đơn vị thực tập tại thư mục `content/7-Feedback/`.<br>- Cập nhật đầy đủ bản Tiếng Việt và Tiếng Anh cho cả 2 mục đánh giá. | 05/08/2026 | 05/08/2026 | [Self Evaluation](6-Self-evaluation/)<br>[Mentor Feedback](7-Feedback/) |
-| Thứ 5 | - **Thực thi lệnh kiểm thử biên dịch website:**<br>- Chạy lệnh `hugo` trong terminal để build tĩnh trang web báo cáo thực tập.<br>- Xác nhận quá trình build diễn ra thành công, kiểm tra các tệp tin xuất ra trong thư mục `public/`.<br>- Kiểm tra lại tính chính xác của các đường dẫn tĩnh (static assets) và hình ảnh minh họa. | 06/08/2026 | 06/08/2026 | [Hugo CLI Documentation](https://gohugo.io/commands/hugo/)<br>[Hugo Build & Deployment](https://gohugo.io/hosting-and-deployment/) |
-| Thứ 6 | - **Báo cáo tổng kết & Hoàn tất thực tập:**<br>- Tham gia buổi báo cáo tổng kết kết quả thực tập FCJ Workforce trước Mentor và hội đồng đánh giá.<br>- Trình bày các kiến thức đã tích lũy, các sản phẩm thực hành và bài viết blog kỹ thuật trong 12 tuần.<br>- Tiếp thu các ý kiến đóng góp cuối cùng, hoàn thiện hồ sơ thực tập và chính thức khép lại chương trình. | 07/08/2026 | 07/08/2026 | [FCJ Workforce Regulations](https://hcm-rules.awsfcaj.com/1-regulations/) |
+| 2 | - Nghiên cứu chi tiết tài liệu Swagger UI do bộ phận Backend cung cấp.<br>- Họp thống nhất với các thành viên Backend về danh sách Endpoints, phương thức HTTP (GET, POST, PUT, DELETE), cấu trúc dữ liệu JSON và mã lỗi (Error Codes).<br>- Xây dựng Angular `AuthInterceptor` (`HTTP_INTERCEPTORS`) đính kèm JWT Bearer Token vào Request Header và xử lý tập trung lỗi 401 Unauthorized, 403 Forbidden và 500 Server Error qua RxJS `catchError`. | 27/07/2026 | 27/07/2026 | [Angular HttpClient Guide](https://angular.io/guide/http)<br>[Angular Interceptors](https://angular.io/guide/http-intercept-requests-and-responses) |
+| 3 | - Loại bỏ dữ liệu mock data service và tích hợp API thật qua Angular Services cho nhóm chức năng Xác thực (Auth), Dashboard tổng quan, Danh sách giao dịch và Quản lý danh mục chi tiêu.<br>- Xây dựng hiệu ứng Skeleton Loading hiển thị khung xương trang web mượt mà trong thời gian chờ API phản hồi dữ liệu qua RxJS Observables. | 28/07/2026 | 28/07/2026 | [RxJS Observables Guide](https://rxjs.dev/guide/observable) |
+| 4 | - Tích hợp API thật cho các tính năng Quét hóa đơn (gửi đường dẫn ảnh S3 và nhận kết quả trích xuất OCR), Quản lý Ví cá nhân/gia đình, Ngân sách chi tiêu, Chatbot AI Insight và Support Ticket.<br>- Tích hợp dịch vụ thông báo Toast (`Ngx-Toastr`) hiển thị thông báo tức thì khi người dùng thực hiện thao tác thành công hoặc thất bại. | 29/07/2026 | 29/07/2026 | [Ngx-Toastr Guide](https://ngx-toastr.vercel.app/) |
+| 5 | - Tích hợp các API cho khu vực Admin Panel (Quản lý người dùng, Quản lý Ticket, Quản lý Thông báo hệ thống và Hangfire Jobs).<br>- Sửa lỗi responsive vỡ khung trên màn hình Cài đặt tài khoản (Settings Page) khi co nhỏ kích thước cửa sổ trình duyệt.<br>- Khắc phục lỗi Menu Dropdown tài khoản bị che khuyết hoặc không đóng khi click ra ngoài. | 30/07/2026 | 30/07/2026 | [UI Bug Fixing Techniques](https://developer.mozilla.org/) |
+| 6 | - Khắc phục sự cố thanh Navigation mobile bị xô lệch/giật nảy nội dung khi vuốt cuộn trang (khóa thanh navigation bằng `position: sticky/fixed` và xử lý overflow CSS).<br>- Thực hiện kiểm thử lại Form Validation trên tất cả các trang, đảm bảo hiển thị lỗi minh bạch khi nhập sai định dạng dữ liệu.<br>- Rà soát tính nhất quán UI/UX và kiểm tra độ ổn định kết nối API toàn hệ thống. | 31/07/2026 | 31/07/2026 | [Mobile Navigation CSS Fixes](https://css-tricks.com/) |
 
-### Kết quả dự kiến tuần 12
+### Kết quả đạt được tuần 12
 
-* Hoàn thành rà soát toàn bộ source code trang web Hugo, đảm bảo tuân thủ 100% các quy định về mốc thời gian, cấu trúc front matter và chuẩn định dạng Markdown.
-* Đảm bảo sự tương đồng hoàn toàn giữa bản Tiếng Việt (`_index.vi.md`) và bản Tiếng Anh (`_index.md`) cho tất cả các tuần Worklog từ Tuần 1 đến Tuần 12.
-* Chuẩn bị sẵn sàng môi trường demo trực quan cho dự án "IoT Weather Platform for Lab Research" và bài tập thực hành Workshop VPC Endpoints.
-* Hoàn thiện nội dung Tự đánh giá bản thân (Self-evaluation) và ghi nhận đầy đủ nhận xét tích cực từ Mentor (Feedback).
-* Biên dịch trang web báo cáo thành công với lệnh `hugo`, không phát sinh lỗi cú pháp hay hỏng đường dẫn tĩnh.
-* Thuyết trình báo cáo tổng kết thực tập tự tin, chuyên nghiệp và bảo vệ thành công kết quả rèn luyện 12 tuần tại chương trình FCJ Workforce.
+* Nghiên cứu kỹ Swagger API và thống nhất 100% các endpoint tích hợp với đội ngũ Backend.
+* Phát triển thành công Angular API Service & HttpInterceptor quản lý kết nối HTTP, tự động xử lý Access Token JWT và lỗi mạng tập trung qua RxJS.
+* Loại bỏ hoàn toàn dữ liệu Mock Data và thay thế thành công bằng dữ liệu thật từ Backend API cho toàn bộ ứng dụng Snaptics.
+* Giao diện phản hồi trực quan với các trạng thái Skeleton Loading, Toast Notification minh bạch và xử lý dữ liệu rỗng chu đáo.
+* Khắc phục dứt điểm lỗi thanh Navigation mobile bị xô lệch/nảy khung hình khi kéo cuộn trang.
+* Sửa hoàn tất các lỗi hiển thị responsive trên trang Cài đặt và Menu Dropdown tài khoản.
+* Đảm bảo hệ thống kiểm tra lỗi Angular Reactive Form Validation hoạt động chính xác trên 100% màn hình nhập liệu.
+* Toàn bộ hệ thống Frontend Angular đạt độ hoàn thiện cao, vận hành thông suốt với Backend API và sẵn sàng cho giai đoạn đóng gói.

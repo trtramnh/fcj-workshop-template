@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 7"
-date: 2026-06-29
+date: 2026-06-22
 weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
@@ -8,28 +8,32 @@ pre: " <b> 1.7. </b> "
 
 ### Mục tiêu tuần 7
 
-* Phân tích rủi ro bảo mật và hạn chế băng thông khi máy chủ EC2 truy cập Amazon S3 qua Public Internet hoặc NAT Gateway.
-* Nắm vững nguyên lý hoạt động của Gateway VPC Endpoints (dành cho Amazon S3 và DynamoDB), cơ chế tích hợp Route Table và ưu điểm về chi phí (Miễn phí).
-* Thực hành khởi tạo Gateway VPC Endpoint cho Amazon S3 theo đúng tài liệu Workshop chương 5.3 ("Truy cập đến S3 từ VPC").
-* Cập nhật Route Table của Private Subnet để chuyển hướng toàn bộ lưu lượng tới Amazon S3 qua mạng nội bộ bảo mật của AWS.
-* Thực thi kiểm tra truy cập S3 từ máy chủ EC2 nằm trong Private Subnet bị cô lập hoàn toàn (không có Internet Gateway và NAT Gateway).
+* Thiết kế lại giao diện trang Quét hóa đơn (Receipt Scan UI) hiện đại, tiện lợi.
+* Xây dựng khu vực tải ảnh hóa đơn (Upload Drag & Drop Zone, chọn file, chụp ảnh từ Camera).
+* Bổ sung nút chuyển nhanh sang chế độ Nhập giao dịch thủ công nếu người dùng không muốn quét ảnh.
+* Thiết kế vùng Xem trước ảnh hóa đơn (Image Preview Zone) với tính năng phóng to, thu nhỏ và xoay ảnh.
+* Xây dựng hiệu ứng visual trạng thái Đang xử lý OCR (Scanning radar overlay, Progress animation, Processing indicator).
+* Thiết kế Form hiển thị kết quả trích xuất dữ liệu hóa đơn cho phép chỉnh sửa trước khi lưu.
+* Thực hành bài lab **Workshop 5.4**: Tạo Interface VPC Endpoint (AWS PrivateLink) cho Amazon S3 hỗ trợ mô phỏng truy cập an toàn từ trung tâm dữ liệu On-premises.
+* Xử lý các thông báo lỗi giao diện và cải thiện trải nghiệm trên điện thoại.
 
 ### Các công việc thực hiện trong tuần
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| Thứ 2 | - Nghiên cứu khái niệm VPC Endpoints và giải pháp kết nối riêng tư (Private Connectivity) tới các dịch vụ AWS.<br>- So sánh 2 loại điểm cuối: Gateway VPC Endpoint và Interface VPC Endpoint (AWS PrivateLink).<br>- Phân tích bài toán truy cập S3 từ VPC không cần cấp phát Public IP hay NAT Gateway. | 29/06/2026 | 29/06/2026 | [VPC Endpoints Guide](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints.html)<br>[Gateway Endpoints for S3](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html) |
-| Thứ 3 | - Chuẩn bị môi trường thực hành cho Workshop theo hướng dẫn chương 5.2 ("Chuẩn bị").<br>- Khởi tạo VPC thực nghiệm, Public Subnet, Private Subnet và máy chủ EC2 trong Private Subnet không có kết nối Internet.<br>- Kiểm tra thử lệnh `aws s3 ls` từ EC2 Private Subnet và xác nhận bị hỏng kết nối (Timeout) do chưa có đường truyền. | 30/06/2026 | 30/06/2026 | [Workshop Chuẩn bị](5.2-Prerequiste/)<br>[AWS S3 CLI Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/index.html) |
-| Thứ 4 | - Thực hành tạo Gateway VPC Endpoint cho dịch vụ `com.amazonaws.ap-southeast-1.s3` từ AWS Console.<br>- Lựa chọn VPC mục tiêu và gắn Gateway Endpoint vào Route Table đại diện cho Private Subnet.<br>- Quan sát sự thay đổi của Route Table: xuất hiện đường định tuyến mới trỏ Prefix List của S3 (`pl-xxxxxx`) tới Endpoint ID (`vpce-xxxxxx`). | 01/07/2026 | 01/07/2026 | [Workshop S3 từ VPC](5.3-S3-vpc/)<br>[Modifying Route Tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html) |
-| Thứ 5 | - **Thực hành kiểm thử kết nối:**<br>- Quay trở lại máy chủ EC2 trong Private Subnet và thực thi lại lệnh `aws s3 ls` và `aws s3 cp`.<br>- Xác nhận kết nối thành công tức thì với tốc độ cao mà lưu lượng hoàn toàn không đi ra ngoài Internet.<br>- Kiểm tra địa chỉ IP giải mã và xác nhận lưu lượng đi qua dải IP riêng của AWS. | 02/07/2026 | 02/07/2026 | [Workshop S3 từ VPC](5.3-S3-vpc/)<br>[Testing S3 Endpoint Connectivity](https://docs.aws.amazon.com/vpc/latest/privatelink/test-endpoints.html) |
-| Thứ 6 | - Phân tích bảng so sánh hiệu năng và chi phí giữa NAT Gateway và Gateway VPC Endpoint khi làm việc với S3.<br>- Tổng hợp kết quả thực hành, trích xuất log lệnh CLI và chụp ảnh giao diện minh chứng cho báo cáo Workshop 5.3.<br>- Biên tập lại tài liệu thực hành và chuẩn bị kiến thức cho phần Interface Endpoint. | 03/07/2026 | 03/07/2026 | [Workshop Overview](5.1-Workshop-overview/)<br>[AWS PrivateLink Pricing](https://aws.amazon.com/privatelink/pricing/) |
+| 2 | - Thiết kế cấu trúc bố cục trang Quét hóa đơn (Scan Receipt Page).<br>- Xây dựng Upload Drag & Drop Zone hỗ trợ kéo thả ảnh hóa đơn, chọn file từ máy tính hoặc mở Camera chụp trực tiếp trên thiết bị di động.<br>- Bổ sung nút bấm "Nhập thủ công" chuyển hướng linh hoạt. | 22/06/2026 | 22/06/2026 | [File Upload UX](https://uxdesign.cc/) |
+| 3 | - Phát triển component Vùng xem trước ảnh hóa đơn (Image Preview Zone).<br>- Tích hợp các bộ công cụ điều khiển ảnh: Zoom In (+), Zoom Out (-), Rotate Left/Right và Reset View.<br>- Giúp người dùng dễ dàng soi chi tiết hình ảnh hóa đơn trước khi tiến hành quét. | 23/06/2026 | 23/06/2026 | [Image Viewer Components](https://react-image-crop.com/) |
+| 4 | - Thiết kế giao diện trạng thái Đang xử lý OCR (OCR Processing Overlay).<br>- Tạo hiệu ứng Scanning Radar Animation phủ trên ảnh hóa đơn kèm Progress Bar và thông báo tiến trình sinh động.<br>- Chuẩn bị state mock giả lập phản hồi kết quả OCR từ hệ thống. | 24/06/2026 | 24/06/2026 | [CSS Scanning Animations](https://codepen.io/) |
+| 5 | - **Thực hành Workshop 5 (Phần 4 - Truy cập S3 từ On-premises):**<br>&emsp; + Nghiên cứu mô hình kết nối S3 riêng tư qua AWS PrivateLink từ môi trường trung tâm dữ liệu On-premises ([Workshop S3 On-prem](5-Workshop/5.4-S3-onprem/)).<br>&emsp; + Tạo Interface VPC Endpoint cho Amazon S3, gán Subnets và Security Group.<br>&emsp; + Cấu hình Private DNS resolution và kiểm thử truy vấn hình ảnh hóa đơn lưu trên S3 qua IP nội bộ của Interface Endpoint. | 25/06/2026 | 25/06/2026 | [Workshop S3 On-prem](5-Workshop/5.4-S3-onprem/)<br>[AWS PrivateLink Interface Endpoints](https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html) |
+| 6 | - Thiết kế Form Kết quả trích xuất hóa đơn (Extracted OCR Results Form) gồm Tên cửa hàng, Ngày, Tổng tiền, Danh mục gợi ý và Bảng danh sách sản phẩm.<br>- Thiết kế các thông báo lỗi và trạng thái đặc biệt (File quá 10MB, lỗi định dạng).<br>- Tối ưu hóa bố cục trang Scan trên điện thoại di động; Rà soát tuần 7. | 26/06/2026 | 26/06/2026 | [OCR Form Verification UX](https://material.io/) |
 
 ### Kết quả đạt được tuần 7
 
-* Phân tích rõ ràng sự khác biệt cốt lõi giữa Gateway VPC Endpoint và Interface VPC Endpoint về mặt kiến trúc, chi phí và cách thức định tuyến.
-* Hiểu sâu nguyên lý chuyển hướng gói tin của Gateway VPC Endpoint dựa trên Prefix List trong Route Table mà không làm thay đổi địa chỉ IP của EC2.
-* Chuẩn bị thành công môi trường VPC kiểm thử với máy chủ EC2 Private bị cô lập hoàn toàn khỏi Public Internet.
-* Khởi tạo thành công Gateway VPC Endpoint cho dịch vụ Amazon S3 và tự động liên kết đường định tuyến vào Route Table của Private Subnet.
-* Kiểm chứng thực tế: EC2 trong Private Subnet có thể truy vấn `aws s3 ls` và tải file lên S3 mượt mà với độ trễ thấp dù không có NAT Gateway hay Internet Gateway.
-* Chứng minh tính hiệu quả tối ưu chi phí (tiết kiệm chi phí Data Processed của NAT Gateway) khi ứng dụng truyền tải lượng dữ liệu lớn với Amazon S3.
-* Hoàn thành đầy đủ bộ tài liệu minh chứng và chụp ảnh các bước cấu hình thuộc chương 5.3 của Báo cáo Thực tập.
+* Hoàn thành thiết kế màn hình Quét hóa đơn ấn tượng với trải nghiệm kéo thả và chụp ảnh từ camera trực quan.
+* Tích hợp tùy chọn chuyển đổi nhanh sang Nhập thủ công thuận tiện.
+* Xây dựng Vùng xem trước ảnh hóa đơn đầy đủ tính năng Zoom và Rotate linh hoạt.
+* Tạo hiệu ứng visual Đang xử lý OCR vô cùng cuốn hút, mang lại trải nghiệm chuyên nghiệp cho người dùng.
+* Thực hành thành công bài lab Workshop 5.4: Tạo và kiểm thử thành công Interface VPC Endpoint cho Amazon S3, hiểu rõ giải pháp truy cập lưu trữ S3 riêng tư cho môi trường Hybrid Cloud.
+* Hoàn thành Form hiển thị kết quả trích xuất hóa đơn trơn tru, cho phép người dùng tùy chỉnh dữ liệu trước khi lưu.
+* Xử lý đầy đủ các thông báo lỗi giao diện và trạng thái giới hạn file ảnh.
+* Đảm bảo các thao tác chụp ảnh và kiểm tra kết quả hóa đơn mượt mà trên điện thoại di động.

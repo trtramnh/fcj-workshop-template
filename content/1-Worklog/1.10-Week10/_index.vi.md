@@ -1,6 +1,6 @@
 ---
 title: "Worklog Tuần 10"
-date: 2026-07-20
+date: 2026-07-13
 weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
@@ -8,27 +8,29 @@ pre: " <b> 1.10. </b> "
 
 ### Mục tiêu tuần 10
 
-* Cấu hình AWS IoT Core Topic Rules để tự động lưu trữ dữ liệu thời tiết thu thập từ thiết bị biên vào Amazon S3 Raw Data Lake Bucket.
-* Lập trình các hàm AWS Lambda (Python/Node.js) xử lý logic và cấu hình Amazon API Gateway cung cấp RESTful API cho ứng dụng web.
-* Cấu hình AWS Glue Crawler tự động quét cơ sở dữ liệu trên S3 và tạo tác vụ Glue ETL Job chuyển đổi dữ liệu thô sang dạng bảng để phân tích.
-* Triển khai ứng dụng Web Dashboard Next.js trên AWS Amplify, tích hợp Amazon Cognito User Pool để xác thực 5 tài khoản nghiên cứu viên.
-* Nghiên cứu bài mẫu kiến trúc Đám mây nâng cao (Amazon ECS Fargate, ALB, Aurora Serverless v2, ElastiCache) chuẩn bị cho việc viết Blog kỹ thuật.
+* Xây dựng giao diện Danh sách Thông báo (Notification Center Page & Header Dropdown Menu).
+* Thiết kế biểu tượng Chuông thông báo (Notification Bell) kèm Badge đếm số thông báo chưa đọc.
+* Phân loại và hiển thị giao diện cho từng nhóm thông báo: Quét hóa đơn, Cảnh báo ngân sách, Gợi ý AI, Lời mời ví gia đình.
+* Xây dựng giao diện trang Yêu cầu Hỗ trợ (Support Ticket Page) với Form tạo Ticket và luồng thảo luận.
+* Thực hành bài lab **Workshop 5.5**: Cấu hình VPC Endpoint IAM Policies để siết chặt an ninh và giới hạn quyền truy cập tài nguyên Amazon S3.
+* Xây dựng trang Cài đặt Tài khoản Người dùng (User Account Settings UI) và tối ưu hóa trải nghiệm người dùng toàn ứng dụng.
 
 ### Các công việc thực hiện trong tuần
 
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| Thứ 2 | - Cấu hình AWS IoT Core Rule lắng nghe topic `lab/weather/telemetry`.<br>- Thiết lập Action ghi dữ liệu JSON trực tiếp vào Amazon S3 Raw Bucket theo đường dẫn phân vùng `year=YYYY/month=MM/day=DD/`.<br>- Kiểm thử gửi bản tin MQTT mô phỏng từ client và xác nhận file JSON được lưu tự động trên S3. | 20/07/2026 | 20/07/2026 | [AWS IoT S3 Action](https://docs.aws.amazon.com/iot/latest/developerguide/s3-rule-action.html)<br>[AWS IoT Rule Tutorial](https://docs.aws.amazon.com/iot/latest/developerguide/iot-write-to-s3.html) |
-| Thứ 3 | - Lập trình AWS Lambda Function xử lý truy vấn dữ liệu thời tiết gần nhất.<br>- Tạo Amazon API Gateway REST API kết nối tới hàm Lambda qua phương thức GET `/api/weather/latest`.<br>- Cấu hình CORS và kiểm tra API endpoint với Postman. | 21/07/2026 | 21/07/2026 | [AWS Lambda Developer Guide](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)<br>[API Gateway Integration](https://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started-with-lambda-integrations.html) |
-| Thứ 4 | - Khởi tạo AWS Glue Crawler quét định kỳ S3 Raw Bucket để tự động trích xuất schema dữ liệu vào Glue Data Catalog.<br>- Viết Glue ETL Job (PySpark) để lọc dữ liệu nhiễu và lưu sang S3 Processed Bucket dưới dạng nén Parquet giúp truy vấn nhanh hơn.<br>- Thực thi Glue Job và kiểm tra dữ liệu kết quả trên S3. | 22/07/2026 | 22/07/2026 | [AWS Glue Crawlers](https://docs.aws.amazon.com/glue/latest/dg/add-crawler.html)<br>[AWS Glue ETL Jobs](https://docs.aws.amazon.com/glue/latest/dg/author-job.html) |
-| Thứ 5 | - Khởi tạo Amazon Cognito User Pool `WeatherLabUserPool` và cấu hình App Client.<br>- Đưa giao diện Web Next.js lên AWS Amplify qua Git repository.<br>- Tích hợp thư viện Amplify Auth (Cognito) vào giao diện Dashboard để bảo mật màn hình giám sát thời tiết. | 23/07/2026 | 23/07/2026 | [AWS Amplify Hosting](https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html)<br>[Amplify Authentication](https://docs.amplify.aws/lib/auth/getting-started/q/platform/js/) |
-| Thứ 6 | - **Nghiên cứu kiến trúc ứng dụng Web có khả năng mở rộng (Scalable Architecture):**<br>- Phân tích bài toán chịu tải cao của các hệ thống Thương mại Điện tử.<br>- Nghiên cứu sự phối hợp giữa Route 53 -> CloudFront -> AWS WAF -> ALB -> Amazon ECS Fargate -> ElastiCache -> Aurora Serverless v2.<br>- Thu thập tài liệu AWS Solutions Guidance làm cơ sở viết bài Blog kỹ thuật 1. | 24/07/2026 | 24/07/2026 | [AWS Web Store Guidance](https://docs.aws.amazon.com/solutions/web-store-on-aws/)<br>[Amazon ECS Fargate](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html) |
+| 2 | - Thiết kế giao diện Notification Dropdown Menu trên Top Header và trang Danh sách thông báo tập trung (Notification Center Page).<br>- Xây dựng biểu tượng Chuông thông báo kèm Icon Badge màu đỏ đếm số lượng thông báo chưa đọc.<br>- Bổ sung các tính năng "Đánh dấu tất cả đã đọc" và "Lọc theo loại thông báo". | 13/07/2026 | 13/07/2026 | [Notification System UX](https://uxdesign.cc/) |
+| 3 | - Phân loại thiết kế UI cho các mẫu thông báo ứng dụng:<br>&emsp; + Thông báo kết quả Quét hóa đơn hoàn tất.<br>&emsp; + Cảnh báo ngân sách chạm hoặc vượt hạn mức.<br>&emsp; + Gợi ý tài chính thông minh từ AI Insight.<br>&emsp; + Lời mời tham gia Ví gia đình từ thành viên khác.<br>- Bổ sung nút thao tác nhanh (Quick Action Button) trên card thông báo. | 14/07/2026 | 14/07/2026 | [In-App Notification Cards](https://material.io/) |
+| 4 | - Thiết kế bố cục trang Yêu cầu Hỗ trợ (Support Ticket Page).<br>- Xây dựng Bảng danh sách Ticket đã gửi kèm phân loại trạng thái.<br>- Thiết kế Form Tạo Ticket hỗ trợ mới với các ô nhập liệu và validation phía Client. | 15/07/2026 | 15/07/2026 | [Helpdesk UI Patterns](https://dribbble.com/) |
+| 5 | - **Thực hành Workshop 5 (Phần 5 - VPC Endpoint Policies):**<br>&emsp; + Tìm hiểu mô hình bảo mật phân lớp bằng VPC Endpoint IAM Policy ([Workshop VPC Endpoint Policies](5-Workshop/5.5-Policy/)).<br>&emsp; + Soạn thảo bản chính sách JSON Endpoint Policy gắn vào VPC Endpoint để chỉ cho phép truy cập duy nhất S3 Bucket của dự án Snaptics.<br>&emsp; + Chạy lệnh kiểm thử từ chối truy cập (Access Denied) khi truy vấn tới các S3 Buckets ngoài danh sách cho phép. | 16/07/2026 | 16/07/2026 | [Workshop VPC Endpoint Policies](5-Workshop/5.5-Policy/)<br>[VPC Endpoint Policy Reference](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html) |
+| 6 | - Thiết kế màn hình Xem chi tiết Ticket (Ticket Detail & Discussion Thread UI).<br>- Xây dựng trang Cài đặt Tài khoản Người dùng (User Account Settings UI) hỗ trợ hồ sơ cá nhân, đổi mật khẩu và quản lý phiên đăng nhập.<br>- Kiểm tra lỗi form validation và tối ưu responsive tuần 10. | 17/07/2026 | 17/07/2026 | [Account Settings Layout](https://refactoringui.com/) |
 
 ### Kết quả đạt được tuần 10
 
-* Triển khai thành công AWS IoT Core Rule tự động thu thập bản tin MQTT và lưu trữ dạng phân vùng thời gian vào S3 Raw Bucket.
-* Xây dựng thành công AWS Lambda Function và API Gateway endpoint phục vụ truy vấn dữ liệu thời tiết thời gian thực cho Client.
-* Vận hành thành công AWS Glue Crawler và Glue ETL Job tự động trích xuất dữ liệu, làm sạch và chuyển đổi sang dạng Parquet trên S3.
-* Triển khai giao diện Web Next.js lên dịch vụ AWS Amplify và hoàn thành tích hợp Amazon Cognito User Pool để xác thực người dùng.
-* Nghiên cứu chuyên sâu mô hình kiến trúc Đám mây có khả năng mở rộng cao (Amazon ECS Fargate, ALB, Aurora Serverless v2, ElastiCache).
-* Chuẩn bị đầy đủ sơ đồ kiến trúc và nội dung lý thuyết cho bài viết Blog kỹ thuật số 1 về Website Thương mại Điện tử.
+* Hoàn thành trung tâm Thông báo (Notification Center) tích hợp mượt mà trên Header và trang riêng.
+* Phân loại và thiết kế trực quan cho 4+ nhóm thông báo chính trong ứng dụng Snaptics.
+* Hoàn thành giao diện trang Quản lý Yêu cầu Hỗ trợ (Support Ticket) chuyên nghiệp.
+* Thực hành thành công bài lab Workshop 5.5: Soạn thảo và gắn thành công VPC Endpoint Policy, ngăn chặn truy cập trái phép tới các S3 Buckets không thuộc dự án.
+* Thiết kế thành công luồng trao đổi thảo luận chi tiết trong Ticket giữa User và Đội ngũ Hỗ trợ.
+* Hoàn thành trang Cài đặt Tài khoản Người dùng gọn gàng, bảo mật và loại bỏ các thành phần thừa.
+* Đảm bảo tính nhất quán thẩm mỹ và khả năng phản hồi mượt mà trên mọi kích thước màn hình.
