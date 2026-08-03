@@ -1,52 +1,35 @@
 ---
 title: "Week 6 Worklog"
-date: 2024-01-01
+date: 2026-06-22
 weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
-### Week 6 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+### Week 6 Objectives
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+* Understand Infrastructure as Code (IaC) principles and the benefits of AWS CloudFormation for automated provisioning.
+* Master CloudFormation template syntax (YAML/JSON) including Parameters, Resources, Outputs, and Mappings sections.
+* Master resource automation scripting using AWS CLI combined with JMESPath `--query` filters and JSON formatting.
+* Explore CloudFormation Stack Lifecycle management, Stack Updates, Rollback behaviors, and Drift Detection.
+* Practice deploying a complete 2-tier infrastructure (VPC, Subnets, Security Groups, EC2, RDS) using a single CloudFormation template via AWS CLI.
 
+### Tasks Completed During the Week
 
-### Week 6 Achievements:
+| Day | Tasks | Start Date | Completion Date | Learning Resources |
+| --- | --- | --- | --- | --- |
+| Monday | - Explore Infrastructure as Code (IaC) fundamentals and AWS CloudFormation overview.<br>- Compare manual management via Console vs automated provisioning with CloudFormation templates.<br>- Study core YAML template sections: AWSTemplateFormatVersion, Description, Parameters, Resources, and Outputs. | 22/06/2026 | 22/06/2026 | [AWS CloudFormation User Guide](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)<br>[Template Anatomy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html) |
+| Tuesday | - Practice writing a CloudFormation YAML template provisioning basic VPC networking infrastructure.<br>- Declare resources: AWS::EC2::VPC, AWS::EC2::Subnet, AWS::EC2::InternetGateway, AWS::EC2::RouteTable, and SubnetRouteTableAssociation.<br>- Utilize Intrinsic Functions (`!Ref`, `!Sub`, `!GetAtt`) to resolve resource dependencies dynamically. | 23/06/2026 | 23/06/2026 | [CloudFormation Resource Reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)<br>[Intrinsic Functions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html) |
+| Wednesday | - Enhance automation scripting skills using AWS CLI in Linux Bash shell environment.<br>- Utilize `--query` options with JMESPath syntax to extract dynamic resource properties (VPC ID, Instance IP).<br>- Write shell scripts to inspect AWS resource states and output formatted JSON reports. | 24/06/2026 | 24/06/2026 | [AWS CLI Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/index.html)<br>[Filtering AWS CLI Output](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html) |
+| Thursday | - Expand CloudFormation template to include Security Groups, EC2 Instance, and RDS DBInstance resources.<br>- Study CloudFormation Stack Events and automatic Rollback mechanisms on resource creation failures.<br>- Learn how to use Drift Detection to identify manual configuration drift against the declared template code. | 25/06/2026 | 25/06/2026 | [Stack Management](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html)<br>[Detecting Drift](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-drift.html) |
+| Friday | - **Practice & Automation:**<br>- Execute `aws cloudformation create-stack` to launch the complete 2-tier stack via CLI.<br>- Track stack creation progress using `aws cloudformation describe-stack-events`.<br>- Verify successful stack creation and retrieve application endpoint URL from Outputs.<br>- Save YAML code to repository and document execution evidence. | 26/06/2026 | 26/06/2026 | [AWS CLI CloudFormation](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/index.html)<br>[Deploying Stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-create-stacks.html) |
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### Week 6 Achievements
 
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Gained a solid grasp of Infrastructure as Code (IaC) principles, appreciating reusability, consistency, and error reduction.
+* Mastered YAML syntax for CloudFormation templates and effective use of Intrinsic Functions (`!Ref`, `!Sub`, `!GetAtt`).
+* Authored a production-ready CloudFormation template defining VPC, Subnets, Route Tables, Internet Gateway, Security Groups, EC2, and RDS.
+* Mastered CLI data extraction using AWS CLI with JMESPath queries (`--query`) for operational automation.
+* Deepened understanding of Stack Lifecycle management, automated rollbacks, and configuration Drift Detection.
+* Successfully launched a full 2-tier cloud environment via a single `aws cloudformation create-stack` command.
+* Committed `template.yaml` to the workspace repository and compiled screenshot logs verifying stack execution.

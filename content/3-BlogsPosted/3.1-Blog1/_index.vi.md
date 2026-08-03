@@ -18,7 +18,7 @@ Website thương mại điện tử thường có lượng truy cập thay đổ
 User → Route 53 → CloudFront → AWS WAF → Application Load Balancer → ECS Fargate → ElastiCache/Aurora
 ```
 
-![Kiến trúc Website Thương Mại Điện Tử trên AWS](images/blog1.jpg)
+![Kiến trúc Website Thương Mại Điện Tử trên AWS](/images/3.1-Blog1/blog1.jpg)
 
 ## Cách hệ thống hoạt động
 

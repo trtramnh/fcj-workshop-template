@@ -1,54 +1,36 @@
 ---
 title: "Worklog Tuần 4"
-date: 2024-01-01
+date: 2026-06-08
 weight: 4
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
-### Mục tiêu tuần 4:
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+### Mục tiêu tuần 4
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+* Hiểu kiến trúc cơ sở dữ liệu quan hệ quản trị trên Đám mây với dịch vụ Amazon RDS (Relational Database Service).
+* Phân biệt các Database Engine hỗ trợ (PostgreSQL, MySQL, MariaDB, Aurora) và tiêu chí lựa chọn cho từng dự án.
+* Nắm vững cơ chế Multi-AZ Deployment để đảm bảo tính sẵn sàng cao (High Availability) và Read Replicas giúp mở rộng khả năng đọc dữ liệu.
+* Thực hành tạo DB Subnet Group, cấu hình Security Group và triển khai Amazon RDS Instance nằm hoàn toàn trong Private Subnet.
+* Kết nối ứng dụng Backend đến Amazon RDS, thực thi script khởi tạo cơ sở dữ liệu và thử nghiệm cơ chế Sao lưu tự động (Automated Backups).
 
+### Các công việc thực hiện trong tuần
 
-### Kết quả đạt được tuần 4:
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | --- | --- | --- | --- |
+| Thứ 2 | - Tìm hiểu tổng quan về dịch vụ cơ sở dữ liệu quan hệ Amazon RDS.<br>- So sánh việc tự quản trị DB trên EC2 và việc sử dụng Amazon RDS tĩnh tự động hóa.<br>- Tìm hiểu các khái niệm: DB Instance Class, Storage Types (gp2, gp3, io1), DB Parameter Group và Option Group. | 08/06/2026 | 08/06/2026 | [Amazon RDS User Guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)<br>[RDS Storage Types](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html) |
+| Thứ 3 | - Nghiên cứu tính năng Multi-AZ Deployments (Synchronous Replication) giúp khắc phục sự cố tự động (Failover).<br>- Tìm hiểu Read Replicas (Asynchronous Replication) hỗ trợ giảm tải truy vấn đọc cho Master Database.<br>- Phân tích mô hình kiến trúc hạ tầng DB chuẩn doanh nghiệp trên AWS. | 09/06/2026 | 09/06/2026 | [RDS High Availability (Multi-AZ)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html)<br>[RDS Read Replicas](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html) |
+| Thứ 4 | - Thực hành tạo DB Subnet Group gồm các Private Subnet thuộc các Availability Zone khác nhau.<br>- Cấu hình Security Group cho RDS chỉ cho phép lưu lượng truy cập từ Security Group của EC2 Web Server (Inbound Port 5432/3306).<br>- Khởi tạo Amazon RDS PostgreSQL instance trong Private Subnet, vô hiệu hóa Public Accessibility. | 10/06/2026 | 10/06/2026 | [RDS Subnet Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html)<br>[RDS Security Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html) |
+| Thứ 5 | - Thực hành kết nối đến RDS PostgreSQL từ EC2 Server trong Public Subnet thông qua `psql` / pgAdmin.<br>- Triển khai các câu lệnh SQL Migration khởi tạo bảng, index và dữ liệu mẫu cho ứng dụng.<br>- Cấu hình biến môi trường kết nối Database Connection String an toàn trên máy chủ backend. | 11/06/2026 | 11/06/2026 | [Connect to RDS Instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html)<br>[PostgreSQL on RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html) |
+| Thứ 6 | - **Thực hành & Kiểm thử:**<br>- Tìm hiểu cơ chế Automated Backups (RPO/RTO) và DB Snapshots thủ công.<br>- Thử nghiệm tạo Snapshot thủ công và khôi phục (Restore) thử một DB Instance mới từ Snapshot.<br>- Kiểm tra lại toàn bộ Security Group rules đảm bảo không có cổng DB nào mở công khai ra Internet.<br>- Chụp ảnh minh chứng kết quả triển khai RDS và lưu trữ tài liệu. | 12/06/2026 | 12/06/2026 | [RDS Backups & Snapshots](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html)<br>[Restoring DB Instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_RestoreFromSnapshot.html) |
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### Kết quả đạt được tuần 4
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Hiểu rõ ưu điểm vượt trội của Amazon RDS so với việc tự cài đặt và quản trị cơ sở dữ liệu trên máy chủ EC2 truyền thống.
+* Nắm vững nguyên lý hoạt động của Multi-AZ Deployments và Read Replicas trong việc xây dựng hệ thống cơ sở dữ liệu có khả năng chống lỗi cao và mở rộng linh hoạt.
+* Thiết lập thành công DB Subnet Group bao phủ nhiều Availability Zones để chuẩn bị cho kiến trúc Multi-AZ.
+* Triển khai thành công Amazon RDS PostgreSQL Instance đặt hoàn toàn trong Private Subnet, khóa hoàn toàn Public Access.
+* Cấu hình chính xác Security Group rule theo mô hình phân lớp (Chỉ cho phép EC2 Security Group kết nối tới DB Port 5432).
+* Thực hiện kết nối thành công từ ứng dụng Backend trên EC2 tới RDS Instance và hoàn tất chạy script SQL Migration khởi tạo dữ liệu.
+* Thao tác thành công việc tạo DB Snapshot thủ công và hiểu rõ quy trình restore khôi phục dữ liệu khi gặp sự cố.
+* Lưu trữ đầy đủ bộ ảnh minh chứng kiến trúc và cấu hình chi tiết của Amazon RDS.

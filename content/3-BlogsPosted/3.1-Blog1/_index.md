@@ -18,7 +18,7 @@ E-commerce websites often experience huge fluctuations in traffic, especially du
 User → Route 53 → CloudFront → AWS WAF → Application Load Balancer → ECS Fargate → ElastiCache/Aurora
 ```
 
-![Scalable E-commerce Web Application Architecture on AWS](images/blog1.jpg)
+![Scalable E-commerce Web Application Architecture on AWS](/images/3.1-Blog1/blog1.jpg)
 
 ## How the System Works
 
