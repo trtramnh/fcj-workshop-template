@@ -22,7 +22,7 @@ During my internship, I participated in four events. Each one was a memorable ex
 ### [Event 2](4.2-Event2/)  
 &emsp;**Event Name:** Seminar "AI From Scratch"  
 
-&emsp;**Date & Time:** 09:00 – 12:00, July 18, 2026  
+&emsp;**Date:** July 18, 2026  
 
 &emsp;**Location:** Room LB 24 (2nd Floor) - FPTU HCMC Library  
 
@@ -33,19 +33,19 @@ During my internship, I participated in four events. Each one was a memorable ex
 ### [Event 3](4.3-Event3/)  
 &emsp;**Event Name:** FCAJ – Agentic AI Build Week Sharing Session  
 
-&emsp;**Date & Time:** Saturday, July 25, 2026  
+&emsp;**Date:** July 25, 2026  
 
-&emsp;**Location:** 26th Floor, Bitexco Financial Tower, District 1, Ho Chi Minh City  
+&emsp;**Location:** Bitexco Financial Tower, District 1, Ho Chi Minh City  
 
 &emsp;**Role:** Attendee  
 
 ---
 
 ### [Event 4](4.4-Event4/)  
-&emsp;**Event Name:** AWS Cloud Day Vietnam 2026  
+&emsp;**Event Name:** FCAJ Community Day – June 2026  
 
-&emsp;**Date & Time:** 08:30, May 15th, 2026  
+&emsp;**Date:** June 27, 2026  
 
-&emsp;**Location:** Gem Center, District 1, Ho Chi Minh City  
+&emsp;**Location:** Bitexco Financial Tower, District 1, Ho Chi Minh City  
 
 &emsp;**Role:** Attendee  

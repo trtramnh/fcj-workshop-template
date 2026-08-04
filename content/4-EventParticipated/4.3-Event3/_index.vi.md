@@ -94,7 +94,7 @@ Nội dung buổi chia sẻ tập trung giải thích quy trình lên kế hoạ
 
 ### Trải Nghiệm Trong Event
 
-Tham dự sự kiện **FCAJ – Agentic AI Build Week Sharing Session** tại Tầng 26 Bitexco Financial Tower mang lại cho tôi cái nhìn thực tế về quy trình đưa một ý tưởng AI thành sản phẩm hoàn chỉnh trên AWS.
+Tham dự sự kiện **FCAJ – Agentic AI Build Week Sharing Session** tại Bitexco Financial Tower mang lại cho tôi cái nhìn thực tế về quy trình đưa một ý tưởng AI thành sản phẩm hoàn chỉnh trên AWS.
 
 Những câu chuyện chia sẻ thực tế từ các đội thi giúp tôi nhận ra rằng phát triển ứng dụng AI thành công đòi hỏi sự kết hợp chặt chẽ giữa thiết kế hệ thống, hạ tầng an toàn, sự hợp tác hiệu quả giữa các thành viên và khả năng xử lý sự cố nhanh chóng.
 
