@@ -1,4 +1,4 @@
----
+﻿---
 title: "Workshop"
 date: 2024-01-01
 weight: 5
@@ -6,23 +6,23 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# Đảm bảo truy cập Hybrid an toàn đến S3 bằng cách sử dụng VPC endpoint
 
 #### Tổng quan
 
-**AWS PrivateLink** cung cấp kết nối riêng tư đến các dịch vụ aws từ VPCs hoặc trung tâm dữ liệu (on-premise) mà không làm lộ lưu lượng truy cập ra ngoài public internet.
+**Snaptics** là một hệ thống lõi tài chính thông minh, được xây dựng trên nền tảng **.NET 8/9**. Hệ thống tích hợp các dịch vụ AI hàng đầu (Google Gemini, Azure Document Intelligence) để trích xuất dữ liệu hóa đơn, kết hợp kiến trúc hướng sự kiện (Event-Driven) với AWS SQS/SNS và xử lý tác vụ nền bằng Hangfire.
 
-Trong bài lab này, chúng ta sẽ học cách tạo, cấu hình, và kiểm tra VPC endpoints để cho phép workload của bạn tiếp cận các dịch vụ AWS mà không cần đi qua Internet công cộng.
+Trong workshop nâng cao này, chúng ta sẽ áp dụng mô hình **Multi-Stack Architecture** để triển khai toàn bộ hệ thống Snaptics lên AWS. Kiến trúc được bóc tách thành nhiều tầng rõ rệt: Network, Security, Database, Storage, Compute và Deployment. Việc triển khai Backend API sẽ được thực hiện dưới dạng Serverless Containers trên **Amazon ECS Fargate**, giúp loại bỏ hoàn toàn gánh nặng quản lý hạ tầng máy chủ ảo (EC2).
 
-Chúng ta sẽ tạo hai loại endpoints để truy cập đến Amazon S3: gateway vpc endpoint và interface vpc endpoint. Hai loại vpc endpoints này mang đến nhiều lợi ích tùy thuộc vào việc bạn truy cập đến S3 từ môi trường cloud hay từ trung tâm dữ liệu (on-premise).
-+ **Gateway** - Tạo gateway endpoint để gửi lưu lượng đến Amazon S3 hoặc DynamoDB using private IP addresses. Bạn điều hướng lưu lượng từ VPC của bạn đến gateway endpoint bằng các bảng định tuyến (route tables)
-+ **Interface** - Tạo interface endpoint để gửi lưu lượng đến các dịch vụ điểm cuối (endpoints) sử dụng Network Load Balancer để phân phối lưu lượng. Lưu lượng dành cho dịch vụ điểm cuối được resolved bằng DNS.
+#### Mô hình Cấu trúc Workshop
 
-#### Nội dung
+Bài workshop được tổ chức thành các phân hệ lõi như sau:
 
-1. [Tổng quan về workshop](5.1-Workshop-overview/)
-2. [Chuẩn bị](5.2-Prerequiste/)
-3. [Truy cập đến S3 từ VPC](5.3-S3-vpc/)
-4. [Truy cập đến S3 từ TTDL On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (làm thêm)](5.5-Policy/)
-6. [Dọn dẹp tài nguyên](5.6-Cleanup/)
+1. **Tổng quan & Kiến trúc (Overview & Architecture)**: Phân tích thiết kế hệ thống và dự toán chi phí.
+2. **Chuẩn bị (Prerequisites)**: Thiết lập môi trường Local và phân quyền IAM.
+3. **Mạng & Bảo mật (VPC & Security)**: Xây dựng nền tảng mạng an toàn với Public/Private Subnets.
+4. **Database, Storage & Secrets**: Triển khai Amazon RDS SQL Server, S3 và SSM Parameter Store.
+5. **AI & Tác vụ nền (Messaging)**: Tích hợp AI Insights và cấu hình hàng đợi SQS/SNS.
+6. **Compute & Load Balancing (ECS)**: Container hóa ứng dụng .NET và chạy trên Fargate.
+7. **Tự động hóa (CI/CD)**: Cơ chế Blue/Green Deployment với script tự động hóa.
+8. **Kiểm thử (E2E Testing)**: Xác thực luồng dữ liệu thời gian thực qua SignalR và Swagger.
+9. **Dọn dẹp (Cleanup)**: Thu hồi tài nguyên AWS.
