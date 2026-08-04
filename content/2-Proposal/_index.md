@@ -18,7 +18,7 @@ pre: " <b> 2. </b> "
 
 Beyond automated receipt scanning, Snaptics provides comprehensive features: manual transaction logging, multi-wallet management (personal & shared family wallets), budget setting and threshold alerts, multi-dimensional statistical reporting, a centralized notification hub, spending behavioral analysis (AI Insight), and an interactive smart assistant (AI Chatbot). The system includes an Admin Panel enabling administrators to monitor users, handle support tickets, issue system announcements, configure runtime settings, and manage background jobs via Hangfire.
 
-Snaptics is built as a SaaS web application deployed on AWS Cloud-Native infrastructure. The system architecture leverages services including **AWS Amplify**, **Amazon CloudFront**, **Amazon Route 53**, **Amazon ECS Fargate**, **Application Load Balancer (ALB)**, **Amazon SQS / Dead Letter Queue (DLQ)**, **Amazon S3**, **Amazon ECR**, **AWS Systems Manager Parameter Store**, **Amazon CloudWatch**, **AWS Budgets**, and **Amazon RDS for SQL Server**. AI capabilities are integrated with **Azure Document Intelligence**, **Gemini API**, and **OpenAI API**.
+Snaptics is built as a SaaS web application deployed on AWS Cloud-Native infrastructure. The system architecture leverages services including **AWS Amplify**, **Amazon CloudFront**, **Amazon Route 53**, **Amazon ECS Fargate**, **Application Load Balancer (ALB)**, **Amazon SQS / Dead Letter Queue (DLQ)**, **Amazon S3**, **Amazon ECR**, **AWS Systems Manager Parameter Store**, **Amazon CloudWatch**, **AWS Budgets**, and **Amazon RDS for SQL Server**. AI capabilities are integrated with **Azure Document Intelligence** and **Gemini API**.
 
 #### 1.2. User Roles
 * **User (Personal / Family Member)**: Manages transactions, receipt images, wallets, and budgets; views analytical reports; receives AI financial advice; initializes and participates in shared family wallets/budgets.
@@ -78,13 +78,13 @@ Build the Snaptics intelligent expense management platform powered by cloud comp
 
 Snaptics utilizes an AWS Cloud-Native architecture combining a Single Page Application (SPA), containerized microservices, relational databases, object storage, asynchronous queues, and specialized external AI services. The architecture maintains clear separation between Frontend, Backend API, and AI Workers for independent deployment, scaling, and monitoring.
 
-![Snaptics AWS Cloud Architecture](/images/2-Proposal/snaptics_architecture.jpg)
+![Snaptics AWS Cloud Architecture](/images/2-Proposal/snaptics_architecture.png)
 
 #### 4.1. Key Components
 
 * **Frontend**: Single Page Application (SPA) deployed via **AWS Amplify**. Connected to GitHub Repository for automated builds/deploys, integrated with **Amazon Route 53** for DNS and **Amazon CloudFront** (CDN) for secure HTTPS delivery.
 * **Backend API**: Containerized via Docker stored on **Amazon ECR**, running on **AWS Fargate (Amazon ECS Cluster)** behind an **Application Load Balancer (ALB)** with **Auto Scaling**.
-* **AI Worker**: Worker running on ECS Fargate dequeuing messages from Amazon SQS, invoking **Azure Document Intelligence** for OCR, and sending structured data to **Gemini API** / **OpenAI API** for classification and insights.
+* **AI Worker**: Worker running on ECS Fargate dequeuing messages from Amazon SQS, invoking **Azure Document Intelligence** for OCR, and sending structured data to **Gemini API** for classification and insights.
 * **Database**: **Amazon RDS for SQL Server** deployed in Private Subnets, managing accounts, transactions, receipts, wallets, budgets, notifications, AI chat history, tickets, and audit logs.
 * **Media Storage**: **Amazon S3** stores raw receipt images, transaction attachments, and processed images, decoupling binary assets from database storage.
 * **Asynchronous Queue Pipeline**: **Amazon SQS** buffers OCR/AI tasks; **Dead Letter Queue (DLQ)** holds failed messages exceeding retry limits for fault handling.
@@ -99,7 +99,7 @@ Snaptics utilizes an AWS Cloud-Native architecture combining a Single Page Appli
 2. Frontend sends image to Backend API -> Backend saves image to **Amazon S3**.
 3. Backend pushes a processing message to **Amazon SQS**.
 4. **AI Worker** retrieves message from SQS, calls **Azure Document Intelligence** for text/table extraction.
-5. AI Worker sends extracted data to **Gemini API / OpenAI API** for category normalization and transaction parsing.
+5. AI Worker sends extracted data to **Gemini API** for category normalization and transaction parsing.
 6. AI Worker saves transaction records into **Amazon RDS for SQL Server** and generates user notifications.
 7. Frontend Dashboard and Financial Reports automatically update.
 
