@@ -141,13 +141,7 @@ Snaptics utilizes an AWS Cloud-Native architecture combining a Single Page Appli
 ![Snaptics AWS Cloud Architecture](/images/2-Proposal/snaptics_architecture.png)
 *Figure 1. Target AWS Cloud Architecture for Snaptics System*
 
-#### 4.5. Demo Configuration vs Production Architecture
-
-> [!NOTE]
-> **Deployment Environment Note:**
-> The architecture diagram illustrates a target production environment across 2 Availability Zones with dual NAT Gateways, Multi-AZ RDS for SQL Server (Primary/Standby), and auto-scaled ECS Fargate tasks. To fit within the 13-week demo budget, the demo deployment utilizes single-AZ RDS, a single NAT Gateway enabled during integration windows, minimal Fargate tasks, and test-scoped WAF rules. Gemini API keys, Azure credentials, JWT secrets, and connection strings are securely stored in AWS Secrets Manager across both demo and production environments.
-
-#### 4.6. Security, Observability & Cost Control
+#### 4.5. Security, Observability & Cost Control
 * Enforce HTTPS and JWT tokens; attach AWS WAF to CloudFront for edge filtering.
 * Enforce RBAC and data ownership checks at the Backend layer.
 * Zero hardcoded secrets in source code or Docker Images; store Gemini API keys, Azure credentials, JWT secrets, and connection strings in AWS Secrets Manager.

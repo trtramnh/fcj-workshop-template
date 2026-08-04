@@ -141,13 +141,7 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 ![Sơ đồ kiến trúc hệ thống Snaptics trên AWS](/images/2-Proposal/snaptics_architecture.png)
 *Hình 1. Kiến trúc mục tiêu của hệ thống Snaptics trên AWS*
 
-#### 4.5. Cấu hình demo và kiến trúc production
-
-> [!NOTE]
-> **Lưu ý về môi trường triển khai:**
-> Sơ đồ thể hiện kiến trúc mục tiêu có hai Availability Zone, hai NAT Gateway, ECS Fargate phân bố ở hai Private Subnet và RDS for SQL Server Primary/Standby. Để phù hợp ngân sách 13 tuần, môi trường demo có thể dùng RDS Single-AZ, một NAT Gateway chỉ bật trong thời gian tích hợp, một số Fargate Task tối thiểu và AWS WAF chỉ bật khi kiểm thử. Gemini API key, Azure key/endpoint, JWT secret và connection string vẫn được lưu trong AWS Secrets Manager ở cả môi trường demo và production.
-
-#### 4.6. Bảo mật, giám sát và kiểm soát chi phí
+#### 4.5. Bảo mật, giám sát và kiểm soát chi phí
 * Sử dụng HTTPS và access token; gắn AWS WAF với CloudFront để lọc request bất thường ở lớp biên.
 * Phân quyền Admin/User và kiểm tra quyền sở hữu dữ liệu tại Backend.
 * Không ghi API key hoặc connection string trong mã nguồn/Docker Image; lưu Gemini API key, Azure key/endpoint, JWT secret và RDS connection string trong AWS Secrets Manager.
