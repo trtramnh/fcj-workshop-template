@@ -119,8 +119,8 @@ Dưới đây là một số hình ảnh ghi lại quá trình tham gia sự ki�
     <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Hình 2:</b> Phần trình bày diễn giả về Agentic AI & AgentCore.</p>
   </div>
   <div style="flex: 1; min-width: 220px; text-align: center;">
-    <img src="/images/4.1-Event1/event1_3.jpg" alt="Tôi và team của tôi tại sự kiện" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
-    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Hình 3:</b> Tôi và team của tôi tại sự kiện.</p>
+    <img src="/images/4.1-Event1/event1_3.jpg" alt="Tôi cùng các thành viên trong nhóm tại sự kiện Agent Forge – Deep Dive" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Hình 3:</b> Tôi cùng các thành viên trong nhóm tại sự kiện Agent Forge – Deep Dive.</p>
   </div>
   <div style="flex: 1; min-width: 220px; text-align: center;">
     <img src="/images/4.1-Event1/event1_4.jpg" alt="Hình ảnh lưu niệm cùng diễn giả và các thành viên tham dự" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />

@@ -119,8 +119,8 @@ Below are photos captured during the **AWS FCAJ Agent Forge – Deep Dive Day 1*
     <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Figure 2:</b> Keynote presentation on Agentic AI & AgentCore.</p>
   </div>
   <div style="flex: 1; min-width: 220px; text-align: center;">
-    <img src="/images/4.1-Event1/event1_3.jpg" alt="Me and my team at the event" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
-    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Figure 3:</b> Me and my team at the event.</p>
+    <img src="/images/4.1-Event1/event1_3.jpg" alt="Me and my team members at the Agent Forge – Deep Dive event" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Figure 3:</b> Me and my team members at the Agent Forge – Deep Dive event.</p>
   </div>
   <div style="flex: 1; min-width: 220px; text-align: center;">
     <img src="/images/4.1-Event1/event1_4.jpg" alt="Group photo with speakers and participants" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
