@@ -1,5 +1,5 @@
 ---
-title: "Agent Forge – Deep Dive Day 1"
+title: "Event 1"
 date: 2026-08-01
 weight: 1
 chapter: false
@@ -7,9 +7,6 @@ pre: " <b> 4.1. </b> "
 ---
 
 # Agent Forge – Deep Dive Day 1: Foundations & Agent Setup
-
-- **Thời gian**: 09:00 – 12:00, ngày 01/08/2026
-- **Địa điểm**: Tầng 26, Bitexco Financial Tower, TP. Hồ Chí Minh
 
 ---
 
