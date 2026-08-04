@@ -1,122 +1,133 @@
 ---
-title: "Event 1"
-date: 2024-01-01
+title: "Agent Forge – Deep Dive Day 1"
+date: 2026-08-01
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+# Agent Forge – Deep Dive Day 1: Foundations & Agent Setup
 
-### Event Objectives
+- **Time**: 09:00 – 12:00, August 01, 2026
+- **Location**: 26th Floor, Bitexco Financial Tower, Ho Chi Minh City
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+---
+
+### Event Purpose
+
+The event was organized to provide foundational knowledge and deep-dive technical guidance on building, deploying, and operating **Agentic AI** systems in production environments.
+
+Through the introduction of **Amazon Bedrock AgentCore**, participants learned about key components required to transition AI Agents from experimental POCs to production readiness, including **Runtime**, **Gateway**, **Identity**, and tool integration mechanisms.
+
+---
 
 ### Speakers
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+- **Nghia Tran** – Agentic Solutions Architect (SA)
+- **Anh Pham** – Cloud Consultant, G-AsiaPacific Vietnam
+
+---
 
 ### Key Highlights
 
-#### Identifying the drawbacks of legacy application architecture
+#### 1. Agentic AI Overview
+* Conceptual introduction to AI Agents, agent autonomy, and the difference between hard-coded workflows and systems capable of self-planning, tool selection, and multi-step execution.
+* Introduction to **Strands Agents SDK**, an open-source model-driven framework for building AI Agents with reduced boilerplate coordination code.
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+#### 2. Amazon Bedrock AgentCore Runtime
+* AgentCore Runtime provides a dedicated serverless environment for running AI Agents.
+* Each session runs in an isolated **microVM**, guaranteeing CPU, memory, and filesystem isolation across users.
+* Runtime supports session state persistence, asynchronous execution, and long-running tasks.
 
-#### Transitioning to modern application architecture – Microservices
+#### 3. Amazon Bedrock AgentCore Identity
+* **Inbound authentication**: Controls which users or applications are authorized to invoke the agent.
+* **Outbound authentication**: Controls how the agent accesses external APIs, AWS services, or third-party platforms.
+* Agents are assigned distinct *workload identities* and use *workload access tokens* for scoped resource access. Flexible integration with **Amazon Cognito** and OAuth/JWT Identity Providers.
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
+#### 4. Amazon Bedrock AgentCore Gateway
+* Centralized, secure access point connecting AI Agents to tools, APIs, Lambda functions, or other agents.
+* Converts existing APIs into **Model Context Protocol (MCP)** compliant tools, allowing standardized tool discovery and invocation.
+* Native **semantic search** capabilities to discover tools via natural language queries when dealing with large API registries.
 
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
+#### 5. Hands-on Lab
+* Deployed a foundational AI Agent onto AgentCore Runtime.
+* Connected the agent to external tools and Knowledge Bases.
+* Built a web interface for direct user interaction with the agent.
+* Integrated **Amazon Cognito** for user authentication prior to granting agent access.
 
-#### Domain-Driven Design (DDD)
+---
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
+### Key Learnings
 
-#### Event-Driven Architecture
+#### Technical Domain Knowledge
+* **Production-Ready Agentic Architecture**: Building production AI Agents requires a complete framework including session isolation (microVMs), bi-directional authentication (Identity), centralized tool management (Gateway), and robust observability.
+* **Model-Driven Development**: Leveraging Strands SDK and MCP Servers standardizes external tool invocation over complex custom orchestration code.
 
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
+#### Security & Governance
+* **Secure Connections & Data**: Minimize public internet transit via **AWS PrivateLink**, encrypt end-to-end data flows, and enforce Least Privilege access controls.
 
-#### Compute Evolution
+---
 
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
+### Practical Application to Snaptics Project
 
-#### Amazon Q Developer
+#### 1. Dedicated AI Agent for Financial Insights
+Rather than one-off model invocations, Snaptics can deploy an agent to:
+* Analyze user transactions, wallets, and budgets.
+* Evaluate spending patterns and query relevant backend APIs automatically.
+* Generate situational financial advice and push alerts to the Notification system.
+* Align with current architecture: Triggering `/AiAssistant/insight` backend endpoint post-transaction confirmation.
 
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+#### 2. API Tooling via AgentCore Gateway (MCP)
+* Encapsulate transaction, budget, wallet, savings goals, and notification APIs into modular MCP tools.
+* AgentCore Gateway acts as a governance layer, ensuring the AI agent only invokes authorized tools without direct DB access.
+
+#### 3. Protecting Financial User Data
+* Combine AgentCore Identity with Amazon Cognito to enforce strict multi-tenant isolation.
+* Granular scoping of tool capabilities per user role.
+
+#### 4. Human-in-the-Loop Implementation
+For sensitive operations (budget modifications, transaction deletion/edits, savings target changes):
+* AI generates recommendations requiring explicit user confirmation prior to execution.
+* Balances AI automation with user authority and data protection.
+
+---
+
+### Workshop Experience
+
+An intensive, highly practical workshop pairing architectural deep-dives with hands-on labs. The lab exercises reinforced the end-to-end pipeline from simple agent setup to production deployment readiness.
+
+---
 
 ### Key Takeaways
 
-#### Design Mindset
+* Reasoning capability alone is insufficient for a production-ready AI Agent. Systems require well-defined control layers across Runtime, Identity, Gateway, permissions, and data boundary isolation.
+* In Snaptics, AI must not be granted direct, unconstrained access to financial stores. Every capability should be exposed as an authenticated, scoped tool requiring user confirmation for sensitive actions.
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
+---
 
-#### Technical Architecture
+### Event Photos
 
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
+Below are photos captured during the **AWS FCAJ Agent Forge – Deep Dive Day 1** event, featuring speaker sessions, hands-on labs, and networking with AWS community members.
 
-#### Modernization Strategy
+<div style="display: flex; gap: 15px; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin-top: 20px;">
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="/images/4.1-Event1/event1_1.jpg" alt="Event Venue at Bitexco Financial Tower" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Figure 1:</b> Event venue at Bitexco Financial Tower.</p>
+  </div>
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="/images/4.1-Event1/event1_2.jpg" alt="Speaker presentation on Agentic AI & AgentCore" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Figure 2:</b> Keynote presentation on Agentic AI & AgentCore.</p>
+  </div>
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="/images/4.1-Event1/event1_3.jpg" alt="Me and my team at the event" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Figure 3:</b> Me and my team at the event.</p>
+  </div>
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="/images/4.1-Event1/event1_4.jpg" alt="Group photo with speakers and participants" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Figure 4:</b> Commemorative photo with speakers and participants.</p>
+  </div>
+</div>
 
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
+---
 
-### Applying to Work
-
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
-
-### Event Experience
-
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
-
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
-
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
-
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
-
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
-
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
-
-#### Some event photos
-*Add your event photos here*  
-
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+> **Summary:** AWS FCAJ Agent Forge – Deep Dive Day 1 delivered a comprehensive framework for building and operating AI Agents on AWS. Most importantly, it helped shape the AI roadmap for Snaptics: moving beyond simple LLM prompts toward a secure, tool-connected, asynchronous, and user-guarded AI architecture.
