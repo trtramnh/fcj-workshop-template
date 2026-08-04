@@ -15,7 +15,7 @@ Trong quá trình thực tập, em đã tham gia bốn sự kiện. Mỗi sự k
 
 &emsp;**Địa điểm:** Tầng 26, Bitexco Financial Tower, Quận 1, TP. Hồ Chí Minh
 
-&emsp;**Vai trò trong sự kiện:** Thực tập sinh (AWS First Cloud Journey Internship) / Người tham dự
+&emsp;**Vai trò trong sự kiện:** Người tham dự
 
 ---
 

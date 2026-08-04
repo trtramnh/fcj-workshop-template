@@ -15,7 +15,7 @@ During my internship, I participated in four events. Each one was a memorable ex
 
 &emsp;**Location:** Bitexco Financial Tower, District 1, Ho Chi Minh City  
 
-&emsp;**Role:** Intern (AWS First Cloud Journey Internship) / Attendee  
+&emsp;**Role:** Attendee  
 
 ---
 
