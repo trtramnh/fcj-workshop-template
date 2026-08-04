@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 4.3. </b> "
 ---
 
-# Buổi Chia Sẻ Trải Nghiệm FCAJ – Agentic AI Build Week
+# FCAJ – Agentic AI Build Week Sharing Session
 
 ---
 
