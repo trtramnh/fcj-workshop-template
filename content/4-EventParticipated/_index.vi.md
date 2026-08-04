@@ -20,22 +20,22 @@ Trong quá trình thực tập, em đã tham gia bốn sự kiện. Mỗi sự k
 ---
 
 ### [Event 2](4.2-Event2/)
-&emsp;**Tên sự kiện:** FCAJ Community Day
+&emsp;**Tên sự kiện:** Seminar "AI From Scratch"
 
-&emsp;**Thời gian:** 09:00 ngày 13/08/2025
+&emsp;**Thời gian:** 09:00 – 12:00, ngày 18/07/2026
 
-&emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
+&emsp;**Địa điểm:** Phòng LB 24 (Lầu 2) - Thư viện FPTU HCMC
 
 &emsp;**Vai trò trong sự kiện:** Người tham dự
 
 ---
 
 ### [Event 3](4.3-Event3/)
-&emsp;**Tên sự kiện:** CLOUD MASTERY 2 - DEVOPS FOR FRESHER
+&emsp;**Tên sự kiện:** FCAJ – Agentic AI Build Week Sharing Session
 
-&emsp;**Thời gian:** 09:00 ngày 04/04/2026
+&emsp;**Thời gian:** Thứ 7, ngày 25/07/2026
 
-&emsp;**Địa điểm:** Tầng 26, Bitexco Financial Tower, TP. Hồ Chí Minh
+&emsp;**Địa điểm:** Tầng 26, Bitexco Financial Tower, Quận 1, TP. Hồ Chí Minh
 
 &emsp;**Vai trò trong sự kiện:** Người tham dự
 

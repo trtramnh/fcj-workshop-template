@@ -1,121 +1,129 @@
 ---
 title: "Event 2"
-date: 2024-01-01
-weight: 1
+date: 2026-07-18
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+# Seminar "AI From Scratch"
+
+---
 
 ### Mục Đích Của Sự Kiện
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+Hội thảo **“AI From Scratch”** được tổ chức nhằm cung cấp cho người tham dự những kiến thức nền tảng và thực tiễn về Trí tuệ Nhân tạo (AI) và Generative AI (GenAI), đồng thời giải thích cách tích hợp các dịch vụ AI trên điện toán đám mây vào các ứng dụng phần mềm hiện đại.
+
+Thông qua các phiên chia sẻ kỹ thuật và trải nghiệm thực tế từ các kỹ sư AWS, hội thảo giúp sinh viên hiểu rõ cách điện toán đám mây tối ưu hóa việc tiếp cận công nghệ AI, loại bỏ gánh nặng tự xây dựng và vận hành hạ tầng AI phức tạp.
+
+---
 
 ### Danh Sách Diễn Giả
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+- **Nguyễn Tuấn Thịnh** – DevOps / Cloud Engineer, AWS
+- **Nguyễn Công Minh** – DevOps Engineer, AWS
+- **AWS Vietnam Specialists**
+- **Mai Hoàng Đỉnh** – Giảng viên Khoa IA, Đại học FPT TP.HCM & Cố vấn Chuyên môn
+
+---
 
 ### Nội Dung Nổi Bật
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+#### 1. Tổng quan về Trí tuệ Nhân tạo & Cloud Managed Services
+* Tổng quan về Trí tuệ Nhân tạo, Generative AI và ảnh hưởng ngày càng lớn của chúng đối với quá trình phát triển phần mềm hiện đại.
+* Diễn giả giải thích cách các nền tảng điện toán đám mây giúp công nghệ AI trở nên dễ tiếp cận hơn thông qua các dịch vụ quản lý (managed services). Thay vì tự phát triển và duy trì hạ tầng AI phức tạp, các lập trình viên có thể sử dụng các dịch vụ có sẵn trên đám mây để tích hợp tính năng thông minh vào ứng dụng một cách nhanh chóng và hiệu quả.
+* Giới thiệu nhiều ví dụ thực tế về các ứng dụng AI có thể phát triển dựa trên hạ tầng AWS.
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+#### 2. Chuỗi dịch vụ AI toàn diện cho Hệ thống Conversational AI
+* Phần lớn nội dung sự kiện tập trung vào việc kết nối nhiều dịch vụ AI của AWS để tạo thành một hệ thống AI trò chuyện (Conversational AI) hoàn chỉnh. Luồng demo bao gồm:
+  * **Amazon Transcribe**: Chuyển đổi giọng nói thành văn bản.
+  * **Amazon Translate**: Hỗ trợ dịch thuật cuộc trò chuyện giữa nhiều ngôn ngữ khác nhau.
+  * **Amazon Comprehend**: Phân tích cảm xúc và xác định các chủ đề, từ khóa quan trọng trong hội thoại.
+  * **Amazon Lex**: Nhận diện ý định người dùng (intent) và giao tiếp với các dịch vụ backend, API hoặc cơ sở dữ liệu.
+  * **Amazon Polly**: Chuyển đổi câu trả lời dạng văn bản thành giọng nói tự nhiên.
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+#### 3. Generative AI & Kiến trúc Amazon Bedrock
+* Giới thiệu chuyên sâu về **Amazon Bedrock**, dịch vụ của AWS cho phép lập trình viên xây dựng ứng dụng Generative AI sử dụng các mô hình nền tảng (Foundation Models) mà không cần trực tiếp quản lý hạ tầng AI bên dưới.
+* Giới thiệu kiến trúc **Amazon Bedrock Knowledge Bases** và các giải pháp lưu trữ vector (Vector Stores) áp dụng trong mô hình Retrieval-Augmented Generation (RAG).
+* Hướng dẫn kết nối dữ liệu nội bộ của doanh nghiệp với các hệ thống GenAI, giúp ứng dụng AI đưa ra câu trả lời chính xác dựa trên tri thức nội bộ.
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+#### 4. Thực tiễn Triển khai & Phát triển Ứng dụng Modern
+* Phiên kỹ thuật chia sẻ về các phương pháp phát triển và triển khai ứng dụng hiện đại trên môi trường cloud.
+* Diễn giả chia sẻ kinh nghiệm thực tế trong việc lựa chọn chiến lược triển khai phù hợp với yêu cầu, quy mô và kiến trúc của từng dự án.
+* Các ví dụ thực tế minh họa cách tích hợp dịch vụ AI vào ứng dụng đám mây và giải quyết các bài toán kinh doanh cụ thể.
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+#### 5. Hoạt động Tương tác & Trải nghiệm Trực tiếp
+* Sự kiện khép lại với hoạt động trò chơi tương tác do các diễn giả tự tay phát triển.
+* Tôi đã xung phong tham gia cùng một bạn học chung lớp, xuất sắc giành chiến thắng cuộc thi và nhận phần thưởng là 1 tháng subscription **ChatGPT Plus**.
+* Hoạt động tạo bầu không khí sôi nổi, cho phép người tham dự tương tác trực tiếp với các diễn giả và trải nghiệm sản phẩm demo thực tế.
 
-#### Domain-Driven Design (DDD)
-
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
-
-#### Event-Driven Architecture
-
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
-
-#### Amazon Q Developer
-
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+---
 
 ### Những Gì Học Được
 
-#### Tư Duy Thiết Kế
+#### Kiến Thức Chuyên Môn
+* **Kiến trúc luồng xử lý AI đa dịch vụ**: Nắm rõ cách kết nối chuỗi dịch vụ Transcribe, Translate, Comprehend, Lex và Polly để tạo nên một hệ thống trợ lý ảo tương tác đa phương thức (thoại, chữ, dịch thuật, phân tích cảm xúc).
+* **Quản trị GenAI & Mô hình RAG**: Hiểu rõ cách Amazon Bedrock giúp đơn giản hóa việc sử dụng Foundation Model và vai trò của Knowledge Bases cùng Vector Stores trong việc triển khai RAG an toàn cho doanh nghiệp.
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+#### Phương Pháp Triển Khai & Thực Tiễn Ngành
+* **Tối ưu tốc độ phát triển nhờ Managed Services**: Nhận thức rõ việc sử dụng các managed AI service giúp rút ngắn đáng kể thời gian đưa tính năng AI vào sản phẩm thực tế.
+* **Tầm quan trọng của việc học tập liên tục**: Thấy được sự phát triển nhanh chóng của AI đòi hỏi lập trình viên phải liên tục cập nhật kiến thức kỹ thuật và tích cực tham gia các hội thảo chuyên môn.
 
-#### Kiến Trúc Kỹ Thuật
+---
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
+### Khả Năng Áp Dụng Vào Dự Án Snaptics
 
-#### Chiến Lược Hiện Đại Hóa
+#### 1. Trợ lý AI tư vấn tài chính thông minh với Amazon Bedrock
+* Áp dụng Amazon Bedrock để xây dựng trợ lý hội thoại thông minh trong **Snaptics**, cho phép người dùng hỏi đáp bằng ngôn ngữ tự nhiên về tình hình tài chính (ví dụ: *"Tuần này tôi đã chi bao nhiêu cho ăn uống?"* hoặc *"Gợi ý kế hoạch tiết kiệm tháng tới"*).
 
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
+#### 2. Tích hợp giọng nói & Đa ngôn ngữ cho Snaptics
+* Kết hợp **Amazon Transcribe** và **Amazon Polly** để người dùng có thể nhập giao dịch bằng giọng nói (ví dụ: nói *"Vừa chi 50k ăn trưa"* để tự động tạo bản ghi giao dịch).
+* Tận dụng **Amazon Translate** để hỗ trợ chuyển đổi ngôn ngữ ghi chú giao dịch cho người dùng quốc tế.
 
-### Ứng Dụng Vào Công Việc
+#### 3. Áp dụng RAG & Knowledge Base cho dữ liệu tài chính cá nhân
+* Tích hợp **Amazon Bedrock Knowledge Bases** và Vector Stores để lưu trữ và truy xuất lịch sử giao dịch, mục tiêu tiết kiệm và các quy tắc tài chính cá nhân.
+* Trợ lý AI của Snaptics có thể đưa ra lời khuyên được cá nhân hóa dựa trên đúng dữ liệu thực tế của người dùng thay vì câu trả lời chung chung.
 
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
+#### 4. Tự động phân tích cảm xúc & Cảnh báo bất thường
+* Sử dụng **Amazon Comprehend** để phân tích ghi chú chi tiêu và nhận diện các giao dịch bất thường hoặc xu hướng chi tiêu quá mức, tự động gửi thông báo qua hệ thống Notification của Snaptics.
 
-### Trải nghiệm trong event
+---
 
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
+### Trải Nghiệm Trong Event
 
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
+Tham gia seminar **“AI From Scratch”** mang lại cho tôi cái nhìn toàn diện về cách triển khai Trí tuệ Nhân tạo trên môi trường điện toán đám mây AWS. 
 
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
+Các phần demo thực tế giúp những khái niệm AI phức tạp trở nên dễ hiểu hơn nhiều so với việc chỉ học lý thuyết. Việc tham gia cuộc thi tương tác cuối buổi và giành giải thưởng ChatGPT Plus là một kỷ niệm rất đáng nhớ, giúp tôi có cơ hội giao lưu trực tiếp với các diễn giả AWS và các bạn sinh viên.
 
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
+---
 
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
+### Bài Học Rút Ra
 
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
+* Xây dựng ứng dụng AI hiện đại không nhất thiết phải huấn luyện mô hình từ đầu; các dịch vụ managed của AWS cung cấp các khối block hoàn chỉnh để triển khai nhanh chóng.
+* RAG (Retrieval-Augmented Generation) kết hợp với Amazon Bedrock Knowledge Bases là chìa khóa để đưa dữ liệu nội bộ vào mô hình Generative AI một cách an toàn và chính xác.
+* Đối với dự án **Snaptics**, việc kết hợp xử lý giọng nói, phân tích cảm xúc và tư vấn tài chính GenAI sẽ tạo ra trải nghiệm người dùng vượt trội và thông minh hơn.
 
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+---
+
+### Một Số Hình Ảnh Khi Tham Gia Sự Kiện
+
+Dưới đây là một số hình ảnh ghi lại quá trình tham gia sự kiện **AI From Scratch**, bao gồm phần chia sẻ kỹ thuật của các diễn giả AWS, trải nghiệm thực tế và hoạt động trò chơi tương tác.
+
+<div style="display: flex; gap: 15px; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin-top: 20px;">
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="/images/4.2-Event2/real_event2_1_thay_dinh.jpg" alt="Thầy Mai Hoàng Đỉnh – Giảng viên Bộ môn IA, FPTU HCMC phát biểu khai mạc" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Hình 1:</b> Thầy Mai Hoàng Đỉnh – Giảng viên Bộ môn IA phát biểu khai mạc sự kiện.</p>
+  </div>
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="/images/4.2-Event2/real_event2_2_slide.jpg" alt="Slide kỹ thuật minh họa luồng xây dựng AI Agent hoàn chỉnh" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Hình 2:</b> Slide trình bày kiến trúc luồng xử lý AI Agent đa dịch vụ (Transcribe, Translate, Lex, Polly...).</p>
+  </div>
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="/images/4.2-Event2/real_event2_3_group.jpg" alt="Hình ảnh chụp tập thể lưu niệm tại Phòng LB 24, Thư viện FPTU HCMC" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Hình 3:</b> Ảnh chụp lưu niệm tập thể cùng diễn giả, giảng viên và sinh viên tham dự.</p>
+  </div>
+</div>
+
+---
+
+> **Tổng kết:** Sự kiện “AI From Scratch” giúp tôi nâng cao kiến thức về các dịch vụ AWS AI và công nghệ Generative AI. Sự kiện đã chứng minh cách kết nối các dịch vụ đám mây như Amazon Bedrock, Transcribe, Translate, Comprehend, Lex và Polly để phát triển ứng dụng thông minh, đồng thời gợi mở nhiều định hướng áp dụng giá trị cho dự án Snaptics.

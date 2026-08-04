@@ -1,122 +1,129 @@
 ---
 title: "Event 2"
-date: 2024-01-01
-weight: 1
+date: 2026-07-18
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+# AI From Scratch
 
-### Event Objectives
+---
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+### Event Purpose
+
+The **“AI From Scratch”** seminar was organized to equip participants with foundational and practical knowledge of Artificial Intelligence (AI) and Generative AI (GenAI), demonstrating how cloud-managed services can accelerate modern software application development.
+
+Through technical sessions and practical sharing by AWS engineers, the seminar aimed to help students understand how cloud computing makes AI technologies highly accessible, eliminating the burden of building and operating complex AI infrastructure independently.
+
+---
 
 ### Speakers
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+- **Nguyen Tuan Thinh** – DevOps / Cloud Engineer, AWS
+- **Nguyen Cong Minh** – DevOps Engineer, AWS
+- **AWS Vietnam Specialists**
+- **Mai Hoang Dinh** – Lecturer, IA Department, FPT University HCMC & Academic Supervisor
+
+---
 
 ### Key Highlights
 
-#### Identifying the drawbacks of legacy application architecture
+#### 1. Introduction to Artificial Intelligence & Cloud Managed Services
+* Conceptual overview of Artificial Intelligence, Generative AI, and their rapidly growing influence on modern software engineering.
+* Explanation of how cloud platforms lower adoption barriers by providing fully managed AI services. Instead of building, training, and maintaining complex AI infrastructure independently, developers can leverage cloud APIs to integrate intelligent features efficiently.
+* Demonstration of practical AI applications built on top of AWS managed services.
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+#### 2. End-to-End Conversational AI via AWS Managed Services
+* Detailed walkthrough demonstrating how multiple special-purpose AWS AI services connect into a cohesive, multi-modal conversational AI workflow:
+  * **Amazon Transcribe**: Converts spoken speech into structured written text.
+  * **Amazon Translate**: Translates conversations seamlessly across multiple languages.
+  * **Amazon Comprehend**: Performs natural language processing (NLP) to analyze sentiment and extract key phrases/topics.
+  * **Amazon Lex**: Recognizes user intent, manages conversational flow, and triggers backend APIs or databases.
+  * **Amazon Polly**: Converts text-based responses back into natural-sounding speech audio.
 
-#### Transitioning to modern application architecture – Microservices
+#### 3. Generative AI Architecture & Amazon Bedrock
+* Exploration of **Amazon Bedrock**, an AWS managed service that enables developers to build Generative AI applications using foundation models (FMs) without managing infrastructure.
+* Introduction to **Amazon Bedrock Knowledge Bases** and vector storage solutions used in Retrieval-Augmented Generation (RAG).
+* Practical explanation of connecting organizational data to GenAI systems, enabling AI applications to deliver accurate responses grounded in internal enterprise context.
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
+#### 4. Modern Application Deployment & Development Practices
+* Technical sharing session focused on modern cloud application architectures and deployment strategies.
+* Guidance on choosing suitable deployment models based on project scale, performance requirements, and cloud infrastructure patterns.
+* Real-world examples showing how AI services can be embedded into business applications to solve practical operational challenges.
 
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
+#### 5. Interactive Competitive Activity
+* Live demonstration and competitive interactive game designed by the speakers to reinforce seminar concepts.
+* Volunteered to participate alongside a classmate, successfully winning 1st place in the competition and receiving a 1-month **ChatGPT Plus** subscription prize.
+* Energetic atmosphere fostering direct dialogue and Q&A with AWS engineers and academic supervisors.
 
-#### Domain-Driven Design (DDD)
+---
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
+### Key Learnings
 
-#### Event-Driven Architecture
+#### Technical Domain Knowledge
+* **Multi-Service AI Workflow Architecture**: Gained a clear understanding of building end-to-end conversational AI pipelines by chaining specialized services (Transcribe, Translate, Comprehend, Lex, Polly).
+* **Managed GenAI & RAG Patterns**: Learned how Amazon Bedrock streamlines Foundation Model utilization, and how Bedrock Knowledge Bases with vector stores enable secure Retrieval-Augmented Generation without custom model retraining.
 
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
+#### Practical & Professional Growth
+* **Cloud Managed Service Efficiency**: Recognized that leveraging AWS managed AI APIs drastically reduces development overhead, allowing teams to focus on business logic rather than model maintenance.
+* **Continuous Skill Modernization**: Reaffirmed the importance of continuously updating technical knowledge and participating in technical communities to stay ahead of industry trends.
 
-#### Compute Evolution
+---
 
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
+### Practical Application to Snaptics Project
 
-#### Amazon Q Developer
+#### 1. Smart Conversational Assistant with Amazon Bedrock
+* Implement an AI assistant in **Snaptics** powered by Amazon Bedrock foundation models to process natural language spending queries (e.g., *"How much did I spend on dining out this week?"* or *"Suggest a savings plan for next month"*).
 
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+#### 2. Voice-Based Financial Logging & Multi-Lingual Support
+* Integrate **Amazon Transcribe** and **Amazon Polly** to enable hands-free voice logging of transactions (e.g., speaking *"Spent 50k on coffee"* to automatically create a transaction entry).
+* Leverage **Amazon Translate** to support multi-language translation for international transaction categories and user notes.
+
+#### 3. RAG-Powered Personal Budgeting Knowledge Base
+* Utilize **Amazon Bedrock Knowledge Bases** and vector stores to index user historical financial transactions, savings goals, and financial regulations.
+* Provide contextual financial advice grounded strictly in the user's specific data rather than generic LLM answers.
+
+#### 4. Automated Sentiment & Spending Anomaly Detection
+* Use **Amazon Comprehend** to analyze user transaction notes and feedback, detecting financial stress indicators or budget anomalies and triggering automated push notifications via Snaptics' Notification system.
+
+---
+
+### Workshop Experience
+
+Attending the **“AI From Scratch”** seminar provided a comprehensive understanding of implementing Artificial Intelligence within cloud environments using AWS services. 
+
+The practical demonstrations made complex AI and RAG concepts intuitive compared to pure theoretical learning. Participating in the end-of-seminar interactive competition and winning the ChatGPT Plus subscription made the event especially memorable, providing valuable hands-on interaction with AWS engineers and peers.
+
+---
 
 ### Key Takeaways
 
-#### Design Mindset
+* Building modern AI solutions does not require training models from scratch; AWS managed services like Amazon Bedrock, Transcribe, Lex, and Polly offer modular building blocks for rapid implementation.
+* Retrieval-Augmented Generation (RAG) using Amazon Bedrock Knowledge Bases is essential for connecting LLMs to private domain data safely and accurately.
+* In the **Snaptics** financial app, combining voice processing, sentiment analysis, and GenAI advice creates a seamless, intelligent user experience.
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
+---
 
-#### Technical Architecture
+### Event Photos
 
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
+Below are photos captured during the **AI From Scratch** seminar, featuring speaker presentations, technical sharing, and interactive competition activities.
 
-#### Modernization Strategy
+<div style="display: flex; gap: 15px; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin-top: 20px;">
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="/images/4.2-Event2/real_event2_1_thay_dinh.jpg" alt="Mai Hoang Dinh – Lecturer & Academic Supervisor at FPT University HCMC" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Figure 1:</b> Mai Hoang Dinh – Lecturer & Academic Supervisor delivering opening remarks.</p>
+  </div>
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="/images/4.2-Event2/real_event2_2_slide.jpg" alt="Technical Slide: Building a Complete AI Agent Workflow" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Figure 2:</b> Technical slide explaining the end-to-end multi-modal AI Agent architecture.</p>
+  </div>
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="/images/4.2-Event2/real_event2_3_group.jpg" alt="Commemorative Group Photo at FPTU HCMC Library Room LB 24" style="border-radius: 8px; width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+    <p style="font-size: 0.9em; margin-top: 8px; color: #555;"><b>Figure 3:</b> Commemorative group photo with speakers, lecturers, and participants.</p>
+  </div>
+</div>
 
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
+---
 
-### Applying to Work
-
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
-
-### Event Experience
-
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
-
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
-
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
-
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
-
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
-
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
-
-#### Some event photos
-*Add your event photos here*  
-
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+> **Summary:** The “AI From Scratch” seminar deepened my understanding of AWS AI managed services and Generative AI technologies. It demonstrated how services such as Amazon Bedrock, Transcribe, Translate, Comprehend, Lex, and Polly can be integrated to build intelligent, interactive cloud applications, while providing key architectural insights for enhancing the Snaptics project.
