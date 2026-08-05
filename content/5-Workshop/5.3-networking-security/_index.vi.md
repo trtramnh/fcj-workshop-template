@@ -63,13 +63,13 @@ Bạn phải cấu hình Firewall cứng (Security Group) theo nguyên tắc t�
 - **ALB Security Group (`snaptics-alb-sg`):** 
   - Mở cổng HTTP (80) và HTTPS (443).
   - *Mẹo bảo mật cao cấp:* Bạn có thể giới hạn Source IP chỉ cho phép dải IP của AWS CloudFront gọi vào, qua đó chặn đứng mọi kẻ lạ cố tình gọi thẳng IP của ALB!
-  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.3-networking-security/alb-sg.jpg" >
+  <div> <img src="/images/5-Workshop/5.3-networking-security/alb-sg.jpg" >
   </div>
 - **ECS Security Group (`snaptics-ecs-sg`):**
   - Mở cổng Custom TCP `8080`. Source CHỈ CHO PHÉP gọi từ `snaptics-alb-sg`.
-  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.3-networking-security/fargate_sg.png" >
+  <div> <img src="/images/5-Workshop/5.3-networking-security/fargate_sg.png" >
   </div>
 - **SQL Server Security Group (`snaptics-aurora-sg`):**
   - Mở cổng DB (Ví dụ 1433 nếu dùng SQL Server hoặc 3306/5432). Source CHỈ CHO PHÉP gọi từ `snaptics-ecs-sg`.
-  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.3-networking-security/db_sg.png" >
+  <div> <img src="/images/5-Workshop/5.3-networking-security/db_sg.png" >
   </div>

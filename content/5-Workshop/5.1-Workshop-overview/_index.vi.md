@@ -11,7 +11,7 @@ Trước khi bắt tay vào cấu hình thực tế trên AWS Console, việc th
 
 ## 1. Sơ đồ Kiến trúc Hệ thống Enterprise
 
-![Snaptics System Architecture](/fcj-workshop-template/images/5-Workshop/5.1-Workshop-overview/snaptics_architecture.jpg)
+![Snaptics System Architecture](/images/5-Workshop/5.1-Workshop-overview/snaptics_architecture.jpg)
 
 ### Phân tích Luồng Dữ Liệu Chuyên sâu 
 

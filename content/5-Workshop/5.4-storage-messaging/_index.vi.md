@@ -37,7 +37,7 @@ Snaptics yêu cầu một DB không bao giờ được phép sập (High Availab
   - VPC security group: Chọn `snaptics-db-sg`.
 - Bấm **Create database**. Cụm SQL Server sẽ mất khoảng 15 phút để tạo. Sau khi xong, copy lấy chuỗi **Writer Endpoint**.
 
-  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.4-storage-messaging/rds.jpg" >
+  <div> <img src="/images/5-Workshop/5.4-storage-messaging/rds.jpg" >
   </div>
 
 ## 2. Kho lưu trữ Hóa đơn (Amazon S3)
@@ -59,7 +59,7 @@ Vì ở bài trước chúng ta đã tạo **VPC Gateway Endpoint**, Code C# ch�
 ]
 ```
 
-  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.4-storage-messaging/s3.jpg" >
+  <div> <img src="/images/5-Workshop/5.4-storage-messaging/s3.jpg" >
   </div>
 
 ## 3. Két sắt Bí mật (AWS Systems Manager Parameter Store)

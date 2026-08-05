@@ -11,7 +11,7 @@ Before getting hands-on with the AWS Console, it is crucial to thoroughly unders
 
 ## 1. Enterprise System Architecture Diagram
 
-![Snaptics System Architecture](/fcj-workshop-template/images/5-Workshop/5.1-Workshop-overview/snaptics_architecture.jpg)
+![Snaptics System Architecture](/images/5-Workshop/5.1-Workshop-overview/snaptics_architecture.jpg)
 
 ### Deep Dive into the Data Flow
 

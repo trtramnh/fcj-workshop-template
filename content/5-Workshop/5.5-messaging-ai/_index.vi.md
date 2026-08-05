@@ -19,7 +19,7 @@ Trong môi trường Enterprise, chỉ tạo 1 Queue là không đủ an toàn. 
 - **Name:** Đặt là `snaptics-ai-queue-dlq` (Có hậu tố DLQ).
 - Các cài đặt khác giữ nguyên, bấm Create.
 
-  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.5-messaging-ai/sqs.jpg" >
+  <div> <img src="/images/5-Workshop/5.5-messaging-ai/sqs.jpg" >
   </div>
 
 ### B. Tạo Main Queue 

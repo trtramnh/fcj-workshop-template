@@ -15,7 +15,7 @@ Instead of hitting the ALB directly, open your browser and navigate to your **Cl
 
 1. **Test Normal Traffic:** Access the normal Swagger UI. It should load exceptionally fast because CloudFront optimizes the delivery through its edge locations.
 
-  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.8-end-to-end-testing/cloudfront.jpg" >
+  <div> <img src="/images/5-Workshop/5.8-end-to-end-testing/cloudfront.jpg" >
   </div>
 
 ## 2. API & AI Integration Testing (Swagger)
