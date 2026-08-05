@@ -37,6 +37,9 @@ Snaptics requires a robust, highly available database. SQL Server automatically 
   - VPC security group: Choose the `snaptics-db-sg` created earlier.
 - Click **Create database**. Wait ~15 minutes and copy the **Writer Endpoint**.
 
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.4-storage-messaging/rds.jpg" >
+  </div>
+
 ## 2. Secure Storage (Amazon S3)
 
 Invoice images must be stored efficiently. Since we configured a **VPC Gateway Endpoint** in the previous step, our containers can save files to S3 internally without internet bandwidth costs.
@@ -55,6 +58,8 @@ Invoice images must be stored efficiently. Since we configured a **VPC Gateway E
     }
 ]
 ```
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.4-storage-messaging/s3.jpg" >
+  </div>
 
 ## 3. Parameter Management (AWS Systems Manager Parameter Store)
 

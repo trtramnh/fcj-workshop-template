@@ -1,5 +1,5 @@
 ---
-title: "Dọn dẹp Tài nguyên (Cleanup)"
+title: "Dọn dẹp Tài nguyên"
 date: 2024-01-01
 weight: 9
 chapter: false

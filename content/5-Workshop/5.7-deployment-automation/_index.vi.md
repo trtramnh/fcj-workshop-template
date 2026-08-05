@@ -81,6 +81,8 @@ Dòng lệnh cuối cùng `--force-new-deployment` kích hoạt cơ chế **Roll
 ## 3. Pipeline Triển khai Frontend (AWS Amplify)
 
 Việc Hosting một trang Angular SPA lên AWS cực kỳ dễ dàng nhờ **AWS Amplify**. Bạn thậm chí không cần viết file YAML lằng nhằng, Amplify có sẵn cổng giao tiếp với GitHub.
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.7-deployment-automation/amplify.jpg" >
+  </div>
 
 ### Thiết lập Amplify Auto-Deploy
 1. Vào AWS Console, mở dịch vụ **AWS Amplify**.

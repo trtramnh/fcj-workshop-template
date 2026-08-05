@@ -14,6 +14,8 @@ Chúc mừng bạn đã dựng xong khối kiến trúc Enterprise đồ sộ! G
 Lần này, ta KHÔNG truy cập qua DNS của ALB nữa. Hãy mở trình duyệt và gõ **Domain của CloudFront** (Ví dụ `https://d1234abcd.cloudfront.net/swagger` hoặc Domain của bạn trên Route 53).
 
 1. **Test Load Tĩnh:** Truy cập trang Swagger bình thường, bạn sẽ thấy nó load nhanh vì CloudFront đã tối ưu đường truyền ở các trạm phát sóng (Edge location).
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.8-end-to-end-testing/cloudfront.jpg" >
+  </div>
 
 ## 2. Kiểm thử API & Trí tuệ Nhân tạo (Swagger)
 

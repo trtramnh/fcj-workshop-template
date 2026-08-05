@@ -63,7 +63,13 @@ Strictly control traffic flow using Security Groups:
 - **ALB Security Group (`snaptics-alb-sg`):** 
   - Allow HTTP (80) and HTTPS (443).
   - *Advanced:* You can restrict the source IP to only CloudFront prefix lists, completely blocking direct internet access to the ALB!
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.3-networking-security/alb-sg.jpg" >
+  </div>
 - **ECS Security Group (`snaptics-ecs-sg`):**
   - Allow Custom TCP `8080` ONLY from `snaptics-alb-sg`.
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.3-networking-security/fargate_sg.png" >
+  </div>
 - **SQL Server Security Group (`snaptics-aurora-sg`):**
   - Allow MySQL/SQL Server (3306) or PostgreSQL (5432) ONLY from `snaptics-ecs-sg`.
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.3-networking-security/db_sg.png" >
+  </div>

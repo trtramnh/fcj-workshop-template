@@ -19,6 +19,9 @@ In a production environment, simply having a queue is not enough. What happens i
 - **Name:** `snaptics-ai-queue-dlq` (Notice the `-dlq` suffix).
 - Keep default settings and click Create.
 
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.5-messaging-ai/sqs.jpg" >
+  </div>
+
 ### B. Create the Main Queue
 - Go back and **Create queue**.
 - **Type:** Standard.

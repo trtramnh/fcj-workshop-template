@@ -21,6 +21,9 @@ Vì các Server Fargate nằm nấp ở mạng Private, ta phải xây một con
 - **VPC:** `snaptics-vpc`.
 - Ở bước chọn Target, cứ bỏ trống (Lát nữa ECS sẽ tự động bơm IP vào đây) và bấm Create.
 
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.6-compute-backend/alb_tg.jpg" >
+  </div>
+
 ### B. Khởi tạo ALB
 - Vào **EC2 ➔ Load Balancers ➔ Create Load Balancer ➔ Application Load Balancer**.
 - **Name:** `snaptics-alb`.
@@ -30,6 +33,9 @@ Vì các Server Fargate nằm nấp ở mạng Private, ta phải xây một con
 - **Listeners and routing:** Mở cổng HTTP (80) và trỏ luồng Forward vào `snaptics-ecs-tg`.
 - Bấm Create.
 
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.6-compute-backend/alb.jpg" >
+  </div>
+
 ## 2. Kho chứa Docker (Amazon ECR)
 
 Trước khi cấu hình ECS, ta cần một kho chứa an toàn để GitHub Actions bắn file Docker Image vào.
@@ -37,6 +43,9 @@ Trước khi cấu hình ECS, ta cần một kho chứa an toàn để GitHub Ac
 - **Visibility settings:** Private (Kín).
 - **Repository name:** `snaptics-api`.
 - Bấm Create. Copy lại chuỗi **URI** (Ví dụ: `123456789.dkr.ecr.ap-southeast-1.amazonaws.com/snaptics-api`).
+
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.6-compute-backend/ecr.jpg" >
+  </div>
 
 *(Lưu ý: Ta sẽ không push image bằng tay bằng dòng lệnh ở đây. Việc này sẽ do GitHub Actions lo trọn gói ở phần tiếp theo).*
 
@@ -47,6 +56,9 @@ Trước khi cấu hình ECS, ta cần một kho chứa an toàn để GitHub Ac
 - **Name:** `Snaptics-Cluster`.
 - **Infrastructure:** AWS Fargate.
 - Hãy BẬT tính năng **Container Insights**. Tính năng này sẽ đẩy log cực kỳ chi tiết của hệ thống về màn hình giám sát CloudWatch (Như trong sơ đồ kiến trúc có vẽ mục Observability).
+
+  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.6-compute-backend/ecscluster.jpg" >
+  </div>
 
 ### B. Tạo Bản thiết kế (Task Definition)
 - Vào **Task definitions ➔ Create new task definition**.
