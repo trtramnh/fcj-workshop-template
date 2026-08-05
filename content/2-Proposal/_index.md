@@ -111,30 +111,28 @@ Snaptics utilizes an AWS Cloud-Native architecture combining a Single Page Appli
 | Component | Role in System |
 | :--- | :--- |
 | **Frontend** | Angular Single Page Application automatically built and deployed via AWS Amplify from GitHub. Distributed via Amazon CloudFront CDN. |
-| **DNS, CDN & Edge Protection** | Amazon Route 53 manages DNS; Amazon CloudFront acts as CDN and ingress point. AWS WAF is attached to CloudFront to inspect and filter web traffic before reaching ALB. |
-| **Networking** | Amazon VPC spanning 02 Availability Zones. Each AZ contains Public Subnets and Private Subnets. ALB and NAT Gateways reside in Public Subnets; ECS Fargate and RDS reside in Private Subnets. |
-| **Backend API** | .NET API containerized with Docker, stored on Amazon ECR, and deployed as ECS Services running Fargate Tasks in Private Subnets behind ALB. |
-| **AI Worker** | ECS Fargate Worker dequeuing messages from SQS, reading images from S3 via Gateway Endpoint, invoking Azure Document Intelligence and Gemini API via NAT Gateway, and writing results to RDS. |
-| **Database** | Amazon RDS for SQL Server managing accounts, transactions, wallets, budgets, notifications, chat history, tickets, and audit logs. Target architecture uses Multi-AZ Primary/Standby. |
-| **Receipt Storage** | Amazon S3 stores raw receipt images and processed files. Backend/Worker access S3 internally via S3 Gateway Endpoint, reducing NAT Gateway traffic. |
-| **Asynchronous Queue** | Amazon SQS buffers OCR/AI tasks; Dead Letter Queue (DLQ) captures failed messages exceeding retry limits for inspection and replay. |
-| **Scheduled Jobs** | Hangfire runner embedded in .NET Backend to schedule, trigger, and monitor periodic system background tasks. |
-| **Notifications** | In-app notifications stored in SQL Server. Amazon SNS supports operational alerts, system health notifications, and push channels. |
-| **Secrets & Security** | AWS Secrets Manager stores RDS connection strings, Gemini API keys, Azure Document Intelligence credentials, and JWT secrets. IAM Roles and Security Groups enforce least privilege. |
-| **Monitoring** | Amazon CloudWatch aggregates logs and metrics for ALB, ECS, RDS, SQS/DLQ, and application tasks; AWS Budgets monitors cost thresholds. |
-| **CI/CD Pipeline** | AWS Amplify auto-deploys Frontend. GitHub Actions builds Docker images, pushes to Amazon ECR, and updates ECS Services. |
+| **DNS, CDN & Edge Protection** | Amazon Route 53 manages DNS resolution; Amazon CloudFront acts as CDN and global entry point, forwarding API requests through the Internet Gateway to ALB. |
+| **Networking (VPC)** | Amazon VPC spanning 02 Availability Zones (AZs). Each AZ contains Public Subnets and Private Subnets. ALB and NAT Gateways reside in Public Subnets; ECS Fargate and Aurora & RDS databases reside in Private Subnets. |
+| **Backend API (ECS Cluster)** | .NET API containerized with Docker, stored on Amazon ECR, and deployed as ECS Services running Fargate Tasks across Private Subnets behind ALB. |
+| **AI Worker** | ECS Fargate Worker dequeuing messages from SQS `snaptics-ai-queue`, reading images from S3 via Gateway Endpoint, invoking External AI APIs (Azure Document Intelligence and Gemini API) via NAT Gateway, and writing results to Aurora & RDS. |
+| **Database** | **Aurora & RDS (Primary / Standby)** managing accounts, transactions, wallets, budgets, notifications, chat history, and support tickets. Configured with Multi-AZ replication between Primary (AZ 2) and Standby (AZ 1). |
+| **Receipt Storage** | Amazon S3 stores raw receipt images and processed files. Backend/Worker access S3 internally via **S3 Gateway Endpoint** within the VPC, reducing NAT Gateway transfer costs. |
+| **Asynchronous Queue** | **Amazon SQS (`snaptics-ai-queue`)** buffers OCR/AI tasks; **Dead Letter Queue (DLQ)** captures failed messages exceeding retry limits for inspection and replay. |
+| **Secrets & Security** | **AWS Secrets Manager** encrypts and stores RDS connection strings, Gemini API keys, Azure credentials, and JWT secrets. IAM Roles and Security Groups enforce least privilege. |
+| **Management & Observability** | **Amazon CloudWatch** (logs/metrics/alarms), **AWS Secrets Manager** (sensitive config), **AWS Budgets** (cost tracking), and **Simple Notification Service (SNS)** (operational alerts). |
+| **CI/CD Pipeline** | GitHub Actions triggers 3 automated paths: (1) **Auto Build & Deploy** Frontend to AWS Amplify, (2) **Build & Push Docker Images** to Elastic Container Registry (ECR), and (3) **Update Service** on ECS Cluster for Fargate to pull new images (**Pull Image**). |
 
 #### 4.3. Main Workflow Steps (Matching Architecture Diagram)
 1. User accesses the Snaptics domain; **Amazon Route 53** (1) resolves DNS to **Amazon CloudFront** (2).
-2. **CloudFront** serves the Frontend SPA hosted on **AWS Amplify**. **AWS WAF** attached to CloudFront inspects and blocks malicious traffic before API requests enter the network.
-3. API requests pass through the **Internet Gateway** to the **Application Load Balancer (ALB)** (3) in Public Subnets.
-4. **ALB** forwards API traffic to **Backend API Tasks** (4) running on **Amazon ECS Fargate** across Private Subnets in two Availability Zones.
-5. Backend reads/writes receipt images to **Amazon S3** via **S3 Gateway Endpoint** (5), avoiding public Internet data transfer.
-6. Backend and AI Worker query/update relational business data on **Amazon RDS for SQL Server** (6); target architecture syncs Primary to Standby Multi-AZ.
-7. Backend pushes OCR/AI jobs to **Amazon SQS** (`snaptics-ai-queue`) (7); AI Worker processes messages, sending failed tasks to **Dead Letter Queue (DLQ)**. ECS pulls Docker images from **Amazon ECR**.
-8. Fargate Workers in Private Subnets dispatch outbound processing calls (8).
+2. **CloudFront** serves the Frontend SPA hosted on **AWS Amplify** and forwards API requests through the **Internet Gateway**.
+3. API requests pass through the Internet Gateway to the **Application Load Balancer (ALB)** (3) in Public Subnets.
+4. **ALB** forwards API traffic to **ECS Fargate Tasks** (4) running in Private Subnets across 02 Availability Zones.
+5. Fargate Tasks read/write receipt images directly to **Amazon S3** via **S3 Gateway Endpoint** (5) in the VPC, bypassing the public Internet.
+6. Fargate Tasks read/write relational business data on **Aurora & RDS Primary / Standby** (6) synchronized across Multi-AZ.
+7. Fargate Tasks push OCR/AI jobs to **Amazon SQS (`snaptics-ai-queue`)** (7); AI Worker processes messages, sending failed tasks to **Dead Letter Queue (DLQ)**. ECS Fargate Tasks pull Docker images from **Amazon ECR**.
+8. Fargate Workers in Private Subnets dispatch outbound requests (8) to external AI services.
 9. Outbound traffic routes through **NAT Gateways** (9) in Public Subnets connected to the Internet Gateway.
-10. AI Worker invokes **Azure Document Intelligence** and **Gemini API** (10) via HTTPS; Gemini API keys and credentials are pulled securely from **AWS Secrets Manager**.
+10. Outbound traffic reaches **External AI APIs** (10) (Azure Document Intelligence & Google Gemini API); credentials are pulled securely from **AWS Secrets Manager**.
 
 #### 4.4. Overall Architecture Diagram
 

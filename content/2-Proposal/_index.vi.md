@@ -111,18 +111,16 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 | Thành phần | Vai trò trong hệ thống |
 | :--- | :--- |
 | **Frontend** | Angular Single Page Application được build và deploy tự động qua AWS Amplify từ GitHub Repository. CloudFront phân phối nội dung Frontend đến người dùng. |
-| **DNS, CDN và bảo vệ biên** | Amazon Route 53 quản lý tên miền; Amazon CloudFront làm CDN và điểm vào chung. AWS WAF được gắn với CloudFront để lọc request bất thường trước khi chuyển request API đến ALB. |
-| **Mạng** | Amazon VPC trải trên 02 Availability Zone. Mỗi AZ có Public Subnet và Private Subnet; ALB và NAT Gateway thuộc tầng công khai, còn ECS Fargate và RDS thuộc tầng riêng. Internet Gateway kết nối VPC với Internet. |
-| **Backend API** | .NET API được đóng gói Docker, lưu trên Amazon ECR và triển khai thành ECS Service chạy Fargate Task trong Private Subnet, nhận lưu lượng từ Application Load Balancer. |
-| **AI Worker** | Worker chạy trên ECS Fargate, nhận message từ SQS, đọc ảnh từ S3, gọi Azure Document Intelligence và Gemini API qua NAT Gateway, sau đó lưu kết quả vào RDS. |
-| **Database** | Amazon RDS for SQL Server lưu người dùng, giao dịch, ví, ngân sách, thông báo, chat, ticket và trạng thái nghiệp vụ. Kiến trúc mục tiêu dùng Multi-AZ Primary/Standby; môi trường demo có thể dùng Single-AZ. |
-| **Lưu trữ hóa đơn** | Amazon S3 lưu ảnh hóa đơn và tệp xử lý; database chỉ lưu metadata và đường dẫn. Backend/Worker truy cập S3 qua S3 Gateway Endpoint để hạn chế lưu lượng đi qua NAT Gateway. |
-| **Hàng đợi** | Amazon SQS tiếp nhận tác vụ OCR/AI; AI Worker xử lý message; Dead Letter Queue giữ message thất bại vượt quá số lần retry để phục vụ kiểm tra và chạy lại. |
-| **Tác vụ định kỳ** | Hangfire chạy cùng Backend .NET để lập lịch, kích hoạt và theo dõi các tác vụ nền. Hangfire quản lý lịch chạy và không thay thế SQS. |
-| **Thông báo** | Thông báo trong ứng dụng được lưu trong SQL Server. Amazon SNS hỗ trợ cảnh báo vận hành, trạng thái hệ thống hoặc tích hợp kênh thông báo khi cần. |
-| **Cấu hình và bảo mật** | AWS Secrets Manager lưu RDS connection string, Gemini API key, Azure Document Intelligence key/endpoint và JWT secret. ECS Task Role, IAM và Security Group giới hạn quyền truy cập. |
-| **Giám sát** | Amazon CloudWatch thu thập log và metric của ALB, ECS, RDS, SQS/DLQ và ứng dụng; AWS Budgets cảnh báo khi chi phí đạt ngưỡng. |
-| **CI/CD** | AWS Amplify tự động build/deploy Frontend. GitHub Actions build Docker Image, đẩy lên Amazon ECR và cập nhật ECS Service; Fargate Task kéo image mới từ ECR khi triển khai. |
+| **DNS, CDN và bảo vệ biên** | Amazon Route 53 quản lý tên miền và phân giải DNS; Amazon CloudFront làm CDN và điểm vào chung. CloudFront chuyển tiếp các request API qua Internet Gateway đến ALB. |
+| **Mạng (VPC)** | Amazon VPC trải trên 02 Availability Zone (AZ). Mỗi AZ có Public Subnet và Private Subnet; ALB và NAT Gateway thuộc tầng Public Subnet, còn ECS Fargate và Database thuộc tầng Private Subnet. |
+| **Backend API (ECS Cluster)** | .NET API được đóng gói Docker, lưu trên Amazon ECR và triển khai thành ECS Service chạy Fargate Task trong Private Subnet của hai Availability Zone, nhận lưu lượng từ Application Load Balancer. |
+| **AI Worker** | ECS Fargate Worker nhận message từ SQS `snaptics-ai-queue`, đọc ảnh từ S3 qua Gateway Endpoint, gọi External AI APIs (Azure Document Intelligence và Gemini API) qua NAT Gateway, sau đó lưu kết quả vào Aurora & RDS. |
+| **Cơ sở dữ liệu (Database)** | **Aurora & RDS (Primary / Standby)** lưu dữ liệu người dùng, giao dịch, ví, ngân sách, thông báo, chat và ticket. Dữ liệu được đồng bộ liên tục giữa Primary (AZ 2) và Standby (AZ 1) trên mạng Private. |
+| **Lưu trữ hóa đơn (Storage)** | Amazon S3 lưu ảnh hóa đơn và tệp xử lý; database chỉ lưu metadata và đường dẫn. Fargate Task truy cập S3 qua **S3 Gateway Endpoint** trực tiếp trong VPC để tối ưu chi phí và bảo mật. |
+| **Hàng đợi (Messaging)** | **Amazon SQS (`snaptics-ai-queue`)** tiếp nhận các tác vụ OCR/AI bất đồng bộ; **Dead Letter Queue (DLQ)** tiếp nhận và giữ lại các message xử lý thất bại vượt quá số lần retry. |
+| **Cấu hình & Bảo mật** | **AWS Secrets Manager** lưu trữ mã hóa RDS connection string, Gemini API key, Azure credentials và JWT secrets. IAM Roles và Security Groups kiểm soát quyền tối thiểu. |
+| **Giám sát & Quản lý** | **Amazon CloudWatch** (thu thập log/metric), **AWS Secrets Manager** (quản lý secret), **AWS Budgets** (cảnh báo ngân sách) và **Simple Notification Service (SNS)** (phát thông báo sự cố/vận hành). |
+| **CI/CD Pipeline** | GitHub Actions thực hiện 3 luồng: (1) **Auto Build & Deploy** Frontend lên AWS Amplify, (2) **Build & Push Docker Images** lên Elastic Container Registry (ECR), và (3) **Update Service** lên ECS Cluster để Fargate kéo image mới (**Pull Image**). |
 
 #### 4.3. Luồng hoạt động chính theo sơ đồ kiến trúc
 1. Người dùng truy cập tên miền Snaptics; **Amazon Route 53** (1) phân giải tên miền đến **Amazon CloudFront** (2).

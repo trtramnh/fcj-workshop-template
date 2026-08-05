@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Tech Stack & AWS Services"
 date: 2024-01-01
 weight: 2
@@ -18,15 +18,17 @@ pre: " <b> 5.1.2. </b> "
 
 ### Lớp Cơ sở Hạ tầng (AWS Infrastructure)
 
-- **Amazon ECS Fargate:** Đóng gói toàn bộ ứng dụng .NET bên trên thành 1 container (Docker). Fargate giúp chạy container này mà không cần tốn công cấu hình hay bảo trì máy chủ EC2 gốc. Tự động mở rộng (Scale out) khi lượng request tăng đột biến.
-- **Amazon RDS (SQL Server):** Dịch vụ Database được quản lý hoàn toàn. Hỗ trợ tự động sao lưu (Auto-backup), patch lỗi bảo mật và Multi-AZ để đảm bảo chống lỗi phần cứng.
-- **Amazon S3 (Simple Storage Service):** Kho lưu trữ Object Storage giá rẻ và bền bỉ vô tận, dùng để chứa mọi file ảnh, PDF biên lai của người dùng trước khi gửi đi phân tích OCR.
+- **Amazon ECS Fargate:** Đóng gói ứng dụng .NET Backend và AI Worker thành các Container (Docker) chạy trên ECS Cluster. Fargate tự động vận hành container trong các Private Subnet trải rộng trên 02 Availability Zone mà không cần quản lý máy chủ EC2.
+- **Amazon Aurora & RDS (Primary / Standby):** Dịch vụ Cơ sở dữ liệu quan hệ hoàn toàn tự động. Hỗ trợ cơ chế Multi-AZ (Primary ở AZ 2 và Standby ở AZ 1) với tính năng nhân bản liên tục, tự động sao lưu và khôi phục khi có sự cố.
+- **Amazon S3 (Simple Storage Service):** Kho lưu trữ Object Storage dùng chứa ảnh hóa đơn và tệp dữ liệu. Kết nối với ECS qua **S3 Gateway Endpoint** trực tiếp trong VPC nhằm tối ưu hóa chi phí đường truyền và tăng cường bảo mật.
+- **AWS Amplify:** Nền tảng hosting và tự động hóa build/deploy Frontend SPA từ GitHub Repo.
+- **Amazon CloudFront & Route 53:** Route 53 quản lý tên miền; CloudFront đóng vai trò CDN điều phối lưu lượng đến Frontend Amplify và chuyển tiếp API Request qua Internet Gateway đến ALB.
 
 ### Lớp Điều phối & Tích hợp (Messaging & Integration)
 
-- **Amazon SNS (Simple Notification Service):** Chủ yếu dùng để bắn các tín hiệu cảnh báo khẩn cấp hoặc gửi luồng event cho nhiều subcriber cùng lúc.
-- **Amazon SQS (Simple Queue Service):** Hàng đợi message. Đóng vai trò làm bộ đệm (Buffer) khi lượng hóa đơn tải lên quá lớn, giúp hệ thống không bị nghẽn (Decoupling).
-- **AWS Parameter Store:** Nơi lưu trữ an toàn các tham số cấu hình nhạy cảm. Ứng dụng .NET sẽ tự động load cấu hình từ đây lúc startup để tránh bị lộ Secret Key ra mã nguồn.
+- **Amazon SQS (`snaptics-ai-queue`) & DLQ:** Hàng đợi thông điệp đóng vai trò làm bộ đệm (Buffer) xử lý tác vụ OCR/AI bất đồng bộ, kết hợp Dead Letter Queue (DLQ) giữ lại các message bị lỗi để kiểm tra lại.
+- **Amazon SNS (Simple Notification Service):** Dịch vụ phát thông báo cảnh báo sự cố vận hành và trạng thái hệ thống.
+- **AWS Secrets Manager:** Quản lý và cung cấp an toàn các thông tin cấu hình nhạy cảm (RDS Connection String, Gemini API Key, Azure Credentials, JWT Secret) cho Fargate Tasks.
 
 ### Lớp Trí tuệ Nhân tạo (AI & OCR)
 

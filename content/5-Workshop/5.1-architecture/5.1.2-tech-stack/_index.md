@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Tech Stack & AWS Services"
 date: 2024-01-01
 weight: 2
@@ -18,15 +18,17 @@ To operate a smooth financial system like Snaptics, we use a hybrid ecosystem co
 
 ### AWS Infrastructure
 
-- **Amazon ECS Fargate:** Packages the above .NET application into a container (Docker). Fargate helps run this container without the effort of configuring or maintaining underlying EC2 servers. Scales out automatically during traffic spikes.
-- **Amazon RDS (SQL Server):** Fully managed Database service. Supports auto-backup, security patching, and Multi-AZ to ensure hardware fault tolerance.
-- **Amazon S3 (Simple Storage Service):** Cheap and infinitely durable Object Storage, used to hold all user image files and PDF receipts before sending them for OCR analysis.
+- **Amazon ECS Fargate:** Packages the .NET Backend API and AI Worker into Docker containers running on ECS Cluster. Fargate automatically runs containers across Private Subnets in 02 Availability Zones without managing EC2 instances.
+- **Amazon Aurora & RDS (Primary / Standby):** Fully managed relational database service. Supports Multi-AZ replication (Primary in AZ 2, Standby in AZ 1), automated backups, and hardware fault tolerance.
+- **Amazon S3 (Simple Storage Service):** Object storage for receipt images and data files. Connects directly via **S3 Gateway Endpoint** within the VPC to optimize bandwidth costs and security.
+- **AWS Amplify:** Hosting platform and automated build/deploy pipeline for the Frontend SPA from the GitHub Repository.
+- **Amazon CloudFront & Route 53:** Route 53 manages DNS; CloudFront serves as CDN delivering Frontend assets and routing API Requests through the Internet Gateway to ALB.
 
 ### Messaging & Integration
 
-- **Amazon SNS (Simple Notification Service):** Primarily used to fire emergency alerts or stream events to multiple subscribers simultaneously.
-- **Amazon SQS (Simple Queue Service):** Message queue. Acts as a buffer when invoice upload volume is too high, preventing system bottlenecks (Decoupling).
-- **AWS Parameter Store:** A safe place to store sensitive configuration parameters. The .NET application will automatically load configs from here at startup to avoid exposing Secret Keys in the source code.
+- **Amazon SQS (`snaptics-ai-queue`) & DLQ:** Message queue buffering asynchronous OCR/AI tasks, paired with Dead Letter Queue (DLQ) to hold failed messages for inspection and replay.
+- **Amazon SNS (Simple Notification Service):** Dispatches operational alerts and system health notifications.
+- **AWS Secrets Manager:** Securely stores and injects sensitive configuration parameters (RDS Connection String, Gemini API Key, Azure Credentials, JWT Secret) into Fargate Tasks.
 
 ### Artificial Intelligence (AI & OCR)
 
