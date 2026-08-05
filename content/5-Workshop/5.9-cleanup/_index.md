@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Cleanup"
 date: 2024-01-01
 weight: 9
@@ -7,43 +7,35 @@ pre: " <b> 5.9. </b> "
 ---
 
 
-The cleanup step is the most critical step for students and Cloud learners to avoid credit card charges. Please follow this sequentially from top to bottom to ensure resources do not lock each other out (e.g., a VPC cannot be deleted if the NAT Gateway is still alive).
+Because this is a massive Enterprise-grade architecture, keeping it running 24/7 will incur significant AWS charges (especially SQL Server Multi-AZ, WAF, and NAT Gateway). You MUST tear it down immediately after testing.
 
-> [!CAUTION]
-> Strictly follow the order below. If you encounter a "Network Interface is in use" error, it means you haven't fully cleared the shared network resources.
+Follow this exact reverse order to prevent dependency lock errors:
 
-### 1. Cleanup ECS Fargate
-- Open **Amazon ECS ➔ Clusters ➔ `Snaptics-Cluster`**.
-- Check `snaptics-backend-service` ➔ Click **Update**.
-- Change `Desired tasks` to **0** ➔ Click **Update**. (This action forces AWS to shut down the servers).
-- Go back to the Services tab, wait for the Tasks status to reach STOPPED. Check the Service again ➔ **Delete**.
-- Delete the `Snaptics-Cluster` entirely.
+### 1. Frontend & CDN
+- **AWS Amplify:** Go to the Amplify console, select the Snaptics app, click Actions ➔ **Delete app**.
+- **CloudFront:** Go to CloudFront, select the distribution, click **Disable**. Wait ~5 minutes for it to deploy the disabled state, then click **Delete**.
+- **AWS WAF:** Go to WAF, Web ACLs, select `snaptics-waf-acl` and **Delete**.
+- **Route 53 (Optional):** Delete any custom records you created. Do not delete the Hosted Zone if you paid for the domain.
 
-### 2. Cleanup Load Balancer
-- Open **EC2 ➔ Load Balancers**.
-- Check `snaptics-alb` ➔ Select Actions ➔ **Delete**.
-- Switch to the **Target Groups** tab, delete `snaptics-tg`.
+### 2. Compute Layer (ECS & ALB)
+- **ECS Fargate:** Go to `Snaptics-Cluster`, update the service desired tasks to `0`. Wait for them to stop. Delete the Service. Then, Delete the Cluster.
+- **Load Balancer:** Go to EC2 ➔ Load Balancers. Delete `snaptics-alb`.
+- **Target Groups:** Delete `snaptics-ecs-tg`.
 
-### 3. Cleanup RDS Database
-- Open **Amazon RDS ➔ Databases**.
-- Check `snaptics-db` ➔ Actions ➔ **Delete**.
-- **Important:** Uncheck "Create final snapshot", agree to delete automated backups, and type `delete me` into the confirmation box. Click **Delete**.
+### 3. Data & Storage Layer
+- **Amazon RDS for SQL Server:** Go to RDS ➔ Databases. Select the `snaptics-sql-server`. Click Actions ➔ **Delete**. *Crucial: Uncheck "Create final snapshot", acknowledge the warnings, and type `delete me`.*
+- **AWS Systems Manager Parameter Store:** Select `/snaptics/prod/db-connection` ➔ Actions ➔ **Schedule secret deletion** (set to 7 days).
+- **Amazon S3:** Go to your bucket. Click **Empty** to permanently delete all uploaded invoices. Then click **Delete** to remove the bucket itself.
+- **Amazon ECR:** Delete the `snaptics-api` repository containing your Docker images.
 
-### 4. Cleanup NAT Gateway & Elastic IP (Most expensive)
-- Open **VPC ➔ NAT Gateways**.
-- Check `snaptics-nat-gw` ➔ **Delete NAT gateway**.
-- Wait about 3 minutes for the word Deleted to appear.
-- Open **VPC ➔ Elastic IPs**, check the IP you just created, Actions ➔ **Release Elastic IP addresses**. (Forgetting to release an Elastic IP will cause AWS to charge a $1/month idle fee).
+### 4. Networking & VPC
+- **NAT Gateway:** Go to VPC ➔ NAT Gateways. Delete `snaptics-nat-gw`.
+- **Elastic IP (Crucial):** Wait 3 minutes for the NAT Gateway to disappear. Then go to **Elastic IPs**, select the IP, and **Release** it. If you forget this, AWS charges an idle fee!
+- **VPC Endpoints:** Go to VPC ➔ Endpoints. Delete the S3 Gateway Endpoint.
+- **VPC:** Finally, go to VPC ➔ Your VPCs. Select `snaptics-vpc` and click **Delete VPC**. This will elegantly wipe out all remaining subnets, route tables, and security groups.
 
-### 5. Cleanup S3, ECR, SQS, SNS, Parameter Store
-- **S3:** Go to the `s3-bucket-snaptics` bucket. You must click the **Empty** button (to clear files inside) before the system allows you to click the **Delete** bucket button.
-- **ECR:** Go delete the repository containing your Docker image.
-- **SQS/SNS:** Delete the `snaptics-main-queue` queue and `snaptics-alerts` topic.
-- **Parameter Store:** Select each configuration row and click delete.
+### 5. Identity (IAM & GitHub)
+- **IAM:** Delete the `github-actions-snaptics` user and the two ECS Roles.
+- **GitHub Secrets:** Remove the AWS credentials from your GitHub repository settings to keep your account safe.
 
-### 6. Delete VPC Last
-- Open **VPC ➔ Your VPCs**.
-- Check `snaptics-vpc` ➔ Actions ➔ **Delete VPC**.
-- This action will automatically clean up all remaining Subnets, Route Tables, Internet Gateways, and Security Groups in a single click!
-
-Congratulations, you have successfully completed the massive project of deploying the Snaptics API Multi-Stack Architecture on AWS!
+Congratulations on successfully deploying (and safely destroying) a real-world AWS Enterprise Architecture!

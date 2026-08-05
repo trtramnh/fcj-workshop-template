@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Dọn dẹp Tài nguyên (Cleanup)"
 date: 2024-01-01
 weight: 9
@@ -7,43 +7,36 @@ pre: " <b> 5.9. </b> "
 ---
 
 
-Bước dọn dẹp là bước quan trọng nhất đối với sinh viên và những người học Cloud để tránh bị trừ tiền thẻ tín dụng. Hãy thực hiện tuần tự từ trên xuống dưới để đảm bảo các tài nguyên không bị khóa chéo lẫn nhau (VD: VPC không thể xóa nếu NAT Gateway vẫn còn sống).
+Vì đây là kiến trúc Enterprise siêu to khổng lồ, việc để nó chạy qua đêm sẽ "đốt" của bạn một lượng tiền không nhỏ (đặc biệt là Database SQL Server Multi-AZ, WAF và NAT Gateway). BẠN BẮT BUỘC PHẢI DỌN DẸP NGAY SAU KHI THỰC HÀNH XONG!
 
-> [!CAUTION]
-> Tuyệt đối tuân thủ thứ tự dưới đây. Nếu gặp lỗi báo "Network Interface is in use", tức là bạn chưa xóa sạch tài nguyên dùng chung mạng.
+Hãy làm đúng trình tự ngược từ ngoài vào trong dưới đây để tránh bị lỗi "tài nguyên đang bị khóa":
 
-### 1. Dọn dẹp ECS Fargate
-- Mở **Amazon ECS ➔ Clusters ➔ `Snaptics-Cluster`**.
-- Tick chọn `snaptics-backend-service` ➔ Bấm **Update**.
-- Sửa mục `Desired tasks` về số **0** ➔ Bấm **Update**. (Hành động này ép AWS tắt máy chủ).
-- Quay lại tab Services, đợi status của các Task về STOPPED. Tick lại vào Service ➔ **Delete**.
-- Xóa luôn `Snaptics-Cluster`.
+### 1. Tầng Frontend & Mạng ngoài
+- **AWS Amplify:** Vào giao diện Amplify, chọn App Snaptics, bấm Actions ➔ **Delete app**.
+- **CloudFront:** Chọn Distribution của bạn, bấm **Disable**. Khúc này phải ngồi đợi khoảng 5 phút cho nó tắt hẳn (Deploying). Khi nào xong mới hiện nút **Delete** để xóa.
+- **AWS WAF:** Vào mục Web ACLs, chọn `snaptics-waf-acl` và bấm **Delete**.
+- **Route 53:** Xóa các Record CNAME/A bạn đã trỏ. (Đừng xóa Hosted Zone nếu đó là domain bạn mua bằng tiền).
 
-### 2. Dọn dẹp Load Balancer
-- Mở **EC2 ➔ Load Balancers**.
-- Tick chọn `snaptics-alb` ➔ Chọn Actions ➔ **Delete**.
-- Sang tab **Target Groups**, xóa `snaptics-tg`.
+### 2. Tầng Compute & Load Balancer
+- **ECS Fargate:** Vào `Snaptics-Cluster`, sửa `Desired tasks` của Service về `0`. Đợi cho các máy ảo tắt ngấm. Xóa Service. Sau đó xóa trắng Cluster.
+- **Load Balancer:** Vào EC2 ➔ Load Balancers, xóa `snaptics-alb`.
+- **Target Groups:** Nhảy qua tab Target Groups, xóa `snaptics-ecs-tg`.
 
-### 3. Dọn dẹp Database RDS
-- Mở **Amazon RDS ➔ Databases**.
-- Tick chọn `snaptics-db` ➔ Actions ➔ **Delete**.
-- **Quan trọng:** Bỏ tick dòng "Create final snapshot" (Tạo bản backup cuối), đồng ý xóa tự động backup, và gõ chữ `delete me` vào ô xác nhận. Bấm **Delete**.
+### 3. Tầng Dữ liệu & Storage (Nơi đốt tiền nhiều nhất)
+- **Amazon RDS for SQL Server:** Vào RDS ➔ Databases. Chọn cụm `snaptics-sql-server`. Bấm Actions ➔ **Delete**. *Cực kỳ cẩn thận: BỎ tick dòng "Create final snapshot", tick đồng ý mọi cảnh báo rủi ro, gõ chữ `delete me` vào ô xác nhận.*
+- **AWS Systems Manager Parameter Store:** Chọn `/snaptics/prod/db-connection` ➔ Actions ➔ **Schedule secret deletion** (Hẹn 7 ngày sau tự xóa vĩnh viễn).
+- **Amazon S3:** Vào Bucket của bạn. Bấm **Empty** để dọn sạch rác hóa đơn ảnh bên trong. Sau đó mới bấm **Delete** Bucket được.
+- **Amazon ECR:** Xóa Repository chứa file Docker.
+- **SQS & SNS:** Xóa hàng đợi `snaptics-ai-queue` (và cái DLQ của nó), xóa luôn Topic cảnh báo.
 
-### 4. Dọn dẹp NAT Gateway & Elastic IP (Ngốn tiền nhất)
-- Mở **VPC ➔ NAT Gateways**.
-- Tick chọn `snaptics-nat-gw` ➔ **Delete NAT gateway**.
-- Chờ khoảng 3 phút cho chữ Deleted xuất hiện.
-- Mở **VPC ➔ Elastic IPs**, tick chọn cái IP vừa tạo, Actions ➔ **Release Elastic IP addresses**. (Lỗi quên release Elastic IP sẽ bị AWS thu phí treo 1$/tháng).
+### 4. Tầng Mạng nội bộ (VPC)
+- **NAT Gateway:** Vào VPC ➔ NAT Gateways. Bấm xóa `snaptics-nat-gw`.
+- **Elastic IP (Rất dễ quên):** Chờ 3 phút cho cục NAT bay màu hẳn. Tiếp tục vào mục **Elastic IPs**, check chọn cái IP tĩnh đó và bấm **Release IP**. (Quên bước này AWS trừ 1 đô/tháng tiền thuê IP tĩnh).
+- **VPC Endpoints:** Vào mục Endpoints, xóa cái S3 Gateway Endpoint.
+- **VPC:** Cuối cùng, vào VPC ➔ Your VPCs. Chọn `snaptics-vpc` và bấm **Delete VPC**. Cú click quyền lực này sẽ tự động thu gom và đốt sạch toàn bộ Subnets, Route Tables, IGW và Security Groups còn sót lại!
 
-### 5. Dọn dẹp S3, ECR, SQS, SNS, Parameter Store
-- **S3:** Vào bucket `s3-bucket-snaptics`. Bạn phải bấm nút **Empty** (Xóa sạch file bên trong) thì hệ thống mới cho phép bạn bấm nút **Delete** bucket.
-- **ECR:** Vào xóa repository chứa Docker image của bạn.
-- **SQS/SNS:** Xóa queue `snaptics-main-queue` và topic `snaptics-alerts`.
-- **Parameter Store:** Chọn từng dòng cấu hình và bấm xóa.
+### 5. Khóa bảo mật (IAM & GitHub)
+- **IAM:** Xóa user `github-actions-snaptics` và 2 cái Role của ECS để đóng cửa hoàn toàn quyền truy cập.
+- **GitHub Secrets:** Vào repo GitHub xóa 2 cái khóa AWS đi cho an toàn.
 
-### 6. Xóa VPC Cuối cùng
-- Mở **VPC ➔ Your VPCs**.
-- Tick chọn `snaptics-vpc` ➔ Actions ➔ **Delete VPC**.
-- Hành động này sẽ tự động thu dọn nốt toàn bộ Subnets, Route Tables, Internet Gateway và Security Groups còn sót lại trong 1 cú click!
-
-Chúc mừng bạn đã hoàn thành xuất sắc siêu dự án triển khai Snaptics API Multi-Stack Architecture trên AWS!
+Chúc mừng bạn đã hoàn thành xuất sắc khóa huấn luyện triển khai (và tiêu hủy) một hệ thống AWS Enterprise thực thụ!
