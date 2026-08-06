@@ -1,62 +1,90 @@
 ---
 title: "Blog 2"
-date: 2026-07-27
-weight: 2
+date: 2024-01-01
+weight: 1
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-# AWS TOOLKIT & CLOUD-NATIVE MINDSET FROM REAL-WORLD INTERNSHIP
+# BUILDING A SCALABLE E-COMMERCE WEBSITE ON AWS
 
-Hello everyone,
+Modern e-commerce websites often experience significant traffic fluctuations, especially during promotional campaigns, flash sales, and peak shopping seasons. If every request is handled by a single application server while directly accessing the database, the system can quickly become overloaded, resulting in slower response times or service interruptions.
 
-During my internship and participation in practical project development at the company, although the main Cloud component I interacted with was Amazon S3, the implementation process helped me acquire essential foundational knowledge about the Amazon Web Services (AWS) ecosystem and Cloud-Native mindset.
+AWS provides a wide range of managed services that help organizations build scalable, secure, and highly available web applications. By combining networking, security, compute, caching, databases, and monitoring services, developers can design cloud-native architectures capable of handling dynamic workloads while maintaining a consistent user experience.
 
-![Architecture Diagram: Monolithic Storage to S3 Decoupled Conversion](/images/3.2-Blog2/architecture-diagram.jpg)
+### Architecture Overview
 
-## Key Learnings & Practical Application
+The overall request flow is illustrated below:
 
-1. **Understanding and Applying System Decoupling**
+**User → Amazon Route 53 → Amazon CloudFront → AWS WAF → Application Load Balancer → Amazon ECS (AWS Fargate) → Amazon ElastiCache / Amazon Aurora Serverless v2**
 
-   * **Key Learning:** Previously, I used to store static files (images, documents) locally on the application server (Local storage) or as binary data inside the database. Working with AWS helped me understand the "Decoupling" mindset — completely separating Compute from Storage.
-   * **Practical Application:** I designed the .NET Backend to only handle business logic, offloading all files/documents to Amazon S3 (Object Storage) and storing only file URLs in the Database. This significantly reduced server load, eliminated disk capacity concerns, and kept database queries lightweight and fast.
+Each AWS service plays a specific role within the architecture:
 
-2. **Mastering AWSSDK and Hands-on Operations with S3**
+- **Amazon Route 53**
+  - Resolves domain names and routes user requests to the appropriate AWS resources.
 
-   * **Key Learning:** Transitioning from manual operations on the AWS Web Console to interacting with and managing resources entirely via code (using AWS SDK).
-   * **Practical Application:** I successfully integrated the `AWSSDK.S3` NuGet package into the core system, writing custom Service classes in C# to manage the complete file lifecycle: streaming data uploads (`PutObjectRequest`), setting accurate Metadata/ContentType for different file formats, and securely retrieving and deleting files on the cloud.
-   * **Cost Optimization Mindset:** Beyond file storage, I realized controlling orphaned files on S3 is equally crucial. In cases where users cancel uploads midway (e.g., closing tab, network drop), orphaned files remain on the Bucket without Database references. I implemented cleanup logic by invoking `DeleteObjectAsync` immediately upon transaction failures, or configuring S3 Lifecycle Policies to automatically delete temporary directory files (`temp/`) after a set period. This taught me a practical Cloud Cost Optimization lesson — pay only for what you use, but proactively clean up to avoid hidden storage costs.
+- **Amazon CloudFront**
+  - Delivers content from edge locations closer to users, reducing latency and improving website performance.
 
-3. **Access Control Management with AWS IAM (Identity and Access Management)**
+- **AWS WAF**
+  - Protects the application against common web attacks such as SQL injection and cross-site scripting (XSS).
 
-   * **Key Learning:** Mastering the core principle of Cloud Security: Least Privilege Principle. I realized the severe security risks of using root AWS accounts for application connections.
-   * **Practical Application:** I configured dedicated IAM User accounts for development environments. Instead of granting Admin access, I learned to write JSON IAM Policies to restrict permissions: the Backend application is only allowed to Read (`s3:GetObject`) and Write (`s3:PutObject`) to a single specific project Bucket, eliminating risks of data tampering or cross-bucket leaks.
+- **Application Load Balancer**
+  - Distributes incoming requests across multiple backend containers to improve scalability and availability.
 
-4. **Secret Key & Environment Variable Security**
+- **Amazon ECS with AWS Fargate**
+  - Runs containerized backend services without requiring developers to manage servers.
 
-   * **Key Learning:** Clear awareness of Security Vulnerabilities when working with Cloud services, especially hardcoding credentials in source code.
-   * **Practical Application:** I established a sensitive data management workflow for Access Keys and Secret Keys using `appsettings.json` (excluded from Git) and Environment Variables. This ensured absolute security when pushing source code to repositories like GitHub.
+- **Amazon Cognito**
+  - Handles user registration, authentication, and authorization securely.
 
-5. **Secure Data Sharing with Pre-signed URLs**
+- **Amazon ElastiCache**
+  - Stores frequently accessed data in memory to reduce database workload and improve response times.
 
-   * **Key Learning:** Understanding static resource security on the Internet. By default, S3 enables Block Public Access to protect internal data.
-   * **Practical Application:** I researched and successfully deployed Pre-signed URLs. When a Client needs to view a document or image, the Backend uses AWS credentials to generate a temporary link (valid for short durations, e.g., 15–30 minutes). This technique securely shares files with authorized users without making the entire Bucket publicly accessible.
+- **Amazon Aurora Serverless v2**
+  - Stores core application data while automatically scaling database capacity based on workload.
 
-![C# S3Service Implementation of GeneratePreSignedUrl](/images/3.2-Blog2/s3service-code.jpg)
+### Monitoring and Alerting
 
-## Real-world CORS Debugging Experience
+Monitoring plays an important role in maintaining application reliability.
 
-A real-world pitfall I encountered was when Frontend invoked Pre-signed URLs to upload directly to S3, browsers consistently blocked requests due to CORS (Cross-Origin Resource Sharing). While Postman testing succeeded, browser requests failed due to Same-Origin Policy.
+Amazon CloudWatch continuously collects metrics and logs from Amazon ECS and Amazon Aurora. When abnormal conditions are detected, such as high CPU utilization, application errors, or database performance degradation, **CloudWatch Alarm** automatically triggers **Amazon SNS** to send notifications via email or SMS.
 
-My solution was configuring CORS Policy on the S3 Bucket, explicitly defining allowed origins (`localhost` for dev, staging domain for testing) and enabling GET/PUT methods. Through this incident, I gained a deeper understanding that Cloud security extends beyond Server-to-Server (IAM, Secret Keys) to Browser-level security.
+**Monitoring Flow**
 
-## Conclusion
+**Amazon CloudWatch → CloudWatch Alarm → Amazon SNS → Email / SMS**
 
-The internship not only taught me how to utilize a cloud storage service (Amazon S3), but more importantly, shaped my software design architecture mindset. Lessons in security (IAM), architectural optimization, and Cloud SDK usage form a solid foundation for my future career as a Backend / Cloud-Native Engineer.
+### Benefits of the Architecture
 
-## Reference Material
+This architecture offers several advantages:
 
-* [Amazon S3 Developer Guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html)
-* [AWS SDK for .NET Documentation](https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/welcome.html)
+- Improved application performance through CloudFront and ElastiCache.
+- Enhanced security using AWS WAF and Amazon Cognito.
+- Automatic scalability with Amazon ECS, AWS Fargate, and Aurora Serverless v2.
+- High availability through Application Load Balancer.
+- Continuous monitoring and proactive alerting using CloudWatch and Amazon SNS.
 
-#AWS #AmazonS3 #CloudNative #Decoupling #AWSSDK #IAM #PreSignedURL #Backend
+### What I learned
+
+This reference architecture demonstrates how multiple AWS managed services can be integrated to build a scalable and cloud-native e-commerce platform.
+
+By exploring this architecture, I gained a better understanding of the responsibilities of individual AWS services and how networking, security, container orchestration, caching, databases, and monitoring work together to support production-ready applications. It also reinforced the importance of designing systems that are scalable, secure, and resilient from the beginning.
+
+### Images
+
+<div style="text-align: center;">
+    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.2-Blog2/blog2.jpg"
+         alt="Scalable E-commerce Architecture"
+         style="width: 900px; height: auto; border-radius: 8px;">
+    <p>Scalable E-commerce website architecture on AWS.</p>
+</div>
+
+### Reference Material
+
+This blog is based on the following AWS official guidance:
+
+- **Guidance for Web Store on AWS**
+  https://docs.aws.amazon.com/solutions/web-store-on-aws/
+
+- **Guidance for Building a Containerized and Scalable Web Application on AWS**
+  https://docs.aws.amazon.com/solutions/building-a-containerized-and-scalable-web-application-on-aws/

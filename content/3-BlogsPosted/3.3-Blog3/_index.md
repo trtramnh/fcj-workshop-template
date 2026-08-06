@@ -1,103 +1,82 @@
 ---
 title: "Blog 3"
-date: 2026-07-27
-weight: 3
+date: 2024-01-01
+weight: 1
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-# HOW DID AWS UPGRADE AMAZON COGNITO WITHOUT USERS NOTICING?
+# AWS LESSONS AND CLOUD-NATIVE MINDSET FROM MY INTERNSHIP
 
-Hello everyone,
+During my internship, I had the opportunity to participate in a real-world backend project where Amazon S3 was integrated for storing documents and images. Although Amazon S3 was the primary AWS service used in the project, the implementation process provided valuable opportunities to learn cloud-native application design and gain a broader understanding of the AWS ecosystem.
 
-In modern systems, authentication is almost the "front door" of the entire application. Just a few minutes of login system failure can prevent users from accessing services, cause password reset requests to fail, and disrupt the entire user experience.
+Beyond learning how cloud storage is integrated into backend applications, I also explored important concepts related to system architecture, security, cost optimization, and cloud best practices that are commonly applied in production environments.
 
-For large-scale identity management systems like Amazon Cognito – serving hundreds of millions of user profiles – changing backend infrastructure is not as simple as deploying a new version. Even a minor change could cause downtime or alter application authentication behavior.
+### Key Lessons
 
-AWS recently shared how Amazon Cognito was upgraded to a next-generation infrastructure, unlocking key capabilities such as high-throughput performance, customer-managed encryption keys, and multi-Region replication, all while users barely noticed any disruption.
+Throughout the internship, I learned several important cloud-native concepts.
 
-What makes this remarkable is not just the new features, but how AWS executed a large-scale migration with a near-zero downtime objective.
+- **Decoupling Compute and Storage**
+  - Learned how backend services can focus on business logic while uploaded files are stored in Amazon S3.
+  - Understood why storing object URLs in the database is more efficient than storing binary files directly.
+  - Recognized how this design improves scalability and reduces storage pressure on application servers.
 
-## What's New in Amazon Cognito?
+- **Working with AWS SDK for Amazon S3**
+  - Learned how the AWSSDK.S3 package is integrated into a .NET backend.
+  - Explored common operations such as file upload, download, metadata management, and object deletion using C#.
+  - Gained a better understanding of interacting with AWS services programmatically instead of relying solely on the AWS Management Console.
 
-Following the architectural upgrade, Amazon Cognito unlocked several notable capabilities:
+- **Cost Optimization**
+  - Learned that unused objects can gradually increase cloud storage costs.
+  - Understood the importance of cleaning up temporary files.
+  - Explored Amazon S3 Lifecycle Policies for automatically removing obsolete objects.
 
-1. **High-Throughput Performance**
+- **IAM and Least Privilege**
+  - Learned why applications should avoid using the AWS Root Account.
+  - Understood how IAM users and policies provide secure access control.
+  - Recognized the importance of applying the Principle of Least Privilege.
 
-   The next-generation infrastructure enables Cognito to process higher request volumes and support modern workloads with:
-   * Tens of millions of users in a single user pool
-   * Thousands of transactions per second (TPS)
-   * Low latency to avoid impacting the login experience
+- **Protecting AWS Credentials**
+  - Learned why Access Keys and Secret Keys should be stored securely using environment variables or configuration files excluded from source control.
+  - Understood the risks of hardcoding sensitive credentials into application source code.
 
-   This is particularly beneficial for large-scale systems or workloads needing rapid authentication scaling.
+- **Secure File Sharing with Pre-signed URLs**
+  - Learned how Amazon S3 Pre-signed URLs provide temporary and secure access to private objects.
+  - Understood how private S3 buckets can securely share files with authorized users.
 
-2. **Customer-Managed Keys (CMK)**
+- **Understanding Browser Security**
+  - Learned about Cross-Origin Resource Sharing (CORS) when frontend applications communicate with Amazon S3.
+  - Understood how S3 CORS policies help allow trusted requests while maintaining security.
+  - Recognized that cloud security involves both backend permissions and browser-level security policies.
 
-   Another notable change is the support for customer-managed encryption keys via AWS KMS. Instead of relying entirely on AWS-managed keys, enterprises can:
-   * Self-manage the encryption key lifecycle
-   * Maintain better control over encrypted data at rest
-   * Meet stringent security and compliance requirements
+### What I Learned
 
-   This is a critical capability for enterprise systems and organizations with high security standards.
+This internship helped me realize that cloud computing is much more than simply using AWS services. Designing cloud-native applications requires careful consideration of architecture, security, scalability, and cost optimization to build reliable systems.
 
-3. **Multi-Region Replication**
+Learning from a real-world project also gave me a better understanding of how AWS services work together in practice. These experiences strengthened my cloud-native mindset and provided a valuable foundation for my future development as a Backend Developer and Cloud Engineer.
 
-   AWS also added the ability to replicate user pools to another Region, including:
-   * User profiles
-   * Passwords
-   * User attributes
-   * Configurations
+### Images
 
-   If a Regional failure occurs, the authentication system can seamlessly continue operating in another Region. This is a valuable capability because authentication is typically a zero-downtime component in system architecture.
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-top: 20px;">
 
-## What Changed in the Architecture?
+  <div style="width: 420px; text-align: center;">
+    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.3-Blog3/blog3.jpg"
+         alt="Amazon S3 Architecture"
+         style="width:100%; height:260px; object-fit:contain; background:#fafafa; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+    <p>Cloud-native architecture integrating Amazon S3 into the backend application.</p>
+  </div>
 
-According to AWS, the previous Cognito architecture relied heavily on a centralized data store. While this approach simplified data management, it slowed down the rollout of new capabilities.
+  <div style="width: 420px; text-align: center;">
+    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.3-Blog3/blog3.1.jpg"
+         alt="Amazon S3 Pre-signed URL"
+         style="width:100%; height:260px; object-fit:contain; background:#fafafa; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+    <p>Generating Amazon S3 Pre-signed URLs using the AWS SDK for .NET.</p>
+  </div>
 
-In the new architecture, Cognito was designed around several core principles:
+</div>
 
-* **Identity-First Design:** Rather than attempting to serve as a generic storage system, the next-generation infrastructure focuses specifically on identity management. This optimization ensures better alignment for user authentication, identity operations, and scalability.
-* **Backward Compatibility:** Infrastructure can change, but customer applications should not be impacted. AWS maintained backend compatibility with legacy behavior, thereby preventing breaking changes for applications using Amazon Cognito.
-* **Avoiding One-Way Doors:** The new architecture is designed to evolve incrementally over time, rather than depending on architectural decisions that are difficult or impossible to reverse. This approach makes it easier for AWS to expand capabilities in the future.
+### Reference Material
 
-## Near-Zero Downtime Migration Strategy
-
-To migrate hundreds of millions of user profiles to the new infrastructure without affecting customers, AWS employed multiple parallel validation mechanisms.
-
-![Amazon Cognito Next-Generation Infrastructure Migration (Zero Downtime)](/images/3.3-Blog3/cognito-architecture-migration.png)
-
-1. **Shadow Mode Validation**
-
-   AWS processed requests simultaneously on both the old and new systems, comparing response structure, status code, and system behavior. If abnormal discrepancies arose, the system detected them before changes impacted production. AWS validated not only functional correctness but also behavioral consistency across both systems.
-
-2. **Dual-Write Architecture**
-
-   During migration, all requests were written to both legacy infrastructure and new infrastructure. If a write operation to the new system failed, the request could still succeed on the old system, mitigating potential customer impacts during the transition period.
-
-3. **Anti-Entropy Validation**
-
-   AWS deployed automated mechanisms to continuously compare data across both systems to detect drift. If discrepancies occurred, the legacy system acted as the authoritative source of truth to reconcile data. This is a useful strategy in distributed systems.
-
-4. **Incremental Rollout & Rollback**
-
-   Rather than migrating all users to the new infrastructure at once, AWS executed the rollout in small stages and maintained rollback capability in case issues were detected. This deployment approach significantly reduced risks during large-scale infrastructure changes.
-
-## What I Learned from This Case
-
-The key takeaway is not just about Amazon Cognito or its new features, but about how AWS approaches infrastructure modernization.
-
-When thinking about migration, we often focus on migrating as quickly as possible. However, for mission-critical systems like authentication, the top priority must be migrating as safely as possible.
-
-Techniques such as shadow mode, dual write, anti-entropy validation, and rollback capability demonstrate that AWS prioritizes step-by-step verification over a single high-risk cutover. This is a valuable mindset when building production systems or managing services that directly affect a large user base.
-
-## Conclusion
-
-Amazon Cognito's transition to next-generation infrastructure not only brings capabilities like multi-Region replication, customer-managed keys, and high-throughput performance, but also demonstrates how AWS handles large-scale migration with near-zero disruption.
-
-It serves as a practical real-world example of modernizing large-scale authentication systems while preserving backward compatibility for existing applications.
-
-## Reference Material
-
-* [Amazon Cognito unlocks advanced capabilities with next-generation infrastructure](https://aws.amazon.com/blogs/security/amazon-cognito-unlocks-advanced-capabilities-with-next-generation-infrastructure/)
-
-#AWS #AmazonCognito #Authentication #CloudSecurity #CloudComputing #AWSArchitecture #Migration
+The knowledge summarized in this blog was learned through:
+* [Amazon S3 Developer Guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html)
+* [AWS SDK for .NET Documentation](https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/welcome.html)

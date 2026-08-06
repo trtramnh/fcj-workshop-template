@@ -1,103 +1,82 @@
 ---
 title: "Blog 3"
-date: 2026-07-27
-weight: 3
+date: 2024-01-01
+weight: 1
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-# AWS ĐÃ NÂNG CẤP AMAZON COGNITO NHƯ THẾ NÀO MÀ NGƯỜI DÙNG GẦN NHƯ KHÔNG HỀ NHẬN RA?
+# NHỮNG BÀI HỌC VỀ AWS VÀ TƯ DUY CLOUD-NATIVE TỪ KỲ THỰC TẬP
 
-Xin chào mọi người,
+Trong quá trình thực tập, mình có cơ hội tham gia vào một dự án Backend thực tế, trong đó Amazon S3 được sử dụng để lưu trữ tài liệu và hình ảnh. Mặc dù Amazon S3 là dịch vụ AWS chính được sử dụng trong dự án, quá trình triển khai đã giúp mình hiểu rõ hơn về cách xây dựng ứng dụng theo mô hình Cloud-Native cũng như mở rộng kiến thức về hệ sinh thái AWS.
 
-Trong các hệ thống hiện đại, authentication gần như là “cửa chính” của toàn bộ ứng dụng. Chỉ cần hệ thống đăng nhập gặp lỗi vài phút, người dùng có thể không thể truy cập dịch vụ, reset password thất bại hoặc gián đoạn toàn bộ trải nghiệm.
+Bên cạnh việc tìm hiểu cách tích hợp dịch vụ lưu trữ đám mây vào hệ thống Backend, mình còn học được nhiều kiến thức về thiết kế hệ thống, bảo mật, tối ưu chi phí và các thực hành tốt trên nền tảng Cloud thường được áp dụng trong các dự án thực tế.
 
-Với những hệ thống identity quy mô lớn như Amazon Cognito – nơi phục vụ hàng trăm triệu user profiles – việc thay đổi hạ tầng backend không chỉ đơn giản là deploy phiên bản mới. Một thay đổi nhỏ cũng có thể tạo ra downtime hoặc ảnh hưởng đến hành vi authentication của ứng dụng.
+### Những kiến thức nổi bật
 
-Gần đây, AWS đã chia sẻ về cách Amazon Cognito được nâng cấp lên next-generation infrastructure, mang đến nhiều capability mới như high-throughput performance, customer-managed encryption keys và multi-Region replication, trong khi người dùng gần như không nhận ra bất kỳ gián đoạn nào.
+Trong quá trình tham gia dự án, mình đã học được nhiều khái niệm quan trọng về Cloud-Native.
 
-Điều khiến mình thấy thú vị không chỉ nằm ở các tính năng mới, mà còn ở cách AWS thực hiện migration quy mô lớn với mục tiêu zero downtime.
+- **Tách biệt Compute và Storage**
+  - Hiểu cách Backend chỉ tập trung xử lý nghiệp vụ, trong khi các tệp được lưu trữ trên Amazon S3.
+  - Hiểu lý do chỉ lưu URL của đối tượng trong cơ sở dữ liệu thay vì lưu trực tiếp dữ liệu nhị phân.
+  - Nhận thấy cách thiết kế này giúp hệ thống dễ mở rộng và giảm tải cho máy chủ ứng dụng.
 
-## Điều gì mới trên Amazon Cognito?
+- **Làm việc với AWS SDK for Amazon S3**
+  - Tìm hiểu cách tích hợp thư viện AWSSDK.S3 vào ứng dụng .NET.
+  - Tìm hiểu các thao tác như tải lên, tải xuống, quản lý metadata và xóa đối tượng bằng C#.
+  - Hiểu rõ hơn cách tương tác với các dịch vụ AWS thông qua lập trình thay vì chỉ thao tác trên AWS Management Console.
 
-Sau quá trình nâng cấp kiến trúc, Amazon Cognito đã mở khóa thêm một số capability đáng chú ý:
+- **Tối ưu chi phí**
+  - Hiểu rằng các đối tượng không còn sử dụng vẫn có thể làm tăng chi phí lưu trữ trên Cloud.
+  - Nhận thức được tầm quan trọng của việc dọn dẹp các tệp tạm thời.
+  - Tìm hiểu Amazon S3 Lifecycle Policies để tự động xóa các đối tượng không còn cần thiết.
 
-1. **High-throughput performance**
+- **IAM và nguyên tắc phân quyền tối thiểu**
+  - Hiểu lý do không nên sử dụng AWS Root Account cho ứng dụng.
+  - Tìm hiểu cách IAM Users và IAM Policies được sử dụng để quản lý quyền truy cập.
+  - Nhận thức được tầm quan trọng của nguyên tắc Least Privilege trong việc tăng cường bảo mật.
 
-   Hạ tầng mới cho phép Cognito xử lý lượng request lớn hơn, hỗ trợ các workload hiện đại với:
-   * Hàng chục triệu người dùng trong một user pool
-   * Hàng nghìn transaction mỗi giây (TPS)
-   * Độ trễ thấp để không ảnh hưởng đến trải nghiệm đăng nhập
+- **Bảo vệ thông tin xác thực AWS**
+  - Hiểu lý do Access Key và Secret Key cần được lưu trữ an toàn bằng biến môi trường hoặc các tệp cấu hình không được đưa lên hệ thống quản lý mã nguồn.
+  - Nhận thức được rủi ro khi hardcode thông tin xác thực trong mã nguồn.
 
-   Điều này đặc biệt hữu ích với các hệ thống có lượng người dùng lớn hoặc cần scale authentication nhanh chóng.
+- **Chia sẻ tệp an toàn bằng Pre-signed URL**
+  - Tìm hiểu cách Amazon S3 Pre-signed URL cho phép truy cập tạm thời vào các đối tượng riêng tư.
+  - Hiểu cách duy trì S3 Bucket ở chế độ riêng tư nhưng vẫn cho phép người dùng được cấp quyền truy cập.
 
-2. **Customer-managed keys (CMK)**
+- **Hiểu về bảo mật trình duyệt**
+  - Tìm hiểu về Cross-Origin Resource Sharing (CORS) khi ứng dụng Frontend giao tiếp với Amazon S3.
+  - Hiểu cách cấu hình S3 CORS để cho phép các yêu cầu hợp lệ đồng thời vẫn đảm bảo tính bảo mật.
+  - Nhận thấy rằng bảo mật Cloud không chỉ nằm ở Backend mà còn liên quan đến các chính sách bảo mật của trình duyệt.
 
-   Một thay đổi đáng chú ý khác là khả năng sử dụng customer-managed encryption keys thông qua AWS KMS. Thay vì hoàn toàn phụ thuộc vào key do AWS quản lý, doanh nghiệp có thể:
-   * Tự quản lý vòng đời encryption key
-   * Kiểm soát tốt hơn dữ liệu mã hóa at-rest
-   * Đáp ứng các yêu cầu compliance và security
+### Những điều mình học được
 
-   Đây là một capability khá quan trọng đối với các hệ thống enterprise hoặc tổ chức có yêu cầu bảo mật cao.
+Kỳ thực tập giúp mình nhận ra rằng Cloud Computing không chỉ đơn thuần là sử dụng các dịch vụ AWS mà còn là quá trình thiết kế hệ thống sao cho bảo mật, dễ mở rộng, tối ưu chi phí và có khả năng vận hành ổn định.
 
-3. **Multi-Region replication**
+Thông qua việc tham gia dự án thực tế, mình hiểu rõ hơn cách các dịch vụ AWS phối hợp với nhau trong một ứng dụng Cloud-Native. Những kiến thức và trải nghiệm này đã giúp mình xây dựng nền tảng vững chắc hơn về phát triển Backend trên Cloud, đồng thời tạo tiền đề cho định hướng trở thành Backend Developer và Cloud Engineer trong tương lai.
 
-   AWS cũng bổ sung khả năng đồng bộ user pool sang Region khác, bao gồm:
-   * User profile
-   * Password
-   * User attributes
-   * Configuration
+### Hình minh họa
 
-   Nếu xảy ra Regional failure, hệ thống authentication vẫn có thể tiếp tục hoạt động. Theo mình, đây là điểm khá đáng giá vì authentication thường là một trong những thành phần “không được phép chết” trong kiến trúc hệ thống.
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-top: 20px;">
 
-## Điều gì thay đổi trong kiến trúc?
+  <div style="width: 420px; text-align: center;">
+    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.3-Blog3/blog3.jpg"
+         alt="Amazon S3 Architecture"
+         style="width:100%; height:260px; object-fit:contain; background:#fafafa; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+    <p>Kiến trúc Cloud-Native tích hợp Amazon S3 vào ứng dụng Backend.</p>
+  </div>
 
-Theo AWS, Cognito trước đây phụ thuộc khá nhiều vào một data store tập trung. Điều này giúp việc quản lý dữ liệu đơn giản hơn nhưng lại làm chậm quá trình mở rộng tính năng mới.
+  <div style="width: 420px; text-align: center;">
+    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.3-Blog3/blog3.1.jpg"
+         alt="Amazon S3 Pre-signed URL"
+         style="width:100%; height:260px; object-fit:contain; background:#fafafa; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+    <p>Triển khai tạo Amazon S3 Pre-signed URL bằng AWS SDK for .NET.</p>
+  </div>
 
-Ở kiến trúc mới, Cognito được thiết kế theo hướng:
+</div>
 
-* **Identity-first design:** Thay vì cố gắng trở thành một hệ thống lưu trữ tổng quát, hạ tầng mới tập trung vào đúng bài toán identity management. Điều này giúp hệ thống tối ưu hơn cho user authentication, identity operations và scalability.
-* **Backward compatibility:** Infrastructure có thể thay đổi, nhưng ứng dụng của customer không nên bị ảnh hưởng. AWS cố gắng giữ mọi thay đổi phía backend tương thích với behavior cũ để tránh breaking changes.
-* **Avoid one-way doors:** Kiến trúc mới được thiết kế để có thể thay đổi dần theo thời gian thay vì những quyết định “không thể quay đầu”. Điều này giúp AWS dễ mở rộng capability mới trong tương lai.
+### Tài liệu tham khảo
 
-## Quy trình migration gần như không downtime
-
-Để migrate hàng trăm triệu user profiles mà không ảnh hưởng đến customer, AWS áp dụng nhiều kỹ thuật validation song song.
-
-![Amazon Cognito Next-Generation Infrastructure Migration (Zero Downtime)](/images/3.3-Blog3/cognito-architecture-migration.png)
-
-1. **Shadow mode validation**
-
-   AWS chạy request trên cả hệ thống cũ và hệ thống mới cùng lúc, sau đó so sánh response structure, status code và behavior. Nếu có khác biệt bất thường, hệ thống sẽ phát hiện ngay trước khi ảnh hưởng production. AWS không chỉ test functionality mà còn test cả behavior consistency.
-
-2. **Dual-write architecture**
-
-   Trong thời gian migration, mọi request đều được ghi vào cả legacy infrastructure và new infrastructure. Nếu ghi vào hệ thống mới thất bại, request vẫn tiếp tục thành công ở hệ thống cũ, giúp customer gần như không bị ảnh hưởng.
-
-3. **Anti-entropy validation**
-
-   AWS còn triển khai cơ chế liên tục so sánh dữ liệu giữa hai hệ thống để phát hiện sai lệch. Nếu có divergence, legacy system sẽ đóng vai trò source of truth để reconcile dữ liệu. Đây là một approach khá thú vị trong các hệ thống distributed.
-
-4. **Incremental rollout & rollback**
-
-   Thay vì migrate toàn bộ cùng lúc, AWS rollout từng phần và luôn giữ khả năng rollback nếu có vấn đề. Điều này giúp giảm đáng kể rủi ro khi thay đổi hạ tầng ở quy mô lớn.
-
-## Điều mình học được từ case này
-
-Sau khi đọc bài blog, điều mình thấy đáng học nhất không nằm ở Cognito hay những feature mới, mà là cách AWS tư duy về infrastructure modernization.
-
-Thông thường khi nói về migration, chúng ta thường nghĩ đến việc migrate nhanh nhất có thể. Tuy nhiên, với những hệ thống critical như authentication, thứ quan trọng hơn lại là migrate an toàn nhất có thể.
-
-Shadow mode, dual write, anti-entropy validation và rollback capability cho thấy AWS ưu tiên khả năng kiểm chứng từng bước thay vì “big bang migration”. Đây là mindset khá đáng học khi làm việc với hệ thống production hoặc những service có ảnh hưởng lớn đến người dùng.
-
-## Kết luận
-
-Việc Amazon Cognito chuyển sang next-generation infrastructure không chỉ mang lại thêm capability mới như multi-Region replication, customer-managed keys hay high-throughput performance, mà còn cho thấy cách AWS xử lý một bài toán migration quy mô lớn với mức độ gián đoạn gần như bằng 0.
-
-Đây cũng là một ví dụ khá thú vị về cách các hệ thống authentication quy mô lớn được hiện đại hóa mà vẫn đảm bảo backward compatibility cho customer.
-
-## Bài viết tham khảo
-
-* [Amazon Cognito unlocks advanced capabilities with next-generation infrastructure](https://aws.amazon.com/blogs/security/amazon-cognito-unlocks-advanced-capabilities-with-next-generation-infrastructure/)
-
-#AWS #AmazonCognito #Authentication #CloudSecurity #CloudComputing #AWSArchitecture #Migration
+Những kiến thức được tổng hợp trong bài viết này được học hỏi từ:
+* [Amazon S3 Developer Guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html)
+* [AWS SDK for .NET Documentation](https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/welcome.html)

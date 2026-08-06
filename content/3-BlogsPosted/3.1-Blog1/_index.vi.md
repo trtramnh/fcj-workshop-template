@@ -1,81 +1,98 @@
 ---
 title: "Blog 1"
-date: 2026-07-27
+date: 2024-01-01
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
 
-# KIẾN TRÚC WEBSITE THƯƠNG MẠI ĐIỆN TỬ CÓ KHẢ NĂNG MỞ RỘNG TRÊN AWS
+# AWS Đã Nâng Cấp Amazon Cognito Với Mức Gián Đoạn Gần Như Bằng 0
 
-Xin chào mọi người,
+Authentication là một trong những thành phần quan trọng nhất của các ứng dụng hiện đại. Chỉ cần hệ thống xác thực gặp sự cố trong vài phút cũng có thể khiến người dùng không thể đăng nhập, đặt lại mật khẩu hoặc truy cập các dịch vụ cần thiết. Vì vậy, việc nâng cấp hạ tầng của một dịch vụ quản lý danh tính như Amazon Cognito đòi hỏi phải được thực hiện cẩn thận nhằm tránh ảnh hưởng đến hàng triệu người dùng.
 
-Website thương mại điện tử thường có lượng truy cập thay đổi rất lớn, đặc biệt trong các chương trình khuyến mãi hoặc mùa mua sắm cao điểm. Nếu toàn bộ request chỉ được xử lý trên một máy chủ và truy cập trực tiếp vào database, hệ thống rất dễ bị chậm, quá tải hoặc gián đoạn.
+Gần đây, AWS đã chia sẻ cách Amazon Cognito được chuyển sang hạ tầng thế hệ mới, mang đến nhiều tính năng mới trong khi vẫn duy trì khả năng tương thích ngược (backward compatibility) và giảm thiểu tối đa thời gian gián đoạn dịch vụ.
 
-## Luồng kiến trúc tổng quát
+### Những tính năng mới
 
-```text
-User → Route 53 → CloudFront → AWS WAF → Application Load Balancer → ECS Fargate → ElastiCache/Aurora
-```
+Hạ tầng mới của Amazon Cognito mang đến nhiều cải tiến đáng chú ý:
 
-![Kiến trúc Website Thương Mại Điện Tử trên AWS](/images/3.1-Blog1/blog1.jpg)
+- **Hiệu năng cao (High-throughput Performance)**
+  - Hỗ trợ hàng chục triệu người dùng trong một User Pool.
+  - Xử lý hàng nghìn giao dịch mỗi giây (TPS).
+  - Giảm độ trễ trong quá trình xác thực.
 
-## Cách hệ thống hoạt động
+- **Customer-managed Encryption Keys (CMK)**
+  - Tích hợp với AWS KMS.
+  - Cho phép doanh nghiệp tự quản lý khóa mã hóa.
+  - Tăng cường khả năng bảo mật và đáp ứng các yêu cầu về tuân thủ.
 
-1. **Amazon Route 53**
+- **Multi-Region Replication**
+  - Đồng bộ User Profile, Password, User Attributes và Configuration giữa nhiều AWS Region.
+  - Nâng cao tính sẵn sàng và khả năng khôi phục sau sự cố của hệ thống xác thực.
 
-   Định tuyến request của người dùng đến hệ thống.
+### Những cải tiến trong kiến trúc
 
-2. **Amazon CloudFront**
+AWS đã thiết kế lại Amazon Cognito dựa trên một số nguyên tắc quan trọng:
 
-   Phân phối nội dung từ vị trí gần người dùng, giúp giảm độ trễ và giảm tải cho hệ thống phía sau.
+- **Identity-first Design**
+  - Tập trung tối ưu cho bài toán quản lý danh tính thay vì hoạt động như một hệ thống lưu trữ dữ liệu đa mục đích.
+  - Giúp hệ thống có khả năng mở rộng và vận hành hiệu quả hơn.
 
-3. **AWS WAF**
+- **Backward Compatibility**
+  - Việc thay đổi hạ tầng không yêu cầu khách hàng phải chỉnh sửa ứng dụng hiện có.
+  - Hành vi xác thực vẫn được giữ nguyên để đảm bảo tính tương thích.
 
-   Kiểm tra và chặn các request có dấu hiệu bất thường trước khi chúng được chuyển đến ứng dụng.
+- **Avoid One-way Doors**
+  - Kiến trúc được thiết kế để có thể tiếp tục mở rộng và cải tiến trong tương lai mà không tạo ra những quyết định khó thay đổi.
 
-4. **Application Load Balancer**
+### Chiến lược Migration
 
-   Phân phối các request hợp lệ đến những container Backend đang chạy trên Amazon ECS.
+Một trong những điểm ấn tượng nhất của bài viết là cách AWS thực hiện migration cho hàng trăm triệu hồ sơ người dùng với mức gián đoạn gần như bằng không.
 
-5. **Amazon ECS với AWS Fargate**
+Quá trình migration bao gồm nhiều kỹ thuật khác nhau:
 
-   Chạy các container Backend mà không cần trực tiếp quản lý máy chủ. Hệ thống có thể tăng hoặc giảm số lượng container theo nhu cầu sử dụng.
+- **Shadow Mode Validation**
+  - Các request được xử lý đồng thời trên cả hệ thống cũ và hệ thống mới.
+  - Response, Status Code và hành vi xử lý được liên tục so sánh trước khi chuyển hoàn toàn lưu lượng sang hạ tầng mới.
 
-6. **Amazon Cognito**
+- **Dual-write Architecture**
+  - Dữ liệu được ghi đồng thời vào cả hai hạ tầng trong suốt quá trình migration.
+  - Nếu hệ thống mới gặp sự cố, hệ thống cũ vẫn tiếp tục phục vụ người dùng.
 
-   Hỗ trợ đăng ký, đăng nhập và xác thực người dùng. Cognito là dịch vụ hỗ trợ xác thực và không nằm trực tiếp trên toàn bộ luồng xử lý request công khai.
+- **Anti-entropy Validation**
+  - Dữ liệu giữa hai hệ thống được đối chiếu liên tục để phát hiện sự khác biệt.
+  - Hệ thống cũ đóng vai trò là nguồn dữ liệu chuẩn (Source of Truth) để đồng bộ khi cần thiết.
 
-7. **Amazon ElastiCache**
+- **Incremental Rollout & Rollback**
+  - Việc triển khai được thực hiện theo từng giai đoạn thay vì chuyển đổi toàn bộ cùng lúc.
+  - Luôn duy trì khả năng rollback nếu phát sinh sự cố trong quá trình triển khai.
 
-   Lưu tạm những dữ liệu được truy cập thường xuyên, giúp tăng tốc độ phản hồi và giảm số lần truy vấn trực tiếp đến database.
+### Những điều mình học được
 
-8. **Amazon Aurora Serverless v2**
+Qua bài viết này, mình nhận thấy việc hiện đại hóa hạ tầng không chỉ nhằm bổ sung các tính năng mới mà còn phải giảm thiểu rủi ro trong quá trình vận hành.
 
-   Lưu trữ dữ liệu chính của website như thông tin người dùng, sản phẩm, tồn kho và đơn hàng. Aurora Serverless v2 có thể tự động điều chỉnh tài nguyên theo khối lượng công việc.
+Một số bài học đáng chú ý gồm:
 
-## Giám sát và cảnh báo hệ thống
+- Luôn kiểm chứng hệ thống mới trước khi chuyển lưu lượng thực tế.
+- Thiết kế quy trình migration có khả năng rollback.
+- Ưu tiên duy trì backward compatibility để tránh ảnh hưởng đến người dùng.
+- Thực hiện migration theo từng giai đoạn thay vì chuyển đổi toàn bộ trong một lần.
 
-Amazon CloudWatch theo dõi hoạt động của ECS và Aurora. Khi phát hiện CPU tăng cao, ứng dụng xuất hiện nhiều lỗi hoặc database sử dụng tài nguyên bất thường, CloudWatch Alarm sẽ kích hoạt Amazon SNS để gửi cảnh báo qua email hoặc SMS.
+Những kinh nghiệm này là nguồn tham khảo hữu ích khi xây dựng các ứng dụng Cloud có độ tin cậy cao cũng như triển khai các hệ thống phân tán ở quy mô lớn.
 
-```text
-CloudWatch → CloudWatch Alarm → Amazon SNS → Email/SMS
-```
+### Hình minh họa
 
-## Lợi ích của kiến trúc
+<div style="text-align: center;">
+    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.1-Blog1/blog1.jpg"
+         alt="Amazon Cognito Next-generation Infrastructure"
+         style="width: 800px; height: auto; border-radius: 8px;">
+    <p>Kiến trúc hạ tầng thế hệ mới của Amazon Cognito</p>
+</div>
 
-Nhờ kết hợp các dịch vụ trên, website có thể:
+### Tài liệu tham khảo
 
-* Tăng tốc độ truy cập cho người dùng.
-* Cải thiện khả năng bảo mật.
-* Giảm tải cho cơ sở dữ liệu.
-* Mở rộng linh hoạt khi lượng truy cập tăng cao.
-* Tự động giám sát và phát hiện sự cố sớm.
-* Hạn chế nguy cơ gián đoạn trong các chương trình khuyến mãi hoặc mùa mua sắm cao điểm.
+Bài viết này được tổng hợp và phát triển dựa trên bài viết của **AWS Security Blog**:
 
-## Bài viết tham khảo
+- **Amazon Cognito unlocks advanced capabilities with next-generation infrastructure**
 
-* [Guidance for Web Store on AWS](https://docs.aws.amazon.com/solutions/web-store-on-aws/)
-* [Guidance for Building a Containerized and Scalable Web Application on AWS](https://docs.aws.amazon.com/solutions/building-a-containerized-and-scalable-web-application-on-aws/)
-
-#AWS #AWSArchitecture #CloudComputing #Ecommerce #ECS #Fargate #CloudFront #Aurora #CloudWatch
+https://aws.amazon.com/blogs/security/amazon-cognito-unlocks-advanced-capabilities-with-next-generation-infrastructure/
