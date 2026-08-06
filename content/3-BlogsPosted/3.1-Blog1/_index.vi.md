@@ -83,7 +83,7 @@ Những kinh nghiệm này là nguồn tham khảo hữu ích khi xây dựng c�
 ### Hình minh họa
 
 <div style="text-align: center;">
-    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.1-Blog1/blog1.jpg"
+    <img src="/images/3-BlogsPosted/3.1-Blog1/blog1.jpg"
          alt="Amazon Cognito Next-generation Infrastructure"
          style="width: 800px; height: auto; border-radius: 8px;">
     <p>Kiến trúc hạ tầng thế hệ mới của Amazon Cognito</p>

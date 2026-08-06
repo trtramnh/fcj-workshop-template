@@ -73,7 +73,7 @@ By exploring this architecture, I gained a better understanding of the responsib
 ### Images
 
 <div style="text-align: center;">
-    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.2-Blog2/blog2.jpg"
+    <img src="/images/3-BlogsPosted/3.2-Blog2/blog2.jpg"
          alt="Scalable E-commerce Architecture"
          style="width: 900px; height: auto; border-radius: 8px;">
     <p>Scalable E-commerce website architecture on AWS.</p>

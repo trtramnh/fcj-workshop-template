@@ -83,7 +83,7 @@ These engineering practices are valuable references for building reliable cloud 
 ### Images
 
 <div style="text-align: center;">
-    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.1-Blog1/blog1.jpg"
+    <img src="/images/3-BlogsPosted/3.1-Blog1/blog1.jpg"
          alt="Architecture"
          style="width: 800px; height: auto; border-radius: 8px;">
     <p>Architecture</p>

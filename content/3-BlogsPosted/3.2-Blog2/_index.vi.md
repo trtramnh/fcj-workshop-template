@@ -73,7 +73,7 @@ Thông qua việc tìm hiểu kiến trúc này, mình hiểu rõ hơn vai trò 
 ### Hình minh họa
 
 <div style="text-align: center;">
-    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.2-Blog2/blog2.jpg"
+    <img src="/images/3-BlogsPosted/3.2-Blog2/blog2.jpg"
          alt="Kiến trúc website thương mại điện tử"
          style="width: 900px; height: auto; border-radius: 8px;">
     <p>Kiến trúc website thương mại điện tử có khả năng mở rộng trên AWS.</p>

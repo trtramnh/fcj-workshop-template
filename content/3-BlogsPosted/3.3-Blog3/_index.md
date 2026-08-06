@@ -60,14 +60,14 @@ Learning from a real-world project also gave me a better understanding of how AW
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-top: 20px;">
 
   <div style="width: 420px; text-align: center;">
-    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.3-Blog3/blog3.jpg"
+    <img src="/images/3-BlogsPosted/3.3-Blog3/blog3.jpg"
          alt="Amazon S3 Architecture"
          style="width:100%; height:260px; object-fit:contain; background:#fafafa; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
     <p>Cloud-native architecture integrating Amazon S3 into the backend application.</p>
   </div>
 
   <div style="width: 420px; text-align: center;">
-    <img src="/fcj-workshop-template/images/3-BlogsPosted/3.3-Blog3/blog3.1.jpg"
+    <img src="/images/3-BlogsPosted/3.3-Blog3/blog3.1.jpg"
          alt="Amazon S3 Pre-signed URL"
          style="width:100%; height:260px; object-fit:contain; background:#fafafa; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
     <p>Generating Amazon S3 Pre-signed URLs using the AWS SDK for .NET.</p>
