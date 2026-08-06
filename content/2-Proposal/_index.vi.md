@@ -102,7 +102,7 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 * Tách tác vụ OCR/AI khỏi request chính để giảm timeout và tránh làm nghẽn Backend API.
 * Triển khai VPC trên hai Availability Zone; đặt Backend, Worker và Database trong Private Subnet, chỉ công khai CloudFront, ALB, NAT Gateway và các điểm truy cập cần thiết.
 * Lưu ảnh hóa đơn trên Amazon S3, truy cập nội bộ qua S3 Gateway Endpoint; lưu dữ liệu nghiệp vụ trong Amazon RDS for SQL Server.
-* Gắn AWS WAF với CloudFront, quản lý Gemini API key, Azure key/endpoint, JWT secret và connection string bằng AWS Secrets Manager; áp dụng quyền truy cập tối thiểu.
+* Gắn AWS WAF với CloudFront, quản lý JWT secret và connection string bằng AWS Secrets Manager; áp dụng quyền truy cập tối thiểu.
 * Theo dõi log, metric, lỗi hàng đợi và chi phí ngay từ giai đoạn demo.
 * Phân biệt kiến trúc mục tiêu production với cấu hình demo tối ưu chi phí.
 
@@ -114,11 +114,11 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 | **DNS, CDN và bảo vệ biên** | Amazon Route 53 quản lý tên miền và phân giải DNS; Amazon CloudFront làm CDN và điểm vào chung. CloudFront chuyển tiếp các request API qua Internet Gateway đến ALB. |
 | **Mạng (VPC)** | Amazon VPC trải trên 02 Availability Zone (AZ). Mỗi AZ có Public Subnet và Private Subnet; ALB và NAT Gateway thuộc tầng Public Subnet, còn ECS Fargate và Database thuộc tầng Private Subnet. |
 | **Backend API (ECS Cluster)** | .NET API được đóng gói Docker, lưu trên Amazon ECR và triển khai thành ECS Service chạy Fargate Task trong Private Subnet của hai Availability Zone, nhận lưu lượng từ Application Load Balancer. |
-| **AI Worker** | ECS Fargate Worker nhận message từ SQS `snaptics-ai-queue`, đọc ảnh từ S3 qua Gateway Endpoint, gọi External AI APIs (Azure Document Intelligence và Gemini API) qua NAT Gateway, sau đó lưu kết quả vào Aurora & RDS. |
+| **AI Worker** | ECS Fargate Worker nhận message từ SQS `snaptics-ai-queue`, đọc ảnh từ S3 qua Gateway Endpoint, xử lý các tác vụ tự động qua NAT Gateway, sau đó lưu kết quả vào Aurora & RDS. |
 | **Cơ sở dữ liệu (Database)** | **Aurora & RDS (Primary / Standby)** lưu dữ liệu người dùng, giao dịch, ví, ngân sách, thông báo, chat và ticket. Dữ liệu được đồng bộ liên tục giữa Primary (AZ 2) và Standby (AZ 1) trên mạng Private. |
 | **Lưu trữ hóa đơn (Storage)** | Amazon S3 lưu ảnh hóa đơn và tệp xử lý; database chỉ lưu metadata và đường dẫn. Fargate Task truy cập S3 qua **S3 Gateway Endpoint** trực tiếp trong VPC để tối ưu chi phí và bảo mật. |
 | **Hàng đợi (Messaging)** | **Amazon SQS (`snaptics-ai-queue`)** tiếp nhận các tác vụ OCR/AI bất đồng bộ; **Dead Letter Queue (DLQ)** tiếp nhận và giữ lại các message xử lý thất bại vượt quá số lần retry. |
-| **Cấu hình & Bảo mật** | **AWS Secrets Manager** lưu trữ mã hóa RDS connection string, Gemini API key, Azure credentials và JWT secrets. IAM Roles và Security Groups kiểm soát quyền tối thiểu. |
+| **Cấu hình & Bảo mật** | **AWS Secrets Manager** lưu trữ mã hóa RDS connection string và JWT secrets. IAM Roles và Security Groups kiểm soát quyền tối thiểu. |
 | **Giám sát & Quản lý** | **Amazon CloudWatch** (thu thập log/metric), **AWS Secrets Manager** (quản lý secret), **AWS Budgets** (cảnh báo ngân sách) và **Simple Notification Service (SNS)** (phát thông báo sự cố/vận hành). |
 | **CI/CD Pipeline** | GitHub Actions thực hiện 3 luồng: (1) **Auto Build & Deploy** Frontend lên AWS Amplify, (2) **Build & Push Docker Images** lên Elastic Container Registry (ECR), và (3) **Update Service** lên ECS Cluster để Fargate kéo image mới (**Pull Image**). |
 
@@ -132,7 +132,7 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 7. Backend đẩy tác vụ OCR/AI vào **Amazon SQS** (`snaptics-ai-queue`) (7); AI Worker nhận message, message lỗi vượt retry được chuyển sang **Dead Letter Queue**. ECS Service kéo Docker Image từ **Amazon ECR** khi triển khai.
 8. Các Fargate Task trong Private Subnet gửi request xử lý ra ngoài (8).
 9. Lưu lượng đi qua **NAT Gateway** (9) trong Public Subnet kết nối với Internet Gateway ra môi trường ngoài.
-10. AI Worker gọi **Azure Document Intelligence** và **Gemini API** (10) qua kết nối Internet; Gemini API key và các thông tin nhạy cảm được lấy an toàn từ **AWS Secrets Manager**.
+10. AI Worker xử lý các tác vụ tự động (10) qua kết nối Internet; các thông tin nhạy cảm được lấy an toàn từ **AWS Secrets Manager**.
 
 #### 4.4. Sơ đồ kiến trúc tổng thể
 
@@ -142,7 +142,7 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 #### 4.5. Bảo mật, giám sát và kiểm soát chi phí
 * Sử dụng HTTPS và access token; gắn AWS WAF với CloudFront để lọc request bất thường ở lớp biên.
 * Phân quyền Admin/User và kiểm tra quyền sở hữu dữ liệu tại Backend.
-* Không ghi API key hoặc connection string trong mã nguồn/Docker Image; lưu Gemini API key, Azure key/endpoint, JWT secret và RDS connection string trong AWS Secrets Manager.
+* Không ghi API key hoặc connection string trong mã nguồn/Docker Image; lưu JWT secret và RDS connection string trong AWS Secrets Manager.
 * Đặt Backend, AI Worker và RDS SQL Server trong Private Subnet; chỉ ALB và NAT Gateway nằm ở Public Subnet, kèm Security Group giới hạn luồng truy cập.
 * Truy cập Amazon S3 qua S3 Gateway Endpoint; đồng thời kiểm tra loại tệp, kích thước và định dạng hóa đơn trước khi xử lý.
 * Ghi CloudWatch Logs cho lỗi hệ thống, tác vụ AI, hoạt động Admin, trạng thái Hangfire và luồng xử lý SQS/DLQ.
@@ -162,12 +162,12 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 | **Tuần 5** | Giao dịch và danh mục | Phát triển API và giao diện tạo, sửa, xóa, tra cứu giao dịch; quản lý danh mục thu/chi. | Người dùng quản lý được giao dịch và danh mục cơ bản. |
 | **Tuần 6** | Ví và ngân sách | Phát triển ví cá nhân, ví gia đình, thành viên dùng chung, ngân sách cá nhân/gia đình và logic tính mức sử dụng. | Hoàn thiện quản lý ví, ngân sách và dữ liệu dùng chung. |
 | **Tuần 7** | Dashboard và lưu trữ hóa đơn | Xây dựng Dashboard, biểu đồ, báo cáo; phát triển giao diện quét/tải ảnh; tích hợp Amazon S3 để lưu hóa đơn. | Có báo cáo trực quan và quy trình lưu ảnh trên S3. |
-| **Tuần 8** | OCR, AI và thông báo | Tích hợp Azure Document Intelligence; chuẩn hóa kết quả; tích hợp Gemini API; xây dựng AI Insight, chat AI và thông báo trong ứng dụng. | Hệ thống trích xuất hóa đơn, tạo giao dịch và cung cấp gợi ý AI. |
+| **Tuần 8** | OCR, AI và thông báo | Xây dựng module xử lý hóa đơn tự động; chuẩn hóa kết quả; xây dựng AI Insight và thông báo trong ứng dụng. | Hệ thống trích xuất hóa đơn, tạo giao dịch và cung cấp gợi ý AI. |
 | **Tuần 9** | DLQ và Hangfire | Tạo Dead Letter Queue và AI Worker; chuyển xử lý OCR/AI sang bất đồng bộ; tích hợp HangfireController và trang Admin cấu hình lịch chạy. | Tác vụ AI xử lý qua queue; tác vụ định kỳ được quản lý từ Admin. |
-| **Tuần 10** | Frontend, Secrets và Database AWS | Kết nối Amplify với GitHub; triển khai Frontend; lưu Gemini API key, Azure key/endpoint, JWT secret và connection string trong Secrets Manager; tạo RDS SQL Server cho môi trường demo. | Frontend hoạt động trên AWS; database và toàn bộ cấu hình nhạy cảm được quản lý an toàn. |
+| **Tuần 10** | Frontend, Secrets và Database AWS | Kết nối Amplify với GitHub; triển khai Frontend; lưu JWT secret và connection string trong Secrets Manager; tạo RDS SQL Server cho môi trường demo. | Frontend hoạt động trên AWS; database và toàn bộ cấu hình nhạy cảm được quản lý an toàn. |
 | **Tuần 11** | VPC, S3 Endpoint, SQS, ECR và Container | Tạo VPC hai Availability Zone, Public/Private Subnet, Internet Gateway, NAT Gateway, S3 Gateway Endpoint và SQS/DLQ; đóng gói Backend/Worker; tạo ECR và GitHub Actions build/push image. | Hạ tầng mạng, endpoint, queue và kho container sẵn sàng cho triển khai Backend/Worker. |
 | **Tuần 12** | Triển khai ECS Fargate | Tạo ECS Cluster/Service; triển khai Backend và AI Worker; cấu hình ALB, health check, Auto Scaling, quyền đọc Secrets Manager, CloudWatch, SNS và AWS Budgets. | Backend và Worker hoạt động trên Fargate, truy cập đúng secret, có giám sát và cảnh báo chi phí. |
-| **Tuần 13** | Hoàn thiện, kiểm thử và demo | Cấu hình Route 53, CloudFront và AWS WAF; kiểm thử responsive, phân quyền, S3 Endpoint, SQS-OCR-Gemini-DLQ, RDS, log, CI/CD và chi phí. | Phiên bản Snaptics theo kiến trúc cập nhật sẵn sàng trình bày và thử nghiệm. |
+| **Tuần 13** | Hoàn thiện, kiểm thử và demo | Cấu hình Route 53, CloudFront và AWS WAF; kiểm thử responsive, phân quyền, S3 Endpoint, SQS-Worker-DLQ, RDS, log, CI/CD và chi phí. | Phiên bản Snaptics theo kiến trúc cập nhật sẵn sàng trình bày và thử nghiệm. |
 
 ---
 
@@ -186,7 +186,6 @@ Ngân sách được lập cho 01 tháng phát triển, tích hợp và demo. Đ
 | **Backend và AI Worker** | Cấu hình nhỏ; tổng khoảng 200-220 task-hour trong giai đoạn tích hợp/demo |
 | **Database** | RDS for SQL Server Express, Single-AZ, khoảng 20 GB |
 | **Kết nối Internet từ Private Subnet** | 01 NAT Gateway, chỉ duy trì trong thời gian cần thiết |
-| **Gemini API** | Khoảng 1 triệu token đầu vào và 200.000 token đầu ra |
 | **Phạm vi** | Không bao gồm tên miền mua mới, thuế, AWS WAF chạy liên tục và vận hành production Multi-AZ |
 
 #### 6.2. Bảng dự toán chi phí môi trường demo
@@ -201,8 +200,6 @@ Ngân sách được lập cho 01 tháng phát triển, tích hợp và demo. Đ
 | **6** | NAT Gateway và dữ liệu xử lý | 01 NAT Gateway, bật giới hạn trong thời gian tích hợp | $13.00 |
 | **7** | Amazon SQS, SNS và ECR | Queue OCR/AI, cảnh báo cơ bản và lưu Docker Image | $1.00 |
 | **8** | CloudWatch, Secrets Manager và AWS Budgets | Log, metric, alarm, lưu secret/API key và cảnh báo ngân sách | $3.00 |
-| **9** | Azure Document Intelligence | Khoảng 1.000 trang bằng prebuilt invoice model | $10.00 |
-| **10** | Gemini API | Ước tính 1 triệu token input và 200.000 token output | $0.80 |
 
 #### 6.3. Cách kiểm soát chi phí
 * Tạo AWS Budget và cảnh báo khi chi phí đạt 50%, 80% và 100% ngân sách.
@@ -210,7 +207,7 @@ Ngân sách được lập cho 01 tháng phát triển, tích hợp và demo. Đ
 * Đặt giới hạn tối thiểu/tối đa cho ECS Auto Scaling và không để AI Worker chạy dư thừa.
 * Giới hạn dung lượng ảnh; nén ảnh trước khi tải lên khi phù hợp.
 * Thiết lập thời gian lưu log CloudWatch và Lifecycle Policy cho tệp S3.
-* Không gọi lại Azure OCR hoặc Gemini API khi giao dịch đã có kết quả hợp lệ; không ghi Gemini API key vào log.
+* Không gọi lại xử lý tự động khi giao dịch đã có kết quả hợp lệ; không ghi secret vào log.
 * Xóa tài nguyên thử nghiệm ngay sau khi hoàn tất demo.
 
 #### 6.4. Cơ sở tham khảo đơn vị tính phí
@@ -224,8 +221,6 @@ Dự toán sử dụng mô hình pay-as-you-go và các đơn vị tính phí do
 * [AWS WAF Pricing](https://aws.amazon.com/waf/pricing/)
 * [AWS Secrets Manager Pricing](https://aws.amazon.com/secrets-manager/pricing/)
 * [Amazon RDS for SQL Server Pricing](https://aws.amazon.com/rds/sqlserver/pricing/)
-* [Azure Document Intelligence Pricing](https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence/)
-* [Gemini Developer API Pricing](https://ai.google.dev/pricing)
 
 ---
 
@@ -234,8 +229,8 @@ Dự toán sử dụng mô hình pay-as-you-go và các đơn vị tính phí do
 | STT | Rủi ro | Tác động | Khả năng | Mức độ | Biện pháp giảm thiểu & Kế hoạch dự phòng |
 | :---: | :--- | :---: | :---: | :---: | :--- |
 | **1** | Sai lệch OCR do ảnh mờ, thiếu sáng hoặc bố cục hóa đơn không đồng nhất | Cao | Trung bình | **Cao** | Cho phép xem ảnh gốc, chỉnh sửa trước khi lưu, kiểm tra ngày/số tiền và đánh dấu trường có độ tin cậy thấp. |
-| **2** | Azure Document Intelligence hoặc Gemini API lỗi, giới hạn request hoặc thay đổi chính sách | Cao | Trung bình | **Cao** | Xử lý qua SQS; retry có backoff; giới hạn số lần thử; DLQ; tách lớp tích hợp; cho phép nhập thủ công. |
-| **3** | Rò rỉ dữ liệu tài chính, connection string hoặc API key | Rất cao | Thấp | **Cao** | HTTPS; AWS WAF; Secrets Manager cho Gemini/Azure key, JWT secret và connection string; IAM tối thiểu; kiểm tra quyền sở hữu; Private Subnet; không ghi secret vào log. |
+| **2** | Dịch vụ xử lý tự động lỗi hoặc bị giới hạn request | Cao | Trung bình | **Cao** | Xử lý qua SQS; retry có backoff; giới hạn số lần thử; DLQ; tách lớp tích hợp; cho phép nhập thủ công. |
+| **3** | Rò rỉ dữ liệu tài chính, connection string hoặc API key | Rất cao | Thấp | **Cao** | HTTPS; AWS WAF; Secrets Manager cho JWT secret và connection string; IAM tối thiểu; kiểm tra quyền sở hữu; Private Subnet; không ghi secret vào log. |
 | **4** | Chi phí Cloud và AI tăng ngoài dự kiến | Cao | Trung bình | **Cao** | AWS Budgets; giới hạn Auto Scaling; giới hạn ảnh và request AI; log retention; xóa tài nguyên demo sau khi sử dụng. |
 | **5** | Tồn đọng message khi nhiều người dùng quét cùng lúc | Trung bình | Trung bình | **Trung bình** | Theo dõi Queue Depth; tăng Worker trong giới hạn; hiển thị trạng thái xử lý; DLQ; tách Backend và Worker. |
 | **6** | Phiên bản mới gây lỗi khi triển khai | Trung bình | Trung bình | **Trung bình** | CI/CD build kiểm tra; health check; lưu image ổn định trên ECR; tách cấu hình Dev/Prod; theo dõi CloudWatch. |
@@ -247,13 +242,13 @@ Dự toán sử dụng mô hình pay-as-you-go và các đơn vị tính phí do
 
 ### 8. Kết luận và kết quả kỳ vọng
 
-Snaptics hướng đến việc chuyển đổi quản lý chi tiêu từ nhập liệu thủ công sang quy trình tự động, tập trung và có khả năng phân tích. Việc kết hợp Azure OCR, Gemini API, Amazon SQS/DLQ, Hangfire, ECS Fargate, RDS SQL Server, S3 Gateway Endpoint, CloudFront/WAF và Secrets Manager giúp hệ thống xử lý hóa đơn an toàn hơn, giảm phụ thuộc vào thao tác nhập liệu và tạo nền tảng cho các tính năng tài chính trong tương lai.
+Snaptics hướng đến việc chuyển đổi quản lý chi tiêu từ nhập liệu thủ công sang quy trình tự động, tập trung và có khả năng phân tích. Việc kết hợp Amazon SQS/DLQ, Hangfire, ECS Fargate, RDS SQL Server, S3 Gateway Endpoint, CloudFront/WAF và Secrets Manager giúp hệ thống xử lý hóa đơn an toàn hơn, giảm phụ thuộc vào thao tác nhập liệu và tạo nền tảng cho các tính năng tài chính trong tương lai.
 
 Sau 13 tuần, dự án kỳ vọng hoàn thành phiên bản demo có thể trình bày đầy đủ luồng từ quét hóa đơn đến tạo giao dịch, cập nhật ví/ngân sách, hiển thị báo cáo và gửi thông báo. Đồng thời, nhóm có thể chứng minh khả năng triển khai Frontend, Backend, Worker, Database, Storage, Queue, CI/CD và Monitoring trên môi trường Cloud.
 
 | Nhóm kết quả | Kết quả kỳ vọng |
 | :--- | :--- |
 | **Sản phẩm** | Có phiên bản Web hoạt động theo phạm vi User/Admin và luồng nghiệp vụ cốt lõi. |
-| **Kỹ thuật** | Thể hiện kiến trúc CloudFront/WAF, container trên ECS Fargate, queue bất đồng bộ, S3 Gateway Endpoint, RDS SQL Server và tích hợp External AI APIs. |
+| **Kỹ thuật** | Thể hiện kiến trúc CloudFront/WAF, container trên ECS Fargate, queue bất đồng bộ, S3 Gateway Endpoint, RDS SQL Server và xử lý tác vụ tự động. |
 | **Vận hành** | Có health check, CloudWatch log/metric, DLQ, Secrets Manager, cảnh báo chi phí và cơ chế quản lý tác vụ nền. |
 | **Khả năng mở rộng** | Kiến trúc mục tiêu có thể chuyển từ demo thu gọn sang production Multi-AZ sau khi xác nhận tải và ngân sách. |
