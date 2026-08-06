@@ -64,7 +64,7 @@ Build the Snaptics intelligent expense management platform powered by cloud comp
 | **Business Flow** | End-to-end flow from receipt upload to transaction creation and Dashboard update. |
 | **Financial Management** | Functional transactions, wallets, budgets, reports, notifications, and AI Insights within demo scope. |
 | **Authorization** | Users access only their owned data; Admin accesses administrative functions based on granted roles. |
-| **Cloud Deployment** | Frontend, CloudFront/WAF, Backend, Worker, Database, Storage, Queue, Secrets, and Monitoring configured on AWS. |
+| **Cloud Deployment** | Frontend, AWS WAF, Backend, Worker, Database, Storage, Queue, Secrets, and Monitoring configured on AWS. |
 | **Operations** | CloudWatch logging, health checks, cost alerts, and DLQ error message handling. |
 
 ---
@@ -96,13 +96,13 @@ Tasks like periodic AI Insights, budget checks, and alert pushes require automat
 
 ### 4. Solution Architecture
 
-Snaptics utilizes an AWS Cloud-Native architecture combining a Single Page Application (SPA), CDN with edge protection, containerized microservices on ECS Fargate, relational database, object storage, asynchronous queues, and external AI services. The target infrastructure spans two Availability Zones, maintaining clear separation between Frontend, Backend API, and AI Workers for independent scaling, deployment, and monitoring.
+Snaptics utilizes an AWS Cloud-Native architecture combining a Single Page Application (SPA), edge protection layer, containerized microservices on ECS Fargate, relational database, object storage, asynchronous queues, and external AI services. The target infrastructure spans two Availability Zones, maintaining clear separation between Frontend, Backend API, and AI Workers for independent scaling, deployment, and monitoring.
 
 #### 4.1. Design Principles
 * Decouple OCR/AI processing from API requests to prevent timeouts and backend bottlenecks.
-* Deploy VPC across two Availability Zones; place Backend, Worker, and Database in Private Subnets; expose only CloudFront, ALB, NAT Gateways, and necessary public endpoints.
+* Deploy VPC across two Availability Zones; place Backend, Worker, and Database in Private Subnets; expose only AWS Amplify, ALB, NAT Gateways, and necessary public endpoints.
 * Store receipt images on Amazon S3 accessed internally via S3 Gateway Endpoint; store relational business data in Amazon RDS for SQL Server.
-* Attach AWS WAF to CloudFront; store JWT secrets and connection strings securely in AWS Secrets Manager using least privilege.
+* Attach AWS WAF; store JWT secrets and connection strings securely in AWS Secrets Manager using least privilege.
 * Monitor logs, metrics, queue errors, and costs starting from the demo phase.
 * Clearly demarcate target production architecture from cost-optimized demo configurations.
 
@@ -110,8 +110,8 @@ Snaptics utilizes an AWS Cloud-Native architecture combining a Single Page Appli
 
 | Component | Role in System |
 | :--- | :--- |
-| **Frontend** | Angular Single Page Application automatically built and deployed via AWS Amplify from GitHub. Distributed via Amazon CloudFront CDN. |
-| **DNS, CDN & Edge Protection** | Amazon Route 53 manages DNS resolution; Amazon CloudFront acts as CDN and global entry point, forwarding API requests through the Internet Gateway to ALB. |
+| **Frontend** | Angular Single Page Application automatically built and deployed via AWS Amplify from GitHub. AWS Amplify hosts and distributes the Frontend application. |
+| **DNS & Domain Resolution** | Amazon Route 53 manages domain and DNS resolution. Frontend UI requests are routed to AWS Amplify, and API requests are sent via Internet Gateway to Application Load Balancer (ALB). |
 | **Networking (VPC)** | Amazon VPC spanning 02 Availability Zones (AZs). Each AZ contains Public Subnets and Private Subnets. ALB and NAT Gateways reside in Public Subnets; ECS Fargate and Aurora & RDS databases reside in Private Subnets. |
 | **Backend API (ECS Cluster)** | .NET API containerized with Docker, stored on Amazon ECR, and deployed as ECS Services running Fargate Tasks across Private Subnets behind ALB. |
 | **AI Worker** | ECS Fargate Worker dequeuing messages from SQS `snaptics-ai-queue`, reading images from S3 via Gateway Endpoint, executing automated tasks via NAT Gateway, and writing results to Aurora & RDS. |
@@ -123,8 +123,8 @@ Snaptics utilizes an AWS Cloud-Native architecture combining a Single Page Appli
 | **CI/CD Pipeline** | GitHub Actions triggers 3 automated paths: (1) **Auto Build & Deploy** Frontend to AWS Amplify, (2) **Build & Push Docker Images** to Elastic Container Registry (ECR), and (3) **Update Service** on ECS Cluster for Fargate to pull new images (**Pull Image**). |
 
 #### 4.3. Main Workflow Steps (Matching Architecture Diagram)
-1. User accesses the Snaptics domain; **Amazon Route 53** (1) resolves DNS to **Amazon CloudFront** (2).
-2. **CloudFront** serves the Frontend SPA hosted on **AWS Amplify** and forwards API requests through the **Internet Gateway**.
+1. User accesses the Snaptics domain; **Amazon Route 53** (1) resolves DNS routing Frontend UI requests to **AWS Amplify** and API requests to the system.
+2. **AWS Amplify** distributes the Frontend SPA UI. API request traffic passes through the **Internet Gateway** (2) into the **Application Load Balancer (ALB)**. **AWS WAF** inspects and blocks security threats.
 3. API requests pass through the Internet Gateway to the **Application Load Balancer (ALB)** (3) in Public Subnets.
 4. **ALB** forwards API traffic to **ECS Fargate Tasks** (4) running in Private Subnets across 02 Availability Zones.
 5. Fargate Tasks read/write receipt images directly to **Amazon S3** via **S3 Gateway Endpoint** (5) in the VPC, bypassing the public Internet.
@@ -140,7 +140,7 @@ Snaptics utilizes an AWS Cloud-Native architecture combining a Single Page Appli
 *Figure 1. Target AWS Cloud Architecture for Snaptics System*
 
 #### 4.5. Security, Observability & Cost Control
-* Enforce HTTPS and JWT tokens; attach AWS WAF to CloudFront for edge filtering.
+* Enforce HTTPS and access tokens; attach AWS WAF for edge filtering.
 * Enforce RBAC and data ownership checks at the Backend layer.
 * Zero hardcoded secrets in source code or Docker Images; store JWT secrets and connection strings in AWS Secrets Manager.
 * Place Backend, AI Worker, and RDS SQL Server in Private Subnets; limit Public Subnet access strictly to ALB and NAT Gateways with tight Security Groups.
@@ -167,7 +167,7 @@ Snaptics utilizes an AWS Cloud-Native architecture combining a Single Page Appli
 | **Week 10** | AWS Frontend, Secrets & Database | Connect AWS Amplify to GitHub; deploy Frontend; store JWT secrets & DB string in Secrets Manager; provision demo RDS. | Live Frontend on Amplify & secure RDS SQL Server. |
 | **Week 11** | VPC, S3 Endpoint, SQS & Containers | Provision VPC (2 AZs), Subnets, Internet Gateway, NAT Gateway, S3 Gateway Endpoint & SQS/DLQ; containerize Backend/Worker; ECR & GitHub Actions pipeline. | Network infrastructure, S3 endpoint & ECR container pipeline. |
 | **Week 12** | ECS Fargate Deployment | Create ECS Cluster/Service; deploy Backend & AI Worker; configure ALB, health checks, Auto Scaling, Secrets Manager access, CloudWatch & Budgets. | Backend & Worker running on ECS Fargate. |
-| **Week 13** | Polishing, Testing & Demo | Configure Route 53, CloudFront & AWS WAF; responsive UI testing, RBAC, S3 Endpoint, SQS-Worker-DLQ, RDS, logs, CI/CD & cost audit. | Demo-ready Snaptics platform. |
+| **Week 13** | Polishing, Testing & Demo | Configure Route 53 & AWS WAF; responsive UI testing, RBAC, S3 Endpoint, SQS-Worker-DLQ, RDS, logs, CI/CD & cost audit. | Demo-ready Snaptics platform. |
 
 ---
 
@@ -182,7 +182,7 @@ The budget estimation covers a 1-month development, integration, and demo window
 | **Test Users** | ~100 active test users |
 | **Receipt Volume** | 1,000 receipts / OCR pages during demo month |
 | **S3 Storage** | ~20 GB receipt images and processed files |
-| **Frontend / CDN Traffic** | ~30-50 GB / month |
+| **Frontend Traffic** | ~30-50 GB / month |
 | **Backend & AI Worker** | Small task configs; total ~200-220 task-hours during integration/demo |
 | **Database** | RDS for SQL Server Express, Single-AZ, ~20 GB |
 | **Outbound Internet Access** | 01 NAT Gateway, maintained strictly during required integration windows |
@@ -192,7 +192,7 @@ The budget estimation covers a 1-month development, integration, and demo window
 
 | # | Service Component | Estimation Basis | Cost (USD) |
 | :---: | :--- | :--- | :---: |
-| **1** | AWS Amplify, CloudFront & Route 53 | Build/hosting Frontend, low traffic CDN and 01 Hosted Zone | $4.50 |
+| **1** | AWS Amplify & Route 53 | Build/hosting Frontend, low traffic distribution and 01 Hosted Zone | $4.50 |
 | **2** | Amazon S3 | Store ~20 GB receipt images and upload/download requests | $1.00 |
 | **3** | ECS Fargate - Backend & AI Worker | Small task configs, total ~200-220 task-hours | $8.00 |
 | **4** | Application Load Balancer (ALB) | Active during deployment & demo phase, low traffic | $7.00 |
@@ -242,13 +242,13 @@ Calculations use pay-as-you-go public rates. Figures in the table represent inte
 
 ### 8. Conclusion & Expected Outcomes
 
-Snaptics aims to transform expense management from manual tracking to an automated, centralized, and analytical platform. Combining Amazon SQS/DLQ, Hangfire, ECS Fargate, RDS SQL Server, S3 Gateway Endpoint, CloudFront/WAF, and Secrets Manager ensures secure, efficient receipt processing while laying the foundation for future financial capabilities.
+Snaptics aims to transform expense management from manual tracking to an automated, centralized, and analytical platform. Combining Amazon SQS/DLQ, Hangfire, ECS Fargate, RDS SQL Server, S3 Gateway Endpoint, AWS WAF, and Secrets Manager ensures secure, efficient receipt processing while laying the foundation for future financial capabilities.
 
 Upon completing the 13-week project, the team will deliver a fully functional demo showcasing end-to-end receipt scanning, transaction management, wallet/budget sync, visual reports, and in-app notifications, while demonstrating cloud-native deployment, containerization, queueing, security, monitoring, and CI/CD automation on AWS.
 
 | Deliverable Category | Target Outcome |
 | :--- | :--- |
 | **Product** | Functional Web application covering User/Admin roles and core business workflows. |
-| **Technical** | Demonstrated CloudFront/WAF, containerized ECS Fargate, async queueing, S3 Gateway Endpoint, RDS SQL Server, and External AI API integration. |
+| **Technical** | Demonstrated AWS WAF, containerized ECS Fargate, async queueing, S3 Gateway Endpoint, RDS SQL Server, and External AI API integration. |
 | **Operations** | Health checks, CloudWatch logs/metrics, DLQ fault handling, Secrets Manager, cost alerts, and scheduled background job management. |
 | **Scalability** | Architecture ready to transition smoothly from cost-optimized demo to Multi-AZ production deployment. |

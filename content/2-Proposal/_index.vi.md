@@ -64,7 +64,7 @@ Xây dựng một nền tảng quản lý chi tiêu thông minh giúp người d
 | **Luồng nghiệp vụ** | Thực hiện được quy trình từ tải hóa đơn đến tạo giao dịch và cập nhật Dashboard. |
 | **Quản lý tài chính** | Có giao dịch, ví, ngân sách, báo cáo, thông báo và AI Insight hoạt động theo phạm vi demo. |
 | **Phân quyền** | User chỉ truy cập dữ liệu của mình; Admin truy cập chức năng quản trị theo quyền được cấp. |
-| **Triển khai Cloud** | Frontend, CloudFront/WAF, Backend, Worker, Database, Storage, Queue, Secrets và Monitoring được cấu hình trên AWS. |
+| **Triển khai Cloud** | Frontend, AWS WAF, Backend, Worker, Database, Storage, Queue, Secrets và Monitoring được cấu hình trên AWS. |
 | **Vận hành** | Có log, health check, cảnh báo chi phí và cơ chế xử lý message lỗi qua DLQ. |
 
 ---
@@ -96,13 +96,13 @@ Các tác vụ như tạo insight định kỳ, kiểm tra ngân sách hoặc g�
 
 ### 4. Kiến trúc giải pháp
 
-Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, CDN và lớp bảo vệ biên, container trên ECS Fargate, cơ sở dữ liệu quan hệ, lưu trữ đối tượng, hàng đợi bất đồng bộ và các dịch vụ AI bên ngoài. Hạ tầng mục tiêu được trải trên hai Availability Zone, tách biệt Frontend, Backend API và AI Worker để từng thành phần có thể triển khai, mở rộng và giám sát độc lập.
+Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA và lớp bảo vệ biên, container trên ECS Fargate, cơ sở dữ liệu quan hệ, lưu trữ đối tượng, hàng đợi bất đồng bộ và các dịch vụ AI bên ngoài. Hạ tầng mục tiêu được trải trên hai Availability Zone, tách biệt Frontend, Backend API và AI Worker để từng thành phần có thể triển khai, mở rộng và giám sát độc lập.
 
 #### 4.1. Nguyên tắc thiết kế
 * Tách tác vụ OCR/AI khỏi request chính để giảm timeout và tránh làm nghẽn Backend API.
-* Triển khai VPC trên hai Availability Zone; đặt Backend, Worker và Database trong Private Subnet, chỉ công khai CloudFront, ALB, NAT Gateway và các điểm truy cập cần thiết.
+* Triển khai VPC trên hai Availability Zone; đặt Backend, Worker và Database trong Private Subnet, chỉ công khai AWS Amplify, ALB, NAT Gateway và các điểm truy cập cần thiết.
 * Lưu ảnh hóa đơn trên Amazon S3, truy cập nội bộ qua S3 Gateway Endpoint; lưu dữ liệu nghiệp vụ trong Amazon RDS for SQL Server.
-* Gắn AWS WAF với CloudFront, quản lý JWT secret và connection string bằng AWS Secrets Manager; áp dụng quyền truy cập tối thiểu.
+* Gắn AWS WAF, quản lý JWT secret và connection string bằng AWS Secrets Manager; áp dụng quyền truy cập tối thiểu.
 * Theo dõi log, metric, lỗi hàng đợi và chi phí ngay từ giai đoạn demo.
 * Phân biệt kiến trúc mục tiêu production với cấu hình demo tối ưu chi phí.
 
@@ -110,8 +110,8 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 
 | Thành phần | Vai trò trong hệ thống |
 | :--- | :--- |
-| **Frontend** | Angular Single Page Application được build và deploy tự động qua AWS Amplify từ GitHub Repository. CloudFront phân phối nội dung Frontend đến người dùng. |
-| **DNS, CDN và bảo vệ biên** | Amazon Route 53 quản lý tên miền và phân giải DNS; Amazon CloudFront làm CDN và điểm vào chung. CloudFront chuyển tiếp các request API qua Internet Gateway đến ALB. |
+| **Frontend** | Angular Single Page Application được build và deploy tự động qua AWS Amplify từ GitHub Repository. AWS Amplify hosting và phân phối ứng dụng Frontend. |
+| **DNS và Phân giải Tên miền** | Amazon Route 53 quản lý tên miền và phân giải DNS. Các request giao diện Frontend được định tuyến tới AWS Amplify, và các request gọi API được gửi qua Internet Gateway tới Application Load Balancer (ALB). |
 | **Mạng (VPC)** | Amazon VPC trải trên 02 Availability Zone (AZ). Mỗi AZ có Public Subnet và Private Subnet; ALB và NAT Gateway thuộc tầng Public Subnet, còn ECS Fargate và Database thuộc tầng Private Subnet. |
 | **Backend API (ECS Cluster)** | .NET API được đóng gói Docker, lưu trên Amazon ECR và triển khai thành ECS Service chạy Fargate Task trong Private Subnet của hai Availability Zone, nhận lưu lượng từ Application Load Balancer. |
 | **AI Worker** | ECS Fargate Worker nhận message từ SQS `snaptics-ai-queue`, đọc ảnh từ S3 qua Gateway Endpoint, xử lý các tác vụ tự động qua NAT Gateway, sau đó lưu kết quả vào Aurora & RDS. |
@@ -123,9 +123,9 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 | **CI/CD Pipeline** | GitHub Actions thực hiện 3 luồng: (1) **Auto Build & Deploy** Frontend lên AWS Amplify, (2) **Build & Push Docker Images** lên Elastic Container Registry (ECR), và (3) **Update Service** lên ECS Cluster để Fargate kéo image mới (**Pull Image**). |
 
 #### 4.3. Luồng hoạt động chính theo sơ đồ kiến trúc
-1. Người dùng truy cập tên miền Snaptics; **Amazon Route 53** (1) phân giải tên miền đến **Amazon CloudFront** (2).
-2. **CloudFront** phân phối giao diện được triển khai trên **AWS Amplify**. **AWS WAF** gắn với CloudFront kiểm tra và chặn request bất thường trước khi request API đi vào hệ thống.
-3. Request API được chuyển qua **Internet Gateway** đến **Application Load Balancer (ALB)** (3) đặt trong Public Subnet.
+1. Người dùng truy cập tên miền Snaptics; **Amazon Route 53** (1) phân giải tên miền định tuyến các request của giao diện Frontend vào **AWS Amplify** và các request gọi API vào hệ thống.
+2. **AWS Amplify** phân phối giao diện ứng dụng Frontend. Luồng request gọi API đi qua **Internet Gateway** (2), tiến vào **Application Load Balancer (ALB)**. **AWS WAF** kiểm tra và ngăn chặn các nguy cơ bảo mật.
+3. **Application Load Balancer (ALB)** (3) đặt tại Public Subnet đóng vai trò phân tải, đẩy request vào các container chạy trong Private Subnet.
 4. **Application Load Balancer** phân phối request đến **Backend API** (4) chạy bằng **Amazon ECS Fargate** trong Private Subnet của hai Availability Zone.
 5. Backend lưu hoặc đọc ảnh hóa đơn trên **Amazon S3** thông qua **S3 Gateway Endpoint** (5), không cần đưa lưu lượng S3 đi qua Internet.
 6. Backend và AI Worker đọc/ghi dữ liệu nghiệp vụ trên **Amazon RDS for SQL Server** (6); kiến trúc mục tiêu đồng bộ dữ liệu từ Primary sang Standby Multi-AZ.
@@ -140,7 +140,7 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 *Hình 1. Kiến trúc mục tiêu của hệ thống Snaptics trên AWS*
 
 #### 4.5. Bảo mật, giám sát và kiểm soát chi phí
-* Sử dụng HTTPS và access token; gắn AWS WAF với CloudFront để lọc request bất thường ở lớp biên.
+* Sử dụng HTTPS và access token; gắn AWS WAF để lọc request bất thường ở lớp biên.
 * Phân quyền Admin/User và kiểm tra quyền sở hữu dữ liệu tại Backend.
 * Không ghi API key hoặc connection string trong mã nguồn/Docker Image; lưu JWT secret và RDS connection string trong AWS Secrets Manager.
 * Đặt Backend, AI Worker và RDS SQL Server trong Private Subnet; chỉ ALB và NAT Gateway nằm ở Public Subnet, kèm Security Group giới hạn luồng truy cập.
@@ -167,7 +167,7 @@ Snaptics sử dụng kiến trúc Cloud-Native trên AWS, kết hợp Web SPA, C
 | **Tuần 10** | Frontend, Secrets và Database AWS | Kết nối Amplify với GitHub; triển khai Frontend; lưu JWT secret và connection string trong Secrets Manager; tạo RDS SQL Server cho môi trường demo. | Frontend hoạt động trên AWS; database và toàn bộ cấu hình nhạy cảm được quản lý an toàn. |
 | **Tuần 11** | VPC, S3 Endpoint, SQS, ECR và Container | Tạo VPC hai Availability Zone, Public/Private Subnet, Internet Gateway, NAT Gateway, S3 Gateway Endpoint và SQS/DLQ; đóng gói Backend/Worker; tạo ECR và GitHub Actions build/push image. | Hạ tầng mạng, endpoint, queue và kho container sẵn sàng cho triển khai Backend/Worker. |
 | **Tuần 12** | Triển khai ECS Fargate | Tạo ECS Cluster/Service; triển khai Backend và AI Worker; cấu hình ALB, health check, Auto Scaling, quyền đọc Secrets Manager, CloudWatch, SNS và AWS Budgets. | Backend và Worker hoạt động trên Fargate, truy cập đúng secret, có giám sát và cảnh báo chi phí. |
-| **Tuần 13** | Hoàn thiện, kiểm thử và demo | Cấu hình Route 53, CloudFront và AWS WAF; kiểm thử responsive, phân quyền, S3 Endpoint, SQS-Worker-DLQ, RDS, log, CI/CD và chi phí. | Phiên bản Snaptics theo kiến trúc cập nhật sẵn sàng trình bày và thử nghiệm. |
+| **Tuần 13** | Hoàn thiện, kiểm thử và demo | Cấu hình Route 53 và AWS WAF; kiểm thử responsive, phân quyền, S3 Endpoint, SQS-Worker-DLQ, RDS, log, CI/CD và chi phí. | Phiên bản Snaptics theo kiến trúc cập nhật sẵn sàng trình bày và thử nghiệm. |
 
 ---
 
@@ -182,7 +182,7 @@ Ngân sách được lập cho 01 tháng phát triển, tích hợp và demo. Đ
 | **Người dùng thử nghiệm** | Khoảng 100 người dùng |
 | **Khối lượng hóa đơn** | 1.000 hóa đơn hoặc trang OCR trong tháng demo |
 | **Lưu trữ S3** | Khoảng 20 GB ảnh và tệp xử lý |
-| **Lưu lượng Frontend/CDN** | Khoảng 30-50 GB/tháng |
+| **Lưu lượng Frontend** | Khoảng 30-50 GB/tháng |
 | **Backend và AI Worker** | Cấu hình nhỏ; tổng khoảng 200-220 task-hour trong giai đoạn tích hợp/demo |
 | **Database** | RDS for SQL Server Express, Single-AZ, khoảng 20 GB |
 | **Kết nối Internet từ Private Subnet** | 01 NAT Gateway, chỉ duy trì trong thời gian cần thiết |
@@ -192,7 +192,7 @@ Ngân sách được lập cho 01 tháng phát triển, tích hợp và demo. Đ
 
 | STT | Hạng mục dịch vụ | Cơ sở ước tính | Chi phí (USD) |
 | :---: | :--- | :--- | :---: |
-| **1** | AWS Amplify, CloudFront và Route 53 | Build/hosting Frontend, CDN lưu lượng thấp và 01 Hosted Zone | $4.50 |
+| **1** | AWS Amplify và Route 53 | Build/hosting Frontend, phân phối lưu lượng thấp và 01 Hosted Zone | $4.50 |
 | **2** | Amazon S3 | Lưu khoảng 20 GB ảnh hóa đơn và request upload/download | $1.00 |
 | **3** | ECS Fargate - Backend và AI Worker | Task cấu hình nhỏ, tổng khoảng 200-220 giờ chạy | $8.00 |
 | **4** | Application Load Balancer | Hoạt động trong giai đoạn triển khai và demo, lưu lượng thấp | $7.00 |
@@ -242,13 +242,13 @@ Dự toán sử dụng mô hình pay-as-you-go và các đơn vị tính phí do
 
 ### 8. Kết luận và kết quả kỳ vọng
 
-Snaptics hướng đến việc chuyển đổi quản lý chi tiêu từ nhập liệu thủ công sang quy trình tự động, tập trung và có khả năng phân tích. Việc kết hợp Amazon SQS/DLQ, Hangfire, ECS Fargate, RDS SQL Server, S3 Gateway Endpoint, CloudFront/WAF và Secrets Manager giúp hệ thống xử lý hóa đơn an toàn hơn, giảm phụ thuộc vào thao tác nhập liệu và tạo nền tảng cho các tính năng tài chính trong tương lai.
+Snaptics hướng đến việc chuyển đổi quản lý chi tiêu từ nhập liệu thủ công sang quy trình tự động, tập trung và có khả năng phân tích. Việc kết hợp Amazon SQS/DLQ, Hangfire, ECS Fargate, RDS SQL Server, S3 Gateway Endpoint, AWS WAF và Secrets Manager giúp hệ thống xử lý hóa đơn an toàn hơn, giảm phụ thuộc vào thao tác nhập liệu và tạo nền tảng cho các tính năng tài chính trong tương lai.
 
 Sau 13 tuần, dự án kỳ vọng hoàn thành phiên bản demo có thể trình bày đầy đủ luồng từ quét hóa đơn đến tạo giao dịch, cập nhật ví/ngân sách, hiển thị báo cáo và gửi thông báo. Đồng thời, nhóm có thể chứng minh khả năng triển khai Frontend, Backend, Worker, Database, Storage, Queue, CI/CD và Monitoring trên môi trường Cloud.
 
 | Nhóm kết quả | Kết quả kỳ vọng |
 | :--- | :--- |
 | **Sản phẩm** | Có phiên bản Web hoạt động theo phạm vi User/Admin và luồng nghiệp vụ cốt lõi. |
-| **Kỹ thuật** | Thể hiện kiến trúc CloudFront/WAF, container trên ECS Fargate, queue bất đồng bộ, S3 Gateway Endpoint, RDS SQL Server và xử lý tác vụ tự động. |
+| **Kỹ thuật** | Thể hiện kiến trúc AWS WAF, container trên ECS Fargate, queue bất đồng bộ, S3 Gateway Endpoint, RDS SQL Server và xử lý tác vụ tự động. |
 | **Vận hành** | Có health check, CloudWatch log/metric, DLQ, Secrets Manager, cảnh báo chi phí và cơ chế quản lý tác vụ nền. |
 | **Khả năng mở rộng** | Kiến trúc mục tiêu có thể chuyển từ demo thu gọn sang production Multi-AZ sau khi xác nhận tải và ngân sách. |
