@@ -38,16 +38,16 @@ To objectively reflect on my internship period, I would like to evaluate myself 
 
 | No. | Criteria | Description | Good | Fair | Average |
 | :-: | :--- | :--- | :-: | :-: | :-: |
-| 1 | **Professional Knowledge & Skills** | Industry understanding, practical application, tool proficiency, work quality | ☐ | ✅ | ☐ |
+| 1 | **Professional Knowledge & Skills** | Industry understanding, practical application, tool proficiency, work quality | ✅ | ☐ | ☐ |
 | 2 | **Ability to Learn** | Absorbing new knowledge, fast learner, strong self-study mindset | ✅ | ☐ | ☐ |
 | 3 | **Proactiveness** | Self-directed learning, taking on tasks without waiting for instructions | ✅ | ☐ | ☐ |
 | 4 | **Sense of Responsibility** | Completing tasks on time, ensuring quality standards | ✅ | ☐ | ☐ |
 | 5 | **Discipline** | Adhering to work hours, internal regulations, work processes | ✅ | ☐ | ☐ |
 | 6 | **Desire to Improve** | Ready to receive feedback and continuously improve self | ✅ | ☐ | ☐ |
-| 7 | **Communication** | Presenting ideas clearly, transparent job reporting | ☐ | ✅ | ☐ |
+| 7 | **Communication** | Presenting ideas clearly, transparent job reporting | ✅ | ☐ | ☐ |
 | 8 | **Team Collaboration** | Working effectively with colleagues, participating actively in team | ✅ | ☐ | ☐ |
 | 9 | **Professional Conduct** | Respecting colleagues, partners, and work environment | ✅ | ☐ | ☐ |
-| 10 | **Problem-Solving Mindset** | Identifying problems, proposing creative solutions | ☐ | ✅ | ☐ |
+| 10 | **Problem-Solving Mindset** | Identifying problems, proposing creative solutions | ✅ | ☐ | ☐ |
 | 11 | **Contribution to Project/Organization** | Work efficiency, improvement initiatives, recognition from team | ✅ | ☐ | ☐ |
 | 12 | **Overall Evaluation** | General evaluation of the overall internship process | ✅ | ☐ | ☐ |
 
