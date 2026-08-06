@@ -6,7 +6,7 @@
 {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
 <script type="text/javascript" src="{{"js/lunr.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
 <script type="text/javascript" src="{{"js/auto-complete.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
-{{ if .Site.IsMultiLingual }}
+{{ if hugo.IsMultilingual }}
 <script type="text/javascript">
     var baseurl = "{{.Site.BaseURL}}{{.Site.LanguagePrefix}}";
 </script>
