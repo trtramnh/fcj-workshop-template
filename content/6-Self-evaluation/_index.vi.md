@@ -36,16 +36,20 @@ Tôi đã trực tiếp tham gia xây dựng giao diện người dùng, hoàn t
 
 Để phản ánh một cách khách quan quá trình thực tập, tôi xin tự đánh giá bản thân dựa trên các tiêu chí dưới đây:
 
-| STT | Tiêu chí | Đánh giá | Nhận xét |
-| :-: | :--- | :-: | :--- |
-| 1 | **Kiến thức chuyên môn** | ✅ Tốt | Nắm vững kỹ thuật lập trình Frontend, tích hợp API Backend và ứng dụng hiệu quả các dịch vụ Cloud trong dự án Snaptics. |
-| 2 | **Khả năng học hỏi** | ✅ Tốt | Tiếp thu nhanh các công nghệ mới về Frontend, quy trình tích hợp API và tư duy tối ưu hóa trải nghiệm người dùng. |
-| 3 | **Tính chủ động** | ✅ Tốt | Chủ động tìm hiểu, nhận nhiệm vụ phát triển UI, đề xuất hướng xử lý khi gặp lỗi giao diện và cải thiện UX. |
-| 4 | **Kỷ luật** | ✅ Tốt | Tuân thủ nghiêm túc lịch trình làm việc, nội quy chương trình thực tập và duy trì báo cáo công việc (worklog) đầy đủ, chính xác hàng tuần. |
-| 5 | **Giao tiếp** | ✅ Tốt | Trình bày công việc rõ ràng, chủ động trao đổi và phản hồi kỹ thuật hiệu quả với mentor cũng như các thành viên trong nhóm. |
-| 6 | **Teamwork** | ✅ Tốt | Hợp tác hiệu quả giữa các thành viên Frontend và Backend để đảm bảo ứng dụng vận hành trơn tru và đồng bộ. |
-| 7 | **Giải quyết vấn đề** | ✅ Tốt | Xử lý triệt để các lỗi giao diện, tối ưu hiển thị responsive trên nhiều thiết bị và cải thiện tốc độ phản hồi API. |
-| 8 | **Đóng góp cho dự án** | ✅ Tốt | Tham gia xây dựng và hoàn thiện thành công giao diện, các chức năng chính của dự án Snaptics đúng tiến độ. |
+| STT | Tiêu chí | Mô tả | Tốt | Khá | Trung bình |
+| :-: | :--- | :--- | :-: | :-: | :-: |
+| 1 | **Kiến thức và kỹ năng chuyên môn** | Hiểu biết về ngành, áp dụng kiến thức vào thực tế, kỹ năng sử dụng công cụ, chất lượng công việc | ☐ | ☑ | ☐ |
+| 2 | **Khả năng học hỏi** | Tiếp thu kiến thức mới, học hỏi nhanh, tinh thần tự học tốt | ☑ | ☐ | ☐ |
+| 3 | **Chủ động** | Tự tìm hiểu, nhận nhiệm vụ mà không chờ chỉ dẫn | ☑ | ☐ | ☐ |
+| 4 | **Tinh thần trách nhiệm** | Hoàn thành công việc đúng hạn, đảm bảo chất lượng | ☑ | ☐ | ☐ |
+| 5 | **Kỷ luật** | Tuân thủ giờ giấc, nội quy, quy trình làm việc | ☑ | ☐ | ☐ |
+| 6 | **Tính cầu tiến** | Sẵn sàng nhận feedback và cải thiện bản thân | ☑ | ☐ | ☐ |
+| 7 | **Giao tiếp** | Trình bày ý tưởng, báo cáo công việc rõ ràng | ☐ | ☑ | ☐ |
+| 8 | **Hợp tác nhóm** | Làm việc hiệu quả với đồng nghiệp, tham gia nhóm | ☑ | ☐ | ☐ |
+| 9 | **Ứng xử chuyên nghiệp** | Tôn trọng đồng nghiệp, đối tác, môi trường làm việc | ☑ | ☐ | ☐ |
+| 10 | **Tư duy giải quyết vấn đề** | Nhận diện vấn đề, đề xuất giải pháp, sáng tạo | ☐ | ☑ | ☐ |
+| 11 | **Đóng góp vào dự án/tổ chức** | Hiệu quả công việc, sáng kiến cải tiến, ghi nhận từ team | ☑ | ☐ | ☐ |
+| 12 | **Tổng thể** | Đánh giá chung về toàn bộ quá trình thực tập | ☑ | ☐ | ☐ |
 
 ### CẦN CẢI THIỆN
 

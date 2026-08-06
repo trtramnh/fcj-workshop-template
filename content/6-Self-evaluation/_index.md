@@ -36,16 +36,20 @@ I directly participated in building the user interface, completing system featur
 
 To objectively reflect on my internship period, I would like to evaluate myself based on the following criteria:
 
-| No. | Criteria | Rating | Comments |
-| :-: | :--- | :-: | :--- |
-| 1 | **Professional Knowledge** | ✅ Good | Mastered Frontend programming techniques, Backend API integration, and effectively applied Cloud services in the Snaptics project. |
-| 2 | **Ability to Learn** | ✅ Good | Quickly absorbed new Frontend technologies, API integration workflows, and user experience optimization strategies. |
-| 3 | **Proactiveness** | ✅ Good | Proactively researched, took initiative in UI development tasks, proposed solutions for UI bugs, and improved overall UX. |
-| 4 | **Discipline** | ✅ Good | Strictly adhered to work schedules, internship program rules, and maintained complete and accurate weekly worklogs. |
-| 5 | **Communication** | ✅ Good | Presented work clearly, actively communicated and provided effective technical feedback to mentors and team members. |
-| 6 | **Teamwork** | ✅ Good | Collaborated effectively with Frontend and Backend team members to ensure smooth and synchronized application operation. |
-| 7 | **Problem Solving** | ✅ Good | Thoroughly resolved UI issues, optimized responsive rendering across multiple devices, and improved API response speeds. |
-| 8 | **Project Contribution** | ✅ Good | Successfully participated in building and completing the UI and main features of the Snaptics project on schedule. |
+| No. | Criteria | Description | Good | Fair | Average |
+| :-: | :--- | :--- | :-: | :-: | :-: |
+| 1 | **Professional Knowledge & Skills** | Industry understanding, practical application, tool proficiency, work quality | ☐ | ☑ | ☐ |
+| 2 | **Ability to Learn** | Absorbing new knowledge, fast learner, strong self-study mindset | ☑ | ☐ | ☐ |
+| 3 | **Proactiveness** | Self-directed learning, taking on tasks without waiting for instructions | ☑ | ☐ | ☐ |
+| 4 | **Sense of Responsibility** | Completing tasks on time, ensuring quality standards | ☑ | ☐ | ☐ |
+| 5 | **Discipline** | Adhering to work hours, internal regulations, work processes | ☑ | ☐ | ☐ |
+| 6 | **Desire to Improve** | Ready to receive feedback and continuously improve self | ☑ | ☐ | ☐ |
+| 7 | **Communication** | Presenting ideas clearly, transparent job reporting | ☐ | ☑ | ☐ |
+| 8 | **Team Collaboration** | Working effectively with colleagues, participating actively in team | ☑ | ☐ | ☐ |
+| 9 | **Professional Conduct** | Respecting colleagues, partners, and work environment | ☑ | ☐ | ☐ |
+| 10 | **Problem-Solving Mindset** | Identifying problems, proposing creative solutions | ☐ | ☑ | ☐ |
+| 11 | **Contribution to Project/Organization** | Work efficiency, improvement initiatives, recognition from team | ☑ | ☐ | ☐ |
+| 12 | **Overall Evaluation** | General evaluation of the overall internship process | ☑ | ☐ | ☐ |
 
 ### AREAS FOR IMPROVEMENT
 
