@@ -39,7 +39,7 @@ To objectively reflect on my internship period, I would like to evaluate myself 
 | No. | Criteria | Description | Good | Fair | Average |
 | :-: | :--- | :--- | :-: | :-: | :-: |
 | 1 | **Professional Knowledge & Skills** | Industry understanding, practical application, tool proficiency, work quality | ✅ | ☐ | ☐ |
-| 2 | **Ability to Learn** | Absorbing new knowledge, fast learner, strong self-study mindset | ✅ | ☐ | ☐ |
+| 2 | **Ability to Learn** | Absorbing new knowledge, fast learner, strong self-study mindset | ☐ | ✅ | ☐ |
 | 3 | **Proactiveness** | Self-directed learning, taking on tasks without waiting for instructions | ✅ | ☐ | ☐ |
 | 4 | **Sense of Responsibility** | Completing tasks on time, ensuring quality standards | ✅ | ☐ | ☐ |
 | 5 | **Discipline** | Adhering to work hours, internal regulations, work processes | ✅ | ☐ | ☐ |
