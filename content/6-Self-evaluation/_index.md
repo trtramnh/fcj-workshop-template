@@ -38,18 +38,18 @@ To objectively reflect on my internship period, I would like to evaluate myself 
 
 | No. | Criteria | Description | Good | Fair | Average |
 | :-: | :--- | :--- | :-: | :-: | :-: |
-| 1 | **Professional Knowledge & Skills** | Industry understanding, practical application, tool proficiency, work quality | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 2 | **Ability to Learn** | Absorbing new knowledge, fast learner, strong self-study mindset | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 3 | **Proactiveness** | Self-directed learning, taking on tasks without waiting for instructions | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 4 | **Sense of Responsibility** | Completing tasks on time, ensuring quality standards | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 5 | **Discipline** | Adhering to work hours, internal regulations, work processes | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 6 | **Desire to Improve** | Ready to receive feedback and continuously improve self | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 7 | **Communication** | Presenting ideas clearly, transparent job reporting | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 8 | **Team Collaboration** | Working effectively with colleagues, participating actively in team | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 9 | **Professional Conduct** | Respecting colleagues, partners, and work environment | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 10 | **Problem-Solving Mindset** | Identifying problems, proposing creative solutions | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 11 | **Contribution to Project/Organization** | Work efficiency, improvement initiatives, recognition from team | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
-| 12 | **Overall Evaluation** | General evaluation of the overall internship process | ![✓](/images/6-Self-evaluation/check-green.png) | ![ ](/images/6-Self-evaluation/check-empty.svg) | ![ ](/images/6-Self-evaluation/check-empty.svg) |
+| 1 | **Professional Knowledge & Skills** | Industry understanding, practical application, tool proficiency, work quality | ☐ | ✅ | ☐ |
+| 2 | **Ability to Learn** | Absorbing new knowledge, fast learner, strong self-study mindset | ✅ | ☐ | ☐ |
+| 3 | **Proactiveness** | Self-directed learning, taking on tasks without waiting for instructions | ✅ | ☐ | ☐ |
+| 4 | **Sense of Responsibility** | Completing tasks on time, ensuring quality standards | ✅ | ☐ | ☐ |
+| 5 | **Discipline** | Adhering to work hours, internal regulations, work processes | ✅ | ☐ | ☐ |
+| 6 | **Desire to Improve** | Ready to receive feedback and continuously improve self | ✅ | ☐ | ☐ |
+| 7 | **Communication** | Presenting ideas clearly, transparent job reporting | ☐ | ✅ | ☐ |
+| 8 | **Team Collaboration** | Working effectively with colleagues, participating actively in team | ✅ | ☐ | ☐ |
+| 9 | **Professional Conduct** | Respecting colleagues, partners, and work environment | ✅ | ☐ | ☐ |
+| 10 | **Problem-Solving Mindset** | Identifying problems, proposing creative solutions | ☐ | ✅ | ☐ |
+| 11 | **Contribution to Project/Organization** | Work efficiency, improvement initiatives, recognition from team | ✅ | ☐ | ☐ |
+| 12 | **Overall Evaluation** | General evaluation of the overall internship process | ✅ | ☐ | ☐ |
 
 ### AREAS FOR IMPROVEMENT
 
