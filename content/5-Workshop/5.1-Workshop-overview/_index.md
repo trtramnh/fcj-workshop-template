@@ -71,8 +71,7 @@ Below is an accurate cost estimation for a Demo environment (1 month of developm
 | 7 | **Amazon SQS, SNS & ECR** | OCR/AI queues, basic alerts and storing Docker Image | $1.00 |
 | 8 | **CloudWatch, Parameter Store & Budgets**| Logs, metrics, alarms, secrets and budget alerts | $3.00 |
 | 9 | **Azure Document Intelligence** | ~1,000 pages using prebuilt invoice model | $10.00 |
-| 10 | **Gemini API** | Est. 1M input tokens and 200K output tokens | $0.80 |
-| | **Total Estimated Demo Cost** | | **~$68.30** |
+| | **Total Estimated Demo Cost** | | **~$67.50** |
 
 ### 3.2. Production Multi-AZ Environment (Reference for Scaling)
 
@@ -82,7 +81,7 @@ Below is an accurate cost estimation for a Demo environment (1 month of developm
 | **SQL Server Primary/Standby (Multi-AZ)**| $150 - $300 USD |
 | **Dual NAT Gateway & Data Transfer** | $70 - $120 USD |
 | **S3, SQS, SNS, ECR & CloudWatch**| $20 - $60 USD |
-| **External AI APIs (Azure Document Intelligence & Gemini)** | Depends on actual invoice volume |
+| **External AI APIs (Azure Document Intelligence)** | Depends on actual invoice volume |
 | **Total Estimated Production Cost** | **$300 - $600 USD / month** (Excl. AI APIs) |
 
 > [!WARNING]

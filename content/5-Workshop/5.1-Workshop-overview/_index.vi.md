@@ -71,8 +71,7 @@ Dưới đây là bảng ước tính chi phí chính xác cho môi trường De
 | 7 | **Amazon SQS, SNS & ECR** | Queue OCR/AI, cảnh báo cơ bản và lưu Docker Image | $1.00 |
 | 8 | **CloudWatch, Parameter Store & Budgets**| Log, metric, alarm, secret và cảnh báo ngân sách | $3.00 |
 | 9 | **Azure Document Intelligence** | Khoảng 1.000 trang bằng prebuilt invoice model | $10.00 |
-| 10 | **Gemini API** | Ước tính 1 triệu token input và 200.000 token output | $0.80 |
-| | **Tổng chi phí dự kiến Demo** | | **~$68.30** |
+| | **Tổng chi phí dự kiến Demo** | | **~$67.50** |
 
 ### 3.2. Môi trường Production Multi-AZ (Tham khảo định hướng mở rộng)
 
@@ -82,7 +81,7 @@ Dưới đây là bảng ước tính chi phí chính xác cho môi trường De
 | **SQL Server Primary/Standby (Multi-AZ)**| $150 - $300 USD |
 | **Dual NAT Gateway & Data Transfer** | $70 - $120 USD |
 | **S3, SQS, SNS, ECR & CloudWatch**| $20 - $60 USD |
-| **External AI APIs (Azure Document Intelligence & Gemini)** | Phụ thuộc số lượng hóa đơn thực tế |
+| **External AI APIs (Azure Document Intelligence)** | Phụ thuộc số lượng hóa đơn thực tế |
 | **Tổng chi phí dự kiến Production** | **$300 - $600 USD / tháng** (chưa gồm AI API) |
 
 > [!WARNING]
