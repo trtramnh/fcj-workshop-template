@@ -70,8 +70,7 @@ Below is an accurate cost estimation for a Demo environment (1 month of developm
 | 6 | **NAT Gateway & Data Transfer** | 01 NAT Gateway, limited uptime during integration | $13.00 |
 | 7 | **Amazon SQS, SNS & ECR** | OCR/AI queues, basic alerts and storing Docker Image | $1.00 |
 | 8 | **CloudWatch, Parameter Store & Budgets**| Logs, metrics, alarms, secrets and budget alerts | $3.00 |
-| 9 | **Azure Document Intelligence** | ~1,000 pages using prebuilt invoice model | $10.00 |
-| | **Total Estimated Demo Cost** | | **~$67.50** |
+| | **Total Estimated Demo Cost** | | **~$57.50** |
 
 ### 3.2. Production Multi-AZ Environment (Reference for Scaling)
 

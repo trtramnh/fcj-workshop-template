@@ -70,8 +70,7 @@ Dưới đây là bảng ước tính chi phí chính xác cho môi trường De
 | 6 | **NAT Gateway & Dữ liệu chuyển giao** | 01 NAT Gateway, bật giới hạn trong thời gian tích hợp | $13.00 |
 | 7 | **Amazon SQS, SNS & ECR** | Queue OCR/AI, cảnh báo cơ bản và lưu Docker Image | $1.00 |
 | 8 | **CloudWatch, Parameter Store & Budgets**| Log, metric, alarm, secret và cảnh báo ngân sách | $3.00 |
-| 9 | **Azure Document Intelligence** | Khoảng 1.000 trang bằng prebuilt invoice model | $10.00 |
-| | **Tổng chi phí dự kiến Demo** | | **~$67.50** |
+| | **Tổng chi phí dự kiến Demo** | | **~$57.50** |
 
 ### 3.2. Môi trường Production Multi-AZ (Tham khảo định hướng mở rộng)
 
