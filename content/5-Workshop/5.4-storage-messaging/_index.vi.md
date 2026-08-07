@@ -68,9 +68,6 @@ Vì ở bài trước chúng ta đã tạo **VPC Gateway Endpoint**, Code C# ch�
   <div> <img src="/fcj-workshop-template/images/5-Workshop/5.4-storage-messaging/amazon_s3_create.png" >
   </div>
 
-  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.4-storage-messaging/s3.png" >
-  </div>
-
 ## 3. Két sắt Bí mật (AWS Systems Manager Parameter Store)
 
 TUYỆT ĐỐI KHÔNG lưu mật khẩu SQL Server hay API Key của AI vào file `appsettings.json` và đẩy lên GitHub! Chúng ta sẽ sử dụng **AWS Systems Manager Parameter Store** để lưu trữ các thông tin này an toàn theo dạng phân cấp.

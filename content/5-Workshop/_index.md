@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Workshop"
 date: 2024-01-01
 weight: 5
@@ -39,5 +39,3 @@ To keep navigation simple while delivering deep technical insights, this worksho
 
 > [!NOTE]  
 > This workshop assumes you have a basic understanding of AWS Console navigation. Grab a cup of coffee, and let's start building a production-ready system!
-
-

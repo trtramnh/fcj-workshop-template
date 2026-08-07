@@ -11,7 +11,7 @@ Before getting hands-on with the AWS Console, it is crucial to thoroughly unders
 
 ## 1. Enterprise System Architecture Diagram
 
-![Snaptics System Architecture](/fcj-workshop-template/images/5-Workshop/5.1-Workshop-overview/snaptics-architecture.png)
+![Snaptics System Architecture](/fcj-workshop-template/images/5-Workshop/5.1-Workshop-overview/snaptics_architecture_workshop.png)
 
 ### Deep Dive into the Data Flow
 
@@ -70,7 +70,6 @@ Below is an accurate cost estimation for a Demo environment (1 month of developm
 | 6 | **NAT Gateway & Data Transfer** | 01 NAT Gateway, limited uptime during integration | $13.00 |
 | 7 | **Amazon SQS, SNS & ECR** | OCR/AI queues, basic alerts and storing Docker Image | $1.00 |
 | 8 | **CloudWatch, Parameter Store & Budgets**| Logs, metrics, alarms, secrets and budget alerts | $3.00 |
-| | **Total Estimated Demo Cost** | | **~$57.50** |
 
 ### 3.2. Production Multi-AZ Environment (Reference for Scaling)
 
@@ -85,9 +84,3 @@ Below is an accurate cost estimation for a Demo environment (1 month of developm
 
 > [!WARNING]
 > **Extremely Important:** If you are running this workshop for learning purposes on your personal account, **YOU MUST** execute the steps in the **5.9 Cleanup** section immediately after testing to destroy the resources. Leaving SQL Server Multi-AZ and NAT Gateway running will drain your credit card rapidly!
-
-
-
-
-
-

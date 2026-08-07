@@ -68,9 +68,6 @@ Invoice images must be stored efficiently. Since we configured a **VPC Gateway E
   <div> <img src="/fcj-workshop-template/images/5-Workshop/5.4-storage-messaging/amazon_s3_create.png" >
   </div>
 
-  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.4-storage-messaging/s3.png" >
-  </div>
-
 ## 3. Parameter Management (AWS Systems Manager Parameter Store)
 
 NEVER hardcode your SQL Server DB password or AI API Keys in your GitHub repo! We will use **AWS Systems Manager Parameter Store** to store these securely in a hierarchical structure.

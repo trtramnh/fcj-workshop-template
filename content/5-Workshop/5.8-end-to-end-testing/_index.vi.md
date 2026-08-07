@@ -15,10 +15,6 @@ Lần này, ta KHÔNG truy cập qua DNS của ALB nữa. Hãy mở trình duy�
 
 1. **Test Load Tĩnh:** Truy cập trang Swagger bình thường, bạn sẽ thấy nó load nhanh chóng thông qua Load Balancer.
 
-  <div> <img src="/fcj-workshop-template/images/5-Workshop/5.8-end-to-end-testing/cloudfront.png" >
-  </div>
-  
-
 ## 2. Kiểm thử API & Trí tuệ Nhân tạo (Swagger)
 
 1. **Đăng nhập (Auth):** Dùng Endpoint `/api/Auth/register` rồi `/api/Auth/login`. Bước này chứng minh ECS Container đã đọc được mật khẩu từ **Parameter Store** và kết nối thành công tới **SQL Server Database**!
@@ -39,10 +35,3 @@ Lần này, ta KHÔNG truy cập qua DNS của ALB nữa. Hãy mở trình duy�
 4. Ngay lập tức màn hình WebSocket Client nhận được một chuỗi JSON đẩy về: `{"type": "NEW_TRANSACTION_ADDED"}`. 
 
 Điều này chứng minh ALB đã làm rất tốt việc Upgrade giao thức HTTP lên WebSocket và giữ đường hầm kết nối liên tục (Persistent tunnel) thẳng tới lõi Fargate bên trong mạng Private!
-
-
-
-
-
-
-

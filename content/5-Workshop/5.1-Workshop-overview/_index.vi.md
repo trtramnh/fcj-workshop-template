@@ -11,7 +11,7 @@ Trước khi bắt tay vào cấu hình thực tế trên AWS Console, việc th
 
 ## 1. Sơ đồ Kiến trúc Hệ thống Enterprise
 
-![Snaptics System Architecture](/fcj-workshop-template/images/5-Workshop/5.1-Workshop-overview/snaptics-architecture.png)
+![Snaptics System Architecture](/fcj-workshop-template/images/5-Workshop/5.1-Workshop-overview/snaptics_architecture_workshop.png)
 
 ### Phân tích Luồng Dữ Liệu Chuyên sâu 
 
@@ -70,7 +70,7 @@ Dưới đây là bảng ước tính chi phí chính xác cho môi trường De
 | 6 | **NAT Gateway & Dữ liệu chuyển giao** | 01 NAT Gateway, bật giới hạn trong thời gian tích hợp | $13.00 |
 | 7 | **Amazon SQS, SNS & ECR** | Queue OCR/AI, cảnh báo cơ bản và lưu Docker Image | $1.00 |
 | 8 | **CloudWatch, Parameter Store & Budgets**| Log, metric, alarm, secret và cảnh báo ngân sách | $3.00 |
-| | **Tổng chi phí dự kiến Demo** | | **~$57.50** |
+
 
 ### 3.2. Môi trường Production Multi-AZ (Tham khảo định hướng mở rộng)
 
@@ -85,9 +85,3 @@ Dưới đây là bảng ước tính chi phí chính xác cho môi trường De
 
 > [!WARNING]
 > **CẢNH BÁO TÀI CHÍNH CỰC KỲ QUAN TRỌNG:** Nếu bạn đang thực hành Workshop này trên tài khoản AWS cá nhân để học tập, **BẠN BẮT BUỘC** phải làm theo mục **5.9 Dọn dẹp Tài nguyên (Cleanup)** ngay sau khi test xong. Việc quên tắt SQL Server Multi-AZ và NAT Gateway có thể "đốt" sạch tiền trong thẻ tín dụng của bạn chỉ trong vài ngày!
-
-
-
-
-
-

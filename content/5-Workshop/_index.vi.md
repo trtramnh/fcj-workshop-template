@@ -23,7 +23,7 @@ Trong workshop này, bạn sẽ học cách triển khai một môi trường Pr
 
 ---
 
-### Cấu trúc Workshop (Đã được tinh gọn)
+### Cấu trúc Workshop
 
 Để việc theo dõi menu bên trái được gọn gàng nhất nhưng nội dung bên trong vẫn giữ nguyên độ sâu và chi tiết khổng lồ, workshop được chia thành 9 phân hệ chính. Vui lòng làm theo đúng thứ tự:
 
@@ -39,5 +39,3 @@ Trong workshop này, bạn sẽ học cách triển khai một môi trường Pr
 
 > [!NOTE]  
 > Hướng dẫn này được viết cực kỳ chi tiết từ A đến Z, bạn chỉ cần đọc chậm rãi và copy/paste cấu hình chính xác. Hãy chuẩn bị một ly cà phê và bắt tay vào xây dựng hệ thống tỷ đô của riêng bạn nào!
-
-
